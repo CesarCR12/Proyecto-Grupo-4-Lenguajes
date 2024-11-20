@@ -1,4 +1,4 @@
-package Conexion;
+package sumastorecr;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

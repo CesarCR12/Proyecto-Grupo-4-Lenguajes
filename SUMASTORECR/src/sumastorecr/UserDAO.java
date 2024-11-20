@@ -1,30 +1,28 @@
 package sumastorecr;
 
-import Conexion.ConexionOracle;
+import sumastorecr.ConexionOracle;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class UserDAO {
 
-    // Método para validar las credenciales de login
-    public boolean validateLogin(String Usuario, String Contraseña) {
+    public boolean validateLogin(String nombre, String contraseña) {
         boolean isValid = false;
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
         try {
-            // Conexión a la base de datos utilizando ConexionOracle
+            // Conexión a la base de datos
             ConexionOracle conexionOracle = new ConexionOracle();
             conn = conexionOracle.conectar();
 
-            // Consulta preparada para evitar inyección SQL
-            // Se cambia 'password' por 'CONTRASEÑA' para que coincida con el nombre de la columna en la base de datos
-            String sql = "SELECT COUNT(*) AS total FROM FIDE_USUARIOS_TB WHERE Usuario = ? AND CONTRASEÑA = ?";
+            // Consulta preparada con el campo NOMBRE
+            String sql = "SELECT COUNT(*) AS total FROM FIDE_CLIENTES_TB WHERE NOMBRE = ? AND CONTRASEÑA = ?";
             ps = conn.prepareStatement(sql);
-            ps.setString(1, Usuario);
-            ps.setString(2, Contraseña);
+            ps.setString(1, nombre);
+            ps.setString(2, contraseña);
 
             // Ejecutar la consulta
             rs = ps.executeQuery();
@@ -38,9 +36,15 @@ public class UserDAO {
         } finally {
             // Cerrar recursos
             try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (conn != null) conn.close();
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -49,7 +53,3 @@ public class UserDAO {
         return isValid;
     }
 }
-
-
-
-
