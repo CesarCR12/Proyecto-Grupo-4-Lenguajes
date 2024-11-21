@@ -362,6 +362,75 @@ INSERT INTO FIDE_DETALLES_FACTURAS_TB (FIDE_DETALLES_FACTURAS_TB_ID_DETALLE_PK, 
 VALUES ('3', '3', '1', '3', 30, 8.00, 240.00);
 COMMIT;
 
+
+--------------------------------------------[VISTAS]--------------------------------------------
+
+---------Muestra las facturas generadas en el último mes---------
+CREATE VIEW FIDE_FACTURAS_RECENTES_V AS
+SELECT 
+    FIDE_FACTURAS_TB_ID_FACTURAS_PK AS ID_FACTURA,
+    ID_CLIENTE,
+    FECHA_VENTA,
+    SUBTOTAL,
+    TOTAL_VENTA
+FROM 
+    FIDE_FACTURAS_TB
+WHERE 
+    FECHA_VENTA >= ADD_MONTHS(SYSDATE, -1);
+SELECT * FROM FIDE_FACTURAS_RECENTES_V;
+
+---------Muestra las facturas asociadas a un cliente---------
+CREATE VIEW FIDE_FACTURAS_CLIENTES_V AS
+SELECT 
+    FIDE_FACTURAS_TB_ID_FACTURAS_PK AS ID_FACTURA,
+    ID_CLIENTE,
+    FECHA_VENTA,
+    TOTAL_VENTA
+FROM 
+    FIDE_FACTURAS_TB
+WHERE 
+    ID_CLIENTE IS NOT NULL;
+SELECT * FROM FIDE_FACTURAS_CLIENTES_V;
+
+---------Muestra los proveedores con su nombre, correo y teléfono de contacto---------
+CREATE VIEW FIDE_PROVEEDORES_CONTACTOS_V AS
+SELECT 
+    FIDE_PROVEEDORES_TB_ID_PROVEEDORES_PK AS ID_PROVEEDOR,
+    NOMBRE_PROVEEDOR,
+    CORREO,
+    TELEFONO
+FROM 
+    FIDE_PROVEEDORES_TB
+WHERE 
+    TELEFONO IS NOT NULL;
+SELECT * FROM FIDE_PROVEEDORES_CONTACTOS_V;
+
+---------Muestra los productos cuyo inventario está por debajo de la cantidad mínima---------
+CREATE VIEW FIDE_INVENTARIO_CANTIDAD_MINIMA_V AS
+SELECT 
+    FIDE_INVENTARIO_TB_ID_INVENTARIO_PK AS ID_INVENTARIO,
+    NOMBRE,
+    CANTIDAD,
+    PRECIO
+FROM 
+    FIDE_INVENTARIO_TB
+WHERE 
+    CANTIDAD <= 10;
+SELECT * FROM FIDE_INVENTARIO_CANTIDAD_MINIMA_V;
+
+---------Muestra los productos del inventario con su ID, nombre, precio y cantidad---------
+CREATE VIEW FIDE_INVENTARIO_PRECIO_V AS
+SELECT 
+    FIDE_INVENTARIO_TB_ID_INVENTARIO_PK AS ID_INVENTARIO,
+    NOMBRE,
+    PRECIO,
+    CANTIDAD
+FROM 
+    FIDE_INVENTARIO_TB
+ORDER BY 
+    PRECIO DESC;
+SELECT * FROM FIDE_INVENTARIO_PRECIO_V;
+
 --------------------------------------------[PROCEDIMIENTOS ALMACENADOS]--------------------------------------------
 
 -------------------------------Actualizar Clientes------------------------------------------------  
@@ -753,19 +822,19 @@ BEGIN
 
     FOR C IN (
         SELECT FIDE_CLIENTES_TB_ID_CLIENTE_PK, ID_PAIS, ID_PROVINCIA, ID_CANTON, ID_DISTRITO, 
-               ID_ESTADOS, NOMBRE, CORREO, CONTRASE�A, DIRECCION, TELEFONO, ESTADO, ACCION
+               ID_ESTADOS, NOMBRE, CORREO, CONTRASEÑA, DIRECCION, TELEFONO, ESTADO, ACCION
         FROM FIDE_CLIENTES_TB
         WHERE UPPER(NOMBRE) = UPPER(P_NOMBRE)
         ORDER BY NOMBRE
     ) LOOP
         V_RESULTADO := V_RESULTADO || 
-                       'ID Cliente: ' || C.FIDE_CLIENTES_TB_ID_CLIENTE_PK || ', ' || 'Pa�s: ' || C.ID_PAIS || ', ' ||
-                       'Provincia: ' || C.ID_PROVINCIA || ', ' || 'Cant�n: ' || C.ID_CANTON || ', ' ||
+                       'ID Cliente: ' || C.FIDE_CLIENTES_TB_ID_CLIENTE_PK || ', ' || 'Pais: ' || C.ID_PAIS || ', ' ||
+                       'Provincia: ' || C.ID_PROVINCIA || ', ' || 'Canton: ' || C.ID_CANTON || ', ' ||
                        'Distrito: ' || C.ID_DISTRITO || ', ' || 'Estado: ' || C.ID_ESTADOS || ', ' ||
                        'Nombre: ' || C.NOMBRE || ', ' || 'Correo: ' || C.CORREO || ', ' ||
-                       'Contrase�a: ' || C.CONTRASE�A || ', ' || 'Direcci�n: ' || C.DIRECCION || ', ' ||
-                       'Tel�fono: ' || C.TELEFONO || ', ' || 'Estado del Cliente: ' || C.ESTADO || ', ' ||
-                       'Acci�n: ' || C.ACCION || ' | '; 
+                       'Contraseña: ' || C.CONTRASEÑA || ', ' || 'Direccion: ' || C.DIRECCION || ', ' ||
+                       'Telefono: ' || C.TELEFONO || ', ' || 'Estado del Cliente: ' || C.ESTADO || ', ' ||
+                       'Accion: ' || C.ACCION || ' | '; 
     END LOOP;
 
     IF V_RESULTADO = '' THEN
@@ -776,7 +845,7 @@ BEGIN
 
 EXCEPTION
     WHEN OTHERS THEN
-        RETURN 'Ocurri� un error: ' || SQLERRM;
+        RETURN 'Ocurrio un error: ' || SQLERRM;
 END FIDE_CLIENTES_TB_FILTRAR_CLIENTES_FN;
 /
 
