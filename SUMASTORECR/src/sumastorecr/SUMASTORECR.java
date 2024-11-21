@@ -4,7 +4,7 @@
  */
 package sumastorecr;
 
-import Frames.LoginForm;
+
 
 /**
  *
@@ -16,8 +16,9 @@ public class SUMASTORECR {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       java.awt.EventQueue.invokeLater(() -> {
-            new LoginForm().setVisible(true);
-        });
+        
+        InventarioDAO dao = new InventarioDAO();
+
+        dao.registrarInventario(4, 101, "Producto X", 50, 25.75);
     }
 }

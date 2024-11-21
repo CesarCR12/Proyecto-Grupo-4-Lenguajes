@@ -10,33 +10,48 @@ public class ConexionOracle {
     private final String DRIVER = "oracle.jdbc.driver.OracleDriver";
     private final String URL = "jdbc:oracle:thin:@//localhost:1521/xe";
     private final String USER = "SUMASTORECR";
-    private final String PASWORD = "12345";
+    private final String PASSWORD = "12345";
 
-    public Connection cadena;
+    private static ConexionOracle instancia;
+    private Connection cadena;
 
-    public ConexionOracle() {
-         this.cadena = null;
+    ConexionOracle() {
+        this.cadena = null;
+        conectar();
     }
 
-    public Connection conectar() {
+    public static ConexionOracle getInstance() {
+        if (instancia == null) {
+            instancia = new ConexionOracle();
+        }
+        return instancia;
+    }
+
+    private void conectar() {
         try {
             Class.forName(DRIVER);
-            this.cadena = DriverManager.getConnection(URL, USER, PASWORD);
-
+            this.cadena = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println("Conexión exitosa a la base de datos.");
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al conectar a la base de datos: " + e.getMessage());
             System.exit(0);
         }
-        return this.cadena;
+    }
 
+    public Connection getConnection() {
+        return this.cadena;
     }
 
     public void desconectar() {
-        try {
-            this.cadena.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        if (this.cadena != null) {
+            try {
+                this.cadena.close();
+                System.out.println("Conexión cerrada.");
+                this.cadena = null;
+                instancia = null;
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage());
+            }
         }
     }
-
 }
