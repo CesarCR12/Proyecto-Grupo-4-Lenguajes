@@ -1060,3 +1060,51 @@ EXCEPTION
         ROLLBACK;
         DBMS_OUTPUT.PUT_LINE('Se cancelo la agregacion del producto');
 END FIDE_INVENTARIO_REGISTRAR_SP;
+
+
+--------------------------------------------TRIGGER--------------------------------------------
+
+---Registrar automáticamente las fechas de creación y modificación
+CREATE OR REPLACE TRIGGER FIDE_CLIENTES_FECHA_TRG
+BEFORE INSERT OR UPDATE ON FIDE_CLIENTES_TB
+FOR EACH ROW
+BEGIN
+  IF INSERTING THEN
+    :NEW.FECHA_CREACION := SYSTIMESTAMP;
+  END IF;
+  :NEW.FECHA_MODIFICACION := SYSTIMESTAMP;
+END;
+/
+    
+---Actualizar la fecha de modificación al cambiar el inventario
+CREATE OR REPLACE TRIGGER FIDE_INVENTARIO_ACTUALIZAR_FECHA_MODIFICACION_TRG
+BEFORE UPDATE ON FIDE_INVENTARIO_TB
+FOR EACH ROW
+BEGIN
+  -- Solo actualiza la fecha de modificación si la cantidad cambia
+  IF :OLD.CANTIDAD != :NEW.CANTIDAD THEN
+    :NEW.FECHA_MODIFICACION := SYSTIMESTAMP;
+  END IF;
+END;
+/
+
+
+DESCRIBE FIDE_INVENTARIO_TB;
+
+
+  -- Evitar duplicados en un campo específico
+CREATE OR REPLACE TRIGGER FIDE_CLIENTES_NO_DUPLICADOS_TRG
+BEFORE INSERT OR UPDATE ON FIDE_CLIENTES_TB
+FOR EACH ROW
+DECLARE
+  v_count NUMBER;
+BEGIN
+  SELECT COUNT(*) INTO v_count
+  FROM FIDE_CLIENTES_TB
+  WHERE CORREO = :NEW.CORREO AND FIDE_CLIENTES_TB_ID_CLIENTE_PK != :NEW.FIDE_CLIENTES_TB_ID_CLIENTE_PK;
+  
+  IF v_count > 0 THEN
+    RAISE_APPLICATION_ERROR(-20002, 'El correo electrónico ya está registrado en otro cliente.');
+  END IF;
+END;
+/
