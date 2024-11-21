@@ -362,10 +362,6 @@ INSERT INTO FIDE_DETALLES_FACTURAS_TB (FIDE_DETALLES_FACTURAS_TB_ID_DETALLE_PK, 
 VALUES ('3', '3', '1', '3', 30, 8.00, 240.00);
 COMMIT;
 
-
---------------------------------------------PROCEDIMIENTOS CRUD--------------------------------------------
-
-
 --------------------------------------------[PROCEDIMIENTOS ALMACENADOS]--------------------------------------------
 
 -------------------------------Actualizar Clientes------------------------------------------------  
@@ -926,3 +922,72 @@ END FIDE_DISTRITO_TB_NOMBRE_POR_ID_FN;
 /
 SELECT FIDE_DISTRITO_TB_NOMBRE_POR_ID_FN('ME') FROM dual;
 /
+
+--------------------------------------------PROCEDIMIENTOS CRUD--------------------------------------------
+---Procedimiento crear clientes
+CREATE OR REPLACE PROCEDURE FIDE_CLIENTES_TB_INSERTAR_CLIENTE_SP(
+    V_NOMBRE FIDE_CLIENTES_TB.NOMBRE%TYPE,
+    V_CORREO FIDE_CLIENTES_TB.CORREO%TYPE,
+    V_CONTRASEÑA FIDE_CLIENTES_TB.CONTRASEÑA%TYPE,
+    V_TELEFONO FIDE_CLIENTES_TB.TELEFONO%TYPE
+)
+AS
+BEGIN
+    INSERT INTO FIDE_CLIENTES_TB (
+        NOMBRE,
+        CORREO,
+        CONTRASEÑA,
+        TELEFONO
+    ) VALUES (
+        V_NOMBRE,
+        V_CORREO,
+        V_CONTRASEÑA,
+        V_TELEFONO
+    );  
+    COMMIT;  
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('ERROR AL INSERTAR CLIENTE: ' || SQLERRM);
+END FIDE_CLIENTES_TB_INSERTAR_CLIENTE_SP;
+
+DROP PROCEDURE FIDE_CLIENTES_TB_INSERTAR_CLIENTE_SP;
+
+select * from FIDE_CLIENTES_TB;
+
+/
+
+---Procedimiento agregar productos
+CREATE OR REPLACE PROCEDURE FIDE_INVENTARIO_REGISTRAR_SP (
+    V_ID_INVENTARIO FIDE_INVENTARIO_TB.FIDE_INVENTARIO_TB_ID_INVENTARIO_PK%TYPE,
+    V_ID_PALLET FIDE_INVENTARIO_TB.ID_PALLET%TYPE,
+    V_NOMBRE FIDE_INVENTARIO_TB.NOMBRE%TYPE,
+    V_CANTIDAD FIDE_INVENTARIO_TB.CANTIDAD%TYPE,
+    V_PRECIO FIDE_INVENTARIO_TB.PRECIO%TYPE
+)
+AS
+BEGIN
+
+    INSERT INTO FIDE_INVENTARIO_TB (
+        FIDE_INVENTARIO_TB_ID_INVENTARIO_PK,
+        ID_PALLET,
+        NOMBRE,
+        CANTIDAD,
+        PRECIO
+    ) VALUES (
+        V_ID_INVENTARIO,
+        V_ID_PALLET,
+        V_NOMBRE,
+        V_CANTIDAD,
+        V_PRECIO
+    );
+
+    COMMIT;
+
+    DBMS_OUTPUT.PUT_LINE('Se agrego el producto');
+EXCEPTION
+    WHEN OTHERS THEN
+
+        DBMS_OUTPUT.PUT_LINE('Error al agregar');
+        ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('Se cancelo la agregacion del producto');
+END FIDE_INVENTARIO_REGISTRAR_SP;
