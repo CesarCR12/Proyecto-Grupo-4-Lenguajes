@@ -13,7 +13,6 @@ CREATE TABLE FIDE_ESTADOS_TB (
     ACCION VARCHAR2(100)
 );
 
-
 ---TABLA DE PAIS
 CREATE TABLE FIDE_PAIS_TB (
     FIDE_PAIS_TB_ID_PAIS_PK VARCHAR2(200) PRIMARY KEY,
@@ -105,7 +104,7 @@ CREATE TABLE FIDE_CLIENTES_TB (
     ID_ESTADOS VARCHAR2(200),
     NOMBRE VARCHAR(255),
     CORREO VARCHAR(255),
-    CONTRASEÃ‘A VARCHAR2(50),
+    CONTRASENA VARCHAR2(50),
     DIRECCION VARCHAR(255),
     TELEFONO VARCHAR(20),
     CREADO_POR VARCHAR2(100),
@@ -291,11 +290,11 @@ VALUES ('3', '1', 'CR', 'CA', 'PA', 'OR', 'Boulevard 789', 'Proveedor 3', '11223
 COMMIT;
 
 ---INSERTS TABLA CLIENTES
-INSERT INTO FIDE_CLIENTES_TB (FIDE_CLIENTES_TB_ID_CLIENTE_PK, ID_PAIS, ID_PROVINCIA, ID_CANTON, ID_DISTRITO, ID_ESTADOS, NOMBRE, CORREO, DIRECCION, TELEFONO, CONTRASEÃ‘A) 
+INSERT INTO FIDE_CLIENTES_TB (FIDE_CLIENTES_TB_ID_CLIENTE_PK, ID_PAIS, ID_PROVINCIA, ID_CANTON, ID_DISTRITO, ID_ESTADOS, NOMBRE, CORREO, DIRECCION, TELEFONO, CONTRASEÑA) 
 VALUES ('1', 'CR', 'SJ', 'ES', 'SAN', '1', 'Cesar', 'Cesar@example.com', 'Calle 123', '87026789', '12345');
-INSERT INTO FIDE_CLIENTES_TB (FIDE_CLIENTES_TB_ID_CLIENTE_PK, ID_PAIS, ID_PROVINCIA, ID_CANTON, ID_DISTRITO, ID_ESTADOS, NOMBRE, CORREO, DIRECCION, TELEFONO, CONTRASEÃ‘A)  
+INSERT INTO FIDE_CLIENTES_TB (FIDE_CLIENTES_TB_ID_CLIENTE_PK, ID_PAIS, ID_PROVINCIA, ID_CANTON, ID_DISTRITO, ID_ESTADOS, NOMBRE, CORREO, DIRECCION, TELEFONO, CONTRASEÑA)  
 VALUES ('2', 'CR', 'AL', 'AT', 'ME', '1', 'Esteban', 'Esteban@example.com', 'Avenida 456', '85643567', '12345');
-INSERT INTO FIDE_CLIENTES_TB (FIDE_CLIENTES_TB_ID_CLIENTE_PK, ID_PAIS, ID_PROVINCIA, ID_CANTON, ID_DISTRITO, ID_ESTADOS, NOMBRE, CORREO, DIRECCION, TELEFONO, CONTRASEÃ‘A)  
+INSERT INTO FIDE_CLIENTES_TB (FIDE_CLIENTES_TB_ID_CLIENTE_PK, ID_PAIS, ID_PROVINCIA, ID_CANTON, ID_DISTRITO, ID_ESTADOS, NOMBRE, CORREO, DIRECCION, TELEFONO, CONTRASEÑA)  
 VALUES ('3', 'CR', 'CA', 'PA', 'OR', '1', 'Alexandra', 'Alexandra@example.com', 'Calle 789', '88456789', '12345');
 COMMIT;
 
@@ -368,3 +367,187 @@ COMMIT;
 
 
 
+
+
+
+--------------------------------------------FUNCIONES------------------------------------------------------------------------------
+
+---------------------------Funcion 1 que hace filtrar los datos de un cliente conforme al nombre----------------------
+CREATE OR REPLACE FUNCTION FIDE_CLIENTES_TB_FILTRAR_CLIENTES_FN(
+    P_NOMBRE IN VARCHAR2
+) RETURN VARCHAR2 IS
+    V_RESULTADO VARCHAR2(4000);
+BEGIN
+    V_RESULTADO := '';
+
+    FOR C IN (
+        SELECT FIDE_CLIENTES_TB_ID_CLIENTE_PK, ID_PAIS, ID_PROVINCIA, ID_CANTON, ID_DISTRITO, 
+               ID_ESTADOS, NOMBRE, CORREO, CONTRASEÑA, DIRECCION, TELEFONO, ESTADO, ACCION
+        FROM FIDE_CLIENTES_TB
+        WHERE UPPER(NOMBRE) = UPPER(P_NOMBRE)
+        ORDER BY NOMBRE
+    ) LOOP
+        V_RESULTADO := V_RESULTADO || 
+                       'ID Cliente: ' || C.FIDE_CLIENTES_TB_ID_CLIENTE_PK || ', ' || 'País: ' || C.ID_PAIS || ', ' ||
+                       'Provincia: ' || C.ID_PROVINCIA || ', ' || 'Cantón: ' || C.ID_CANTON || ', ' ||
+                       'Distrito: ' || C.ID_DISTRITO || ', ' || 'Estado: ' || C.ID_ESTADOS || ', ' ||
+                       'Nombre: ' || C.NOMBRE || ', ' || 'Correo: ' || C.CORREO || ', ' ||
+                       'Contraseña: ' || C.CONTRASEÑA || ', ' || 'Dirección: ' || C.DIRECCION || ', ' ||
+                       'Teléfono: ' || C.TELEFONO || ', ' || 'Estado del Cliente: ' || C.ESTADO || ', ' ||
+                       'Acción: ' || C.ACCION || ' | '; 
+    END LOOP;
+
+    IF V_RESULTADO = '' THEN
+        RETURN 'No se encontraron clientes con el nombre proporcionado.';
+    ELSE
+        RETURN V_RESULTADO;
+    END IF;
+
+EXCEPTION
+    WHEN OTHERS THEN
+        RETURN 'Ocurrió un error: ' || SQLERRM;
+END FIDE_CLIENTES_TB_FILTRAR_CLIENTES_FN;
+/
+
+SELECT FIDE_CLIENTES_TB_FILTRAR_CLIENTES_FN('Esteban') FROM DUAL;
+/
+---------------Funcion 2 que con el id del pallet se vea el proveedor -------------
+
+CREATE OR REPLACE FUNCTION FIDE_PALLETS_TB_OBTENER_PROVEEDOR_FN (
+    P_ID_PALLET IN VARCHAR2
+) RETURN VARCHAR2 IS
+    v_nombre_proveedor VARCHAR2(255);
+BEGIN
+    SELECT FIDE_PROVEEDORES_TB.NOMBRE_PROVEEDOR
+    INTO v_nombre_proveedor
+    FROM FIDE_PALLETS_TB
+    JOIN FIDE_PROVEEDORES_TB ON FIDE_PALLETS_TB.ID_PROVEEDORES = FIDE_PROVEEDORES_TB.FIDE_PROVEEDORES_TB_ID_PROVEEDORES_PK
+    WHERE FIDE_PALLETS_TB.FIDE_PALLETS_TB_ID_PALLET_PK = P_ID_PALLET;
+
+    RETURN v_nombre_proveedor;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RETURN 'Proveedor no encontrado'; 
+    WHEN OTHERS THEN
+        RETURN 'Error al obtener el proveedor'; 
+END FIDE_PALLETS_TB_OBTENER_PROVEEDOR_FN;
+/
+SELECT FIDE_PALLETS_TB_OBTENER_PROVEEDOR_FN('1') FROM DUAL;
+/
+
+----------------Funcion 3  Filtrar el nombre del descuento con el id de descuento--------------------------------------
+
+CREATE OR REPLACE FUNCTION FIDE_TIPO_DESCUENTO_TB_NOMBRE_DESCUENTO_FN(
+    P_ID_TIPO_DESCUENTO IN VARCHAR2
+) RETURN VARCHAR2 IS
+    V_NOMBRE VARCHAR2(255);
+BEGIN
+    SELECT NOMBRE
+    INTO V_NOMBRE
+    FROM FIDE_TIPO_DESCUENTO_TB
+    WHERE FIDE_TIPO_DESCUENTO_TB_ID_TIPO_DESCUENTO_PK = P_ID_TIPO_DESCUENTO;
+
+    RETURN V_NOMBRE;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RETURN 'No se encontró el descuento';
+    WHEN OTHERS THEN
+        RETURN 'Error en la consulta';
+END FIDE_TIPO_DESCUENTO_TB_NOMBRE_DESCUENTO_FN;
+/
+SELECT FIDE_TIPO_DESCUENTO_TB_NOMBRE_DESCUENTO_FN('3') FROM dual;
+/
+
+------------------------Funcion 4 con el nombre del producto se filtra la cantidad que hay-------------------------------
+CREATE OR REPLACE FUNCTION FIDE_INVENTARIO_TB_CANTIDAD_POR_NOMBRE_FN(
+    P_NOMBRE IN VARCHAR2
+) RETURN INT IS
+    V_CANTIDAD INT;
+BEGIN
+    SELECT CANTIDAD
+    INTO V_CANTIDAD
+    FROM FIDE_INVENTARIO_TB
+    WHERE NOMBRE = P_NOMBRE;
+
+    RETURN V_CANTIDAD;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RETURN 0;
+    WHEN OTHERS THEN
+        RETURN NULL;
+END FIDE_INVENTARIO_TB_CANTIDAD_POR_NOMBRE_FN;
+/
+SELECT FIDE_INVENTARIO_TB_CANTIDAD_POR_NOMBRE_FN('Armario') FROM dual;
+------------------Funcion 5 que con su id se filtre los datos de la factura del id --------------------------------
+
+CREATE OR REPLACE FUNCTION FIDE_FACTURAS_TB_DATOS_FACTURA_FN(
+    P_ID_FACTURA  IN VARCHAR2
+) RETURN VARCHAR2 IS
+    V_FACTURA FIDE_FACTURAS_TB%ROWTYPE;  
+BEGIN
+    SELECT * INTO V_FACTURA
+    FROM FIDE_FACTURAS_TB
+    WHERE FIDE_FACTURAS_TB_ID_FACTURAS_PK = P_ID_FACTURA;
+
+    RETURN 'Factura ID: ' || V_FACTURA.FIDE_FACTURAS_TB_ID_FACTURAS_PK ||
+           ', Inventario ID: ' || V_FACTURA.ID_INVENTARIO ||
+           ', Descuento ID: ' || V_FACTURA.ID_DESCUENTO ||
+           ', Estado ID: ' || V_FACTURA.ID_ESTADOS ||
+           ', Cliente ID: ' || V_FACTURA.ID_CLIENTE ||
+           ', Promoción ID: ' || V_FACTURA.ID_PROMOCION ||
+           ', Fecha de Venta: ' || V_FACTURA.FECHA_VENTA ||
+           ', Total Venta: ' || V_FACTURA.TOTAL_VENTA ||
+           ', Subtotal: ' || V_FACTURA.SUBTOTAL ||
+           ', Impuestos: ' || V_FACTURA.IMPUESTOS ||
+           ', Estado: ' || V_FACTURA.ESTADO;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RETURN 'No se encontró la factura con ese ID';
+    WHEN OTHERS THEN
+        RETURN 'Error en la consulta';
+END FIDE_FACTURAS_TB_DATOS_FACTURA_FN;
+/
+SELECT FIDE_FACTURAS_TB_DATOS_FACTURA_FN('2') FROM dual;
+/
+-----------------------Funcion 6 filtra el nombre con el id del canton ---------------------
+CREATE OR REPLACE FUNCTION FIDE_CANTON_TB_NOMBRE_POR_ID_FN(
+    P_ID_CANTO  IN VARCHAR2
+) RETURN VARCHAR2 IS
+    V_NOMBRE VARCHAR2(255);
+BEGIN
+    SELECT NOMBRE
+    INTO V_NOMBRE
+    FROM FIDE_CANTON_TB
+    WHERE FIDE_CANTON_TB_ID_CANTON_PK = P_ID_CANTO;
+
+    RETURN V_NOMBRE;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RETURN 'No se encontró el cantón con ese ID';
+    WHEN OTHERS THEN
+        RETURN 'Error en la consulta';
+END FIDE_CANTON_TB_NOMBRE_POR_ID_FN;
+/
+SELECT FIDE_CANTON_TB_NOMBRE_POR_ID_FN('AT') FROM dual;
+/
+-----------------------Funcion 7  filtra el nombre del distrito con el id------------------------------------------------------
+CREATE OR REPLACE FUNCTION FIDE_DISTRITO_TB_NOMBRE_POR_ID_FN(
+    P_ID_DISTRITO  IN VARCHAR2
+) RETURN VARCHAR2 IS
+    V_NOMBRE VARCHAR2(255);
+BEGIN
+    SELECT NOMBRE
+    INTO V_NOMBRE
+    FROM FIDE_DISTRITO_TB
+    WHERE FIDE_DISTRITO_TB_ID_DISTRITO_PK = P_ID_DISTRITO;
+
+    RETURN V_NOMBRE;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RETURN 'No se encontró el distrito con ese ID';
+    WHEN OTHERS THEN
+        RETURN 'Error en la consulta';
+END FIDE_DISTRITO_TB_NOMBRE_POR_ID_FN;
+/
+SELECT FIDE_DISTRITO_TB_NOMBRE_POR_ID_FN('ME') FROM dual;
+/
