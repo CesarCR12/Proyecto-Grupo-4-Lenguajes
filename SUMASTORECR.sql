@@ -433,6 +433,19 @@ SELECT * FROM FIDE_INVENTARIO_PRECIO_V;
 
 --------------------------------------------[PROCEDIMIENTOS ALMACENADOS]--------------------------------------------
 
+-------------------------------Agregar Clientes------------------------------------------------  
+CREATE OR REPLACE PROCEDURE FIDE_CLIENTES_TB_INSERTAR_CLIENTE_SP (
+    V_NOMBRE IN VARCHAR2,
+    V_CORREO IN VARCHAR2,
+    V_CONTRASEÑA IN VARCHAR2,
+    V_TELEFONO IN VARCHAR2
+) AS
+BEGIN
+    INSERT INTO FIDE_CLIENTES_TB (NOMBRE, CORREO, CONTRASEÑA, TELEFONO)
+    VALUES (V_NOMBRE, V_CORREO, V_CONTRASEÑA, V_TELEFONO);
+
+    COMMIT;
+END;
 -------------------------------Actualizar Clientes------------------------------------------------  
 CREATE OR REPLACE PROCEDURE FIDE_CLIENTES_TB_ACTUALIZAR_SP (
     V_ID_CLIENTE FIDE_CLIENTES_TB.FIDE_CLIENTES_TB_ID_CLIENTE_PK%TYPE,
@@ -590,7 +603,7 @@ END FIDE_INVENTARIO_TB_ACTUALIZAR_SP;
 
 -----------------------Eliminar Producto------------------------------------
 
-CREATE OR REPLACE PROCEDURE FIDE_INVENTARIO_ELIMINAR_SP (
+CREATE OR REPLACE PROCEDURE FIDE_INVENTARIO_TB_ELIMINAR_SP (
     V_ID_INVENTARIO FIDE_INVENTARIO_TB.FIDE_INVENTARIO_TB_ID_INVENTARIO_PK%TYPE
 )
 AS
@@ -605,7 +618,7 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE('No se pudo eliminar el articulo');
         ROLLBACK;
         DBMS_OUTPUT.PUT_LINE('Se cancelo la eliminación');
-END FIDE_INVENTARIO_ELIMINAR_SP;
+END FIDE_INVENTARIO_TB_ELIMINAR_SP;
 
 
 -----------------------Agregar Factura------------------------------------
@@ -1108,3 +1121,17 @@ BEGIN
   END IF;
 END;
 /
+  -- Incrementa el id automatica de los clientes
+CREATE SEQUENCE ID_CLIENTES_SEQ
+START WITH 4
+INCREMENT BY 1;
+
+
+CREATE OR REPLACE TRIGGER FIDE_FIDE_CLIENTES_TB_TRG
+BEFORE INSERT ON FIDE_CLIENTES_TB
+FOR EACH ROW
+BEGIN
+:NEW.FIDE_CLIENTES_TB_ID_CLIENTE_PK := ID_CLIENTES_SEQ.NEXTVAL;
+END;
+
+

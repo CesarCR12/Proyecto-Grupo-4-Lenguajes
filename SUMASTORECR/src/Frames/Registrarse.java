@@ -25,7 +25,7 @@ public class Registrarse extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
 
-        // Obtén la conexión desde la clase Singleton
+
         this.con = ConexionOracle.getInstance().getConnection();
     }
 
@@ -64,40 +64,40 @@ public class Registrarse extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 110, 40));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, 110, 40));
 
         jButton2.setText("Cancelar");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 360, 110, 40));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 300, 110, 40));
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 80, -1));
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 180, 80, -1));
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 80, -1));
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 80, -1));
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 120, 80, -1));
+        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, 80, -1));
+        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 200, 80, -1));
+        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 240, 80, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Contraseña");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 300, -1, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Telefono");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Correo");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 160, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Nombre");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 90, 40));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 110, 90, 40));
 
         jLabel2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -122,27 +122,44 @@ public class Registrarse extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        String nombre = jTextField1.getText();
-        String correo = jTextField2.getText();
-        String contrasena = jTextField4.getText();
-        String telefono = jTextField3.getText();
+         String nombre = jTextField1.getText().trim();
+    String correo = jTextField2.getText().trim();
+    String telefono = jTextField3.getText().trim();
+    String contrasena = jTextField4.getText().trim();
 
-        if (nombre.isEmpty() || correo.isEmpty() || telefono.isEmpty() || contrasena.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (nombre.isEmpty() || correo.isEmpty() || telefono.isEmpty() || contrasena.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        System.out.println("Nombre: " + nombre);
-        System.out.println("Correo: " + correo);
-        System.out.println("Contraseña: " + contrasena);
-        System.out.println("Teléfono: " + telefono);
+    if (!correo.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+        JOptionPane.showMessageDialog(this, "Correo invalido", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    if (!telefono.matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "El numero no puede tener letras", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    try {
+
         RegistroClientes cliente = new RegistroClientes(nombre, correo, contrasena, telefono);
+
         ClienteDAO clienteDAO = new ClienteDAO();
-        JOptionPane.showMessageDialog(this, "Registro exitoso. Bienvenido/a, " + nombre + "!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        LoginForm loginform = new LoginForm();
-        loginform.setVisible(true);
+        clienteDAO.insertarCliente(cliente);
+
+        JOptionPane.showMessageDialog(this, "Se ha registrado de buena manera, " + nombre + "!", "Exito", JOptionPane.INFORMATION_MESSAGE);
+
+        LoginForm loginForm = new LoginForm();
+        loginForm.setVisible(true);
         this.dispose();
+
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(this, "Error no se pudo registrar " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

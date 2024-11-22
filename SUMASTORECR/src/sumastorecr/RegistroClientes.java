@@ -4,20 +4,16 @@
  */
 package sumastorecr;
 
-/**
- *
- * @author XSF
- */
 public class RegistroClientes {
-    String nombre;
-    String correo;
-    String contraseña;
-    String telefono;
+    private String nombre;
+    private String correo;
+    private String contrasena;
+    private String telefono;
 
     public RegistroClientes(String nombre, String correo, String contrasena, String telefono) {
         this.nombre = nombre;
         this.correo = correo;
-        this.contraseña = contrasena;
+        this.contrasena = contrasena;
         this.telefono = telefono;
     }
 
@@ -25,41 +21,15 @@ public class RegistroClientes {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public String getCorreo() {
         return correo;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
     public String getContrasena() {
-        return contraseña;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contraseña = contrasena;
+        return contrasena;
     }
 
     public String getTelefono() {
         return telefono;
     }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
 }
-
-    
-
-
-    
-
-
-    
-
-

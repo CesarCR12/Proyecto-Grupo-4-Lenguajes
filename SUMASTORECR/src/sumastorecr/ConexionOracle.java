@@ -7,15 +7,15 @@ import javax.swing.JOptionPane;
 
 public class ConexionOracle {
 
-    private final String DRIVER = "oracle.jdbc.driver.OracleDriver";
-    private final String URL = "jdbc:oracle:thin:@//localhost:1521/xe";
+    private final String DRIVER = "oracle.jdbc.OracleDriver";
+    private final String URL = "jdbc:oracle:thin:@//localhost:1521/XE";
     private final String USER = "SUMASTORECR";
     private final String PASSWORD = "12345";
 
     private static ConexionOracle instancia;
     private Connection cadena;
 
-    ConexionOracle() {
+    private ConexionOracle() {
         this.cadena = null;
         conectar();
     }
@@ -39,6 +39,13 @@ public class ConexionOracle {
     }
 
     public Connection getConnection() {
+        try {
+            if (this.cadena == null || this.cadena.isClosed()) {
+                conectar();
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al recuperar la conexión: " + e.getMessage());
+        }
         return this.cadena;
     }
 
