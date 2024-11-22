@@ -107,6 +107,7 @@ CREATE TABLE FIDE_CLIENTES_TB (
     CONTRASENA VARCHAR2(50),
     DIRECCION VARCHAR(255),
     TELEFONO VARCHAR(20),
+    ROL VARCHAR2(10),
     CREADO_POR VARCHAR2(100),
     FECHA_CREACION TIMESTAMP,
     MODIFICADO_POR VARCHAR2(100),
@@ -298,6 +299,7 @@ INSERT INTO FIDE_CLIENTES_TB (FIDE_CLIENTES_TB_ID_CLIENTE_PK, ID_PAIS, ID_PROVIN
 VALUES ('3', 'CR', 'CA', 'PA', 'OR', '1', 'Alexandra', 'Alexandra@example.com', 'Calle 789', '88456789', '12345');
 COMMIT;
 
+
 ---INSERTS TABLA INVENTARIO
 INSERT INTO FIDE_INVENTARIO_TB (FIDE_INVENTARIO_TB_ID_INVENTARIO_PK, ID_PALLET, ID_ESTADOS, NOMBRE, CANTIDAD, PRECIO) 
 VALUES ('1', '1', '1', 'Maleta', 3, 25.00);
@@ -365,7 +367,7 @@ COMMIT;
 
 --------------------------------------------[TRIGGERS]--------------------------------------------
 
--------------------------------AUMENTAR ID------------------------------------------------ 
+-------------------------------AUMENTAR ID CLIENTES------------------------------------------------ 
 CREATE SEQUENCE ID_CLIENTES_SEQ
 START WITH 4
 INCREMENT BY 1;
@@ -378,6 +380,21 @@ BEFORE INSERT ON FIDE_CLIENTES_TB
 FOR EACH ROW
 BEGIN
 :NEW.FIDE_CLIENTES_TB_ID_CLIENTE_PK := ID_CLIENTES_SEQ.NEXTVAL;
+END;
+
+-------------------------------AUMENTAR ID INVENTARIO------------------------------------------------ 
+CREATE SEQUENCE ID_INVENTARIO_SEQ
+START WITH 4
+INCREMENT BY 1;
+
+SELECT ID_INVENTARIO_SEQ.NEXTVAL AS SECUENCIA FROM DUAL;
+
+
+CREATE OR REPLACE TRIGGER FIDE_FIDE_INVENTARIO_TB_SEQ_ID_TRG
+BEFORE INSERT ON FIDE_INVENTARIO_TB
+FOR EACH ROW
+BEGIN
+:NEW.FIDE_INVENTARIO_TB_ID_INVENTARIO_PK := ID_INVENTARIO_SEQ.NEXTVAL;
 END;
 
 --------------------------------FECHA DE CREACION Y FECHA DE MODIFICACION PARA TODAS LAS TABLAS--------------------------------
@@ -1597,7 +1614,7 @@ BEGIN
     RETURN V_NOMBRE;
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
-        RETURN 'No se encontr� el descuento';
+        RETURN 'No se encontrO el descuento';
     WHEN OTHERS THEN
         RETURN 'Error en la consulta';
 END FIDE_TIPO_DESCUENTO_TB_NOMBRE_DESCUENTO_FN;
@@ -1698,6 +1715,73 @@ END FIDE_DISTRITO_TB_NOMBRE_POR_ID_FN;
 /
 SELECT FIDE_DISTRITO_TB_NOMBRE_POR_ID_FN('ME') FROM dual;
 /
+
+--------------------------------------------PAQUETES--------------------------------------------
+
+---------------------------------PAQUETES PROCEDIMIENTO---------------------------------
+CREATE OR REPLACE PACKAGE FIDE_SUMASTORECR_PROCEDIMIENTOS_PKG AS
+
+END FIDE_SUMASTORECR_PROCEDIMIENTOS_PKG;
+
+CREATE OR REPLACE PACKAGE BODY FIDE_SUMASTORECR_PROCEDIMIENTOS_PKG AS
+---------ACA INICIAN LOS PROCEDIMIENTOS---------
+---------PROCEDIMIENTO PARA CREAR CLIENTE EN LA TABLA FIDE_CLIENTES---------
+PROCEDURE FIDE_CLIENTES_TB_INSERTAR_CLIENTE_SP (
+    V_NOMBRE IN VARCHAR2,
+    V_CORREO IN VARCHAR2,
+    V_CONTRASEÑA IN VARCHAR2,
+    V_TELEFONO IN VARCHAR2
+) AS
+BEGIN
+    INSERT INTO FIDE_CLIENTES_TB (NOMBRE, CORREO, CONTRASEÑA, TELEFONO)
+    VALUES (V_NOMBRE, V_CORREO, V_CONTRASEÑA, V_TELEFONO);
+
+    COMMIT;
+END;
+END FIDE_SUMASTORECR_PROCEDIMIENTOS_PKG;
+
+---------------------------------PAQUETES FUNCIONES---------------------------------
+CREATE OR REPLACE PACKAGE FIDE_SUMASTORECR_FUNCIONES_PKG AS
+
+END FIDE_SUMASTORECR_FUNCIONES_PKG;
+
+CREATE OR REPLACE PACKAGE BODY FIDE_SUMASTORECR_FUNCIONES_PKG AS
+---------ACA INICIAN LAS FUNCIONES---------
+---------PROCEDIMIENTO PARA CREAR CLIENTE EN LA TABLA FIDE_CLIENTES---------
+FUNCTION FIDE_CLIENTES_TB_FILTRAR_CLIENTES_FN(
+    P_NOMBRE IN VARCHAR2
+) RETURN VARCHAR2 IS
+    V_RESULTADO VARCHAR2(4000);
+BEGIN
+    V_RESULTADO := '';
+    FOR C IN (
+        SELECT FIDE_CLIENTES_TB_ID_CLIENTE_PK, ID_PAIS, ID_PROVINCIA, ID_CANTON, ID_DISTRITO, 
+               ID_ESTADOS, NOMBRE, CORREO, CONTRASEÑA, DIRECCION, TELEFONO, ESTADO, ACCION
+        FROM FIDE_CLIENTES_TB
+        WHERE UPPER(NOMBRE) = UPPER(P_NOMBRE)
+        ORDER BY NOMBRE
+    ) LOOP
+        V_RESULTADO := V_RESULTADO || 
+                       'ID Cliente: ' || C.FIDE_CLIENTES_TB_ID_CLIENTE_PK || ', ' || 'Pais: ' || C.ID_PAIS || ', ' ||
+                       'Provincia: ' || C.ID_PROVINCIA || ', ' || 'Canton: ' || C.ID_CANTON || ', ' ||
+                       'Distrito: ' || C.ID_DISTRITO || ', ' || 'Estado: ' || C.ID_ESTADOS || ', ' ||
+                       'Nombre: ' || C.NOMBRE || ', ' || 'Correo: ' || C.CORREO || ', ' ||
+                       'Contraseña: ' || C.CONTRASEÑA || ', ' || 'Direccion: ' || C.DIRECCION || ', ' ||
+                       'Telefono: ' || C.TELEFONO || ', ' || 'Estado del Cliente: ' || C.ESTADO || ', ' ||
+                       'Accion: ' || C.ACCION || ' | '; 
+    END LOOP;
+    IF V_RESULTADO = '' THEN
+        RETURN 'No se encontraron clientes con el nombre proporcionado.';
+    ELSE
+        RETURN V_RESULTADO;
+    END IF;
+EXCEPTION
+    WHEN OTHERS THEN
+        RETURN 'Ocurrio un error: ' || SQLERRM;
+END FIDE_CLIENTES_TB_FILTRAR_CLIENTES_FN;
+END FIDE_SUMASTORECR_FUNCIONES_PKG;
+
+SHOW ERRORS PACKAGE BODY FIDE_SUMASTORECR_FUNCIONES_PKG;
 
 --------------------------------------------PROCEDIMIENTOS CRUD--------------------------------------------
 ---Procedimiento crear clientes
