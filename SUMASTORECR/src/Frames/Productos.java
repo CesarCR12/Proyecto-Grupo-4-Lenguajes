@@ -19,11 +19,12 @@ public class Productos extends javax.swing.JFrame {
     public Productos() {
         initComponents();
         cargarInventario();
+        this.setLocationRelativeTo(null);
     }
 
     private void cargarInventario() {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-        modelo.setRowCount(0); 
+        modelo.setRowCount(0);
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -48,36 +49,41 @@ public class Productos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al cargar el inventario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
-                if (rs != null) rs.close();
-                if (pstmt != null) pstmt.close();
-                if (conn != null) conn.close();
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(this, "Error al cerrar recursos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
+
     private void actualizarTablaProductos() {
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); 
-    model.setRowCount(0); // Limpiar la tabla
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Limpiar la tabla
 
-    try (Connection connection = ConexionOracle.getInstance().getConnection();
-         PreparedStatement pstmt = connection.prepareStatement("SELECT FIDE_INVENTARIO_TB_ID_INVENTARIO_PK, ID_PALLET, NOMBRE, CANTIDAD, PRECIO FROM FIDE_INVENTARIO_TB");
-         ResultSet resultSet = pstmt.executeQuery()) {
+        try (Connection connection = ConexionOracle.getInstance().getConnection(); PreparedStatement pstmt = connection.prepareStatement("SELECT FIDE_INVENTARIO_TB_ID_INVENTARIO_PK, ID_PALLET, NOMBRE, CANTIDAD, PRECIO FROM FIDE_INVENTARIO_TB"); ResultSet resultSet = pstmt.executeQuery()) {
 
-        while (resultSet.next()) {
-            model.addRow(new Object[]{
-                resultSet.getInt("FIDE_INVENTARIO_TB_ID_INVENTARIO_PK"),
-                resultSet.getInt("ID_PALLET"),
-                resultSet.getString("NOMBRE"),
-                resultSet.getInt("CANTIDAD"),
-                resultSet.getDouble("PRECIO")
-            });
+            while (resultSet.next()) {
+                model.addRow(new Object[]{
+                    resultSet.getInt("FIDE_INVENTARIO_TB_ID_INVENTARIO_PK"),
+                    resultSet.getInt("ID_PALLET"),
+                    resultSet.getString("NOMBRE"),
+                    resultSet.getInt("CANTIDAD"),
+                    resultSet.getDouble("PRECIO")
+                });
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar los productos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Error al cargar los productos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-}
 
     private void agregarProducto() {
         Connection conn = ConexionOracle.getInstance().getConnection();
@@ -106,8 +112,9 @@ public class Productos extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error al agregar producto al inventario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -179,7 +186,7 @@ public class Productos extends javax.swing.JFrame {
                 BotonConfirmarActionPerformed(evt);
             }
         });
-        jPanel1.add(BotonConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 100, 30));
+        jPanel1.add(BotonConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 100, 30));
 
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -226,8 +233,16 @@ public class Productos extends javax.swing.JFrame {
         jLabel1.setText("idInventario:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, -1, -1));
 
-        BotonCancelar1.setText("Cancelar");
-        jPanel1.add(BotonCancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 90, 30));
+        BotonCancelar1.setBackground(new java.awt.Color(255, 102, 102));
+        BotonCancelar1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        BotonCancelar1.setForeground(new java.awt.Color(0, 0, 0));
+        BotonCancelar1.setText("SALIR");
+        BotonCancelar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonCancelar1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(BotonCancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 20, 90, 30));
 
         Editarid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -355,26 +370,26 @@ public class Productos extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void BotonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonConfirmarActionPerformed
-         agregarProducto(); 
-      
+        agregarProducto();
+
     }//GEN-LAST:event_BotonConfirmarActionPerformed
 
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
-         int idInventario = Integer.parseInt(Editarid.getText());
-    int idPallet = Integer.parseInt(EditaridPallet.getText());
-    String nombre = EditarNombre.getText();
-    int cantidad = Integer.parseInt(EditarCantidad.getText());
-    double precio = Double.parseDouble(EditarPrecio.getText());
+        int idInventario = Integer.parseInt(Editarid.getText());
+        int idPallet = Integer.parseInt(EditaridPallet.getText());
+        String nombre = EditarNombre.getText();
+        int cantidad = Integer.parseInt(EditarCantidad.getText());
+        double precio = Double.parseDouble(EditarPrecio.getText());
 
-    if (nombre.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    InventarioDAO inventarioDAO = new InventarioDAO();
-    inventarioDAO.editarProducto(idInventario, idPallet, nombre, cantidad, precio);
+        InventarioDAO inventarioDAO = new InventarioDAO();
+        inventarioDAO.editarProducto(idInventario, idPallet, nombre, cantidad, precio);
 
-    actualizarTablaProductos(); 
+        actualizarTablaProductos();
 
     }//GEN-LAST:event_EditarActionPerformed
 
@@ -405,19 +420,28 @@ public class Productos extends javax.swing.JFrame {
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
         int idInventario = Integer.parseInt(EliminarP.getText());
 
-    int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar este producto?", "Confirmar", JOptionPane.YES_NO_OPTION);
-    if (confirm == JOptionPane.YES_OPTION) {
-        InventarioDAO inventarioDAO = new InventarioDAO();
-        inventarioDAO.eliminarProducto(idInventario);
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar este producto?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            InventarioDAO inventarioDAO = new InventarioDAO();
+            inventarioDAO.eliminarProducto(idInventario);
 
-        actualizarTablaProductos();
-    }
+            actualizarTablaProductos();
+        }
 
     }//GEN-LAST:event_EliminarActionPerformed
 
     private void EliminarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarPActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_EliminarPActionPerformed
+
+    private void BotonCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCancelar1ActionPerformed
+        // TODO add your handling code here:
+        Home homeFrame = new Home();
+
+        homeFrame.setVisible(true);
+
+        this.dispose();
+    }//GEN-LAST:event_BotonCancelar1ActionPerformed
 
     /**
      * @param args the command line arguments

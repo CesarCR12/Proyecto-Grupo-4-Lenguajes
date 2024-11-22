@@ -25,7 +25,6 @@ public class Registrarse extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
 
-
         this.con = ConexionOracle.getInstance().getConnection();
     }
 
@@ -66,7 +65,12 @@ public class Registrarse extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, 110, 40));
 
-        jButton2.setText("Cancelar");
+        jButton2.setText("Atras");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 300, 110, 40));
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -122,43 +126,43 @@ public class Registrarse extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         String nombre = jTextField1.getText().trim();
-    String correo = jTextField2.getText().trim();
-    String telefono = jTextField3.getText().trim();
-    String contrasena = jTextField4.getText().trim();
+        String nombre = jTextField1.getText().trim();
+        String correo = jTextField2.getText().trim();
+        String telefono = jTextField3.getText().trim();
+        String contrasena = jTextField4.getText().trim();
 
-    if (nombre.isEmpty() || correo.isEmpty() || telefono.isEmpty() || contrasena.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        if (nombre.isEmpty() || correo.isEmpty() || telefono.isEmpty() || contrasena.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    if (!correo.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-        JOptionPane.showMessageDialog(this, "Correo invalido", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        if (!correo.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+            JOptionPane.showMessageDialog(this, "Correo invalido", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    if (!telefono.matches("\\d+")) {
-        JOptionPane.showMessageDialog(this, "El numero no puede tener letras", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        if (!telefono.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "El numero no puede tener letras", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    try {
+        try {
 
-        RegistroClientes cliente = new RegistroClientes(nombre, correo, contrasena, telefono);
+            RegistroClientes cliente = new RegistroClientes(nombre, correo, contrasena, telefono);
 
-        ClienteDAO clienteDAO = new ClienteDAO();
-        clienteDAO.insertarCliente(cliente);
+            ClienteDAO clienteDAO = new ClienteDAO();
+            clienteDAO.insertarCliente(cliente);
 
-        JOptionPane.showMessageDialog(this, "Se ha registrado de buena manera, " + nombre + "!", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Se ha registrado de buena manera, " + nombre + "!", "Exito", JOptionPane.INFORMATION_MESSAGE);
 
-        LoginForm loginForm = new LoginForm();
-        loginForm.setVisible(true);
-        this.dispose();
+            LoginForm loginForm = new LoginForm();
+            loginForm.setVisible(true);
+            this.dispose();
 
-    } catch (Exception e) {
+        } catch (Exception e) {
 
-        JOptionPane.showMessageDialog(this, "Error no se pudo registrar " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
+            JOptionPane.showMessageDialog(this, "Error no se pudo registrar " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -166,6 +170,15 @@ public class Registrarse extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        LoginForm loginForm = new LoginForm();
+
+        loginForm.setVisible(true);
+
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

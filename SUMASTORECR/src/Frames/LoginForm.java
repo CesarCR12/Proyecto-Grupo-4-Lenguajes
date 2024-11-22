@@ -18,7 +18,7 @@ public class LoginForm extends javax.swing.JFrame {
      */
     public LoginForm() {
         initComponents();
-        this.setLocationRelativeTo(null); 
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -34,7 +34,6 @@ public class LoginForm extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
-        jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -59,14 +58,6 @@ public class LoginForm extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 220, 125, 40));
-
-        jButton4.setText("Productos");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 30, -1, -1));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 18)); // NOI18N
@@ -142,10 +133,21 @@ public class LoginForm extends javax.swing.JFrame {
         boolean isValid = userDAO.validateLogin(nombre, contraseña);
 
         if (isValid) {
+            // Mostrar mensaje de éxito
             JOptionPane.showMessageDialog(this, "¡Login exitoso!");
+
+            // Crear y mostrar el nuevo frame Home
+            Home homeFrame = new Home();
+            homeFrame.setVisible(true);
+
+            // Cerrar el frame actual (LoginForm)
+            this.dispose();
         } else {
+            // Si la validación falla
             JOptionPane.showMessageDialog(this, "Nombre o contraseña incorrectos.");
         }
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
@@ -165,17 +167,6 @@ public class LoginForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        Productos productos = new Productos();
-
-        productos.setVisible(true);
-
-        this.dispose();
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-
 
     /**
      * @param args the command line arguments
@@ -225,7 +216,6 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
