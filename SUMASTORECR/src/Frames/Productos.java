@@ -46,7 +46,7 @@ public class Productos extends javax.swing.JFrame {
                 modelo.addRow(new Object[]{idInventario, idPallet, nombre, cantidad, precio});
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el inventario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error a la hora de cargar el inventario " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 if (rs != null) {
@@ -59,14 +59,14 @@ public class Productos extends javax.swing.JFrame {
                     conn.close();
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, "Error al cerrar recursos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error al cerrar " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
     private void actualizarTablaProductos() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0); // Limpiar la tabla
+        model.setRowCount(0); 
 
         try (Connection connection = ConexionOracle.getInstance().getConnection(); PreparedStatement pstmt = connection.prepareStatement("SELECT FIDE_INVENTARIO_TB_ID_INVENTARIO_PK, ID_PALLET, NOMBRE, CANTIDAD, PRECIO FROM FIDE_INVENTARIO_TB"); ResultSet resultSet = pstmt.executeQuery()) {
 
@@ -81,39 +81,37 @@ public class Productos extends javax.swing.JFrame {
             }
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar los productos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Se produjo el error " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void agregarProducto() {
-        Connection conn = ConexionOracle.getInstance().getConnection();
-        if (conn == null) {
-            JOptionPane.showMessageDialog(this, "No se pudo establecer conexión con la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        try (CallableStatement cstmt = conn.prepareCall("{CALL FIDE_INVENTARIO_REGISTRAR_SP(?, ?, ?, ?, ?)}")) {
-            int idInventario = Integer.parseInt(jTextField1.getText().trim());
-            int idPallet = Integer.parseInt(jTextField2.getText().trim());
-            String nombre = jTextField3.getText().trim();
-            int cantidad = Integer.parseInt(jTextField4.getText().trim());
-            double precio = Double.parseDouble(jTextField5.getText().trim());
-
-            cstmt.setInt(1, idInventario);
-            cstmt.setInt(2, idPallet);
-            cstmt.setString(3, nombre);
-            cstmt.setInt(4, cantidad);
-            cstmt.setDouble(5, precio);
-
-            cstmt.execute();
-            JOptionPane.showMessageDialog(this, "Producto agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            cargarInventario();
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error al agregar producto al inventario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
+    Connection conn = ConexionOracle.getInstance().getConnection();
+    if (conn == null) {
+        JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+        return;
     }
+
+    try (CallableStatement cstmt = conn.prepareCall("{CALL FIDE_INVENTARIO_TB_REGISTRAR_SP(?, ?, ?, ?, ?)}")) {
+        int idPallet = Integer.parseInt(jTextField2.getText().trim());
+        String nombre = jTextField3.getText().trim();
+        int cantidad = Integer.parseInt(jTextField4.getText().trim());
+        double precio = Double.parseDouble(jTextField5.getText().trim());
+        int idEstados = Integer.parseInt(Estado.getText().trim()); 
+
+        cstmt.setInt(1, idPallet);
+        cstmt.setString(2, nombre);
+        cstmt.setInt(3, cantidad);
+        cstmt.setDouble(4, precio);
+        cstmt.setInt(5, idEstados);
+
+        cstmt.execute();
+        JOptionPane.showMessageDialog(this, "El producto se ha agregado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        cargarInventario(); 
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error al agregar los productos" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -128,7 +126,6 @@ public class Productos extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -142,15 +139,17 @@ public class Productos extends javax.swing.JFrame {
         EditarNombre = new javax.swing.JTextField();
         EditarCantidad = new javax.swing.JTextField();
         EditarPrecio = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         Eliminar = new javax.swing.JButton();
         EliminarP = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        EditarEstado = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        Estado = new javax.swing.JTextField();
         fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -178,7 +177,7 @@ public class Productos extends javax.swing.JFrame {
                 EditarActionPerformed(evt);
             }
         });
-        jPanel1.add(Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, 90, 30));
+        jPanel1.add(Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 90, 30));
 
         BotonConfirmar.setText("Confirmar");
         BotonConfirmar.addActionListener(new java.awt.event.ActionListener() {
@@ -186,56 +185,54 @@ public class Productos extends javax.swing.JFrame {
                 BotonConfirmarActionPerformed(evt);
             }
         });
-        jPanel1.add(BotonConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 100, 30));
+        jPanel1.add(BotonConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 100, 30));
 
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField5ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 100, -1));
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 100, -1));
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 100, -1));
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 100, -1));
+        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 100, -1));
+        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 100, -1));
+        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 100, -1));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTextField2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 100, -1));
+        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 100, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("precio:");
+        jLabel5.setText("Estado:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("cantidad:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, -1, -1));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("nombre:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, -1, -1));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("idPallet:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, -1, -1));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("idInventario:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, -1));
 
         BotonCancelar1.setBackground(new java.awt.Color(255, 102, 102));
         BotonCancelar1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        BotonCancelar1.setForeground(new java.awt.Color(0, 0, 0));
         BotonCancelar1.setText("SALIR");
         BotonCancelar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -249,14 +246,14 @@ public class Productos extends javax.swing.JFrame {
                 EditaridActionPerformed(evt);
             }
         });
-        jPanel1.add(Editarid, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, 100, 20));
+        jPanel1.add(Editarid, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, 100, 20));
 
         EditaridPallet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EditaridPalletActionPerformed(evt);
             }
         });
-        jPanel1.add(EditaridPallet, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 300, 100, 20));
+        jPanel1.add(EditaridPallet, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, 100, 20));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -275,55 +272,43 @@ public class Productos extends javax.swing.JFrame {
                 EditarNombreActionPerformed(evt);
             }
         });
-        jPanel1.add(EditarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 330, 100, 20));
+        jPanel1.add(EditarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 300, 100, 20));
 
         EditarCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EditarCantidadActionPerformed(evt);
             }
         });
-        jPanel1.add(EditarCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 360, 100, 20));
+        jPanel1.add(EditarCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 330, 100, 20));
 
         EditarPrecio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EditarPrecioActionPerformed(evt);
             }
         });
-        jPanel1.add(EditarPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 390, 100, 20));
-
-        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("idInventario:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+        jPanel1.add(EditarPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 360, 100, 20));
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("idPallet:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("nombre:");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
-
-        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("nombre:");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, -1, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("cantidad:");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("precio:");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
+        jLabel13.setText("Estado:");
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
 
         Eliminar.setText("Eliminar");
         Eliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -344,7 +329,31 @@ public class Productos extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Editar Producto");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("precio:");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, -1, -1));
+
+        EditarEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditarEstadoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(EditarEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 390, 100, 20));
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("precio:");
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
+
+        Estado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EstadoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 100, -1));
 
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Fondo.jpg"))); // NOI18N
         jPanel1.add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 480));
@@ -365,10 +374,6 @@ public class Productos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
     private void BotonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonConfirmarActionPerformed
         agregarProducto();
 
@@ -376,20 +381,24 @@ public class Productos extends javax.swing.JFrame {
 
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
         int idInventario = Integer.parseInt(Editarid.getText());
-        int idPallet = Integer.parseInt(EditaridPallet.getText());
-        String nombre = EditarNombre.getText();
-        int cantidad = Integer.parseInt(EditarCantidad.getText());
-        double precio = Double.parseDouble(EditarPrecio.getText());
+    int idPallet = Integer.parseInt(EditaridPallet.getText());
+    String nombre = EditarNombre.getText();
+    int cantidad = Integer.parseInt(EditarCantidad.getText());
+    double precio = Double.parseDouble(EditarPrecio.getText());
+    int idEstados = Integer.parseInt(EditarEstado.getText()); 
 
-        if (nombre.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (nombre.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        InventarioDAO inventarioDAO = new InventarioDAO();
-        inventarioDAO.editarProducto(idInventario, idPallet, nombre, cantidad, precio);
+    InventarioDAO inventarioDAO = new InventarioDAO();
+    inventarioDAO.editarProducto(idInventario, idPallet, nombre, cantidad, precio, idEstados);
 
-        actualizarTablaProductos();
+    actualizarTablaProductos();
+
+
+
 
     }//GEN-LAST:event_EditarActionPerformed
 
@@ -420,7 +429,7 @@ public class Productos extends javax.swing.JFrame {
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
         int idInventario = Integer.parseInt(EliminarP.getText());
 
-        int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar este producto?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        int confirm = JOptionPane.showConfirmDialog(this, "Seguro que quiere eliminar el producto?", "Confirmar", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
             InventarioDAO inventarioDAO = new InventarioDAO();
             inventarioDAO.eliminarProducto(idInventario);
@@ -442,6 +451,18 @@ public class Productos extends javax.swing.JFrame {
 
         this.dispose();
     }//GEN-LAST:event_BotonCancelar1ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void EditarEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EditarEstadoActionPerformed
+
+    private void EstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EstadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -483,19 +504,21 @@ public class Productos extends javax.swing.JFrame {
     private javax.swing.JButton BotonConfirmar;
     private javax.swing.JButton Editar;
     private javax.swing.JTextField EditarCantidad;
+    private javax.swing.JTextField EditarEstado;
     private javax.swing.JTextField EditarNombre;
     private javax.swing.JTextField EditarPrecio;
     private javax.swing.JTextField Editarid;
     private javax.swing.JTextField EditaridPallet;
     private javax.swing.JButton Eliminar;
     private javax.swing.JTextField EliminarP;
+    private javax.swing.JTextField Estado;
     private javax.swing.JLabel fondo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -507,7 +530,6 @@ public class Productos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
