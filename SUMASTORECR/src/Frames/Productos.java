@@ -169,7 +169,7 @@ public class Productos extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, -1, 230));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 190, 590, 340));
 
         Editar.setText("Editar");
         Editar.addActionListener(new java.awt.event.ActionListener() {
@@ -177,7 +177,7 @@ public class Productos extends javax.swing.JFrame {
                 EditarActionPerformed(evt);
             }
         });
-        jPanel1.add(Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 90, 30));
+        jPanel1.add(Editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 650, 90, 30));
 
         BotonConfirmar.setText("Confirmar");
         BotonConfirmar.addActionListener(new java.awt.event.ActionListener() {
@@ -185,51 +185,51 @@ public class Productos extends javax.swing.JFrame {
                 BotonConfirmarActionPerformed(evt);
             }
         });
-        jPanel1.add(BotonConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 100, 30));
+        jPanel1.add(BotonConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 310, 100, 30));
 
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField5ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 100, -1));
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 100, -1));
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 100, -1));
+        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 100, -1));
+        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 100, -1));
+        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 100, -1));
 
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 100, -1));
+        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 100, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Estado:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 610, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("cantidad:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 550, -1, -1));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("nombre:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 520, -1, -1));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("idPallet:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 490, -1, -1));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("idInventario:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 460, -1, -1));
 
         BotonCancelar1.setBackground(new java.awt.Color(255, 102, 102));
         BotonCancelar1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -239,76 +239,76 @@ public class Productos extends javax.swing.JFrame {
                 BotonCancelar1ActionPerformed(evt);
             }
         });
-        jPanel1.add(BotonCancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 20, 90, 30));
+        jPanel1.add(BotonCancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 30, 130, 50));
 
         Editarid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EditaridActionPerformed(evt);
             }
         });
-        jPanel1.add(Editarid, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, 100, 20));
+        jPanel1.add(Editarid, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 460, 100, 20));
 
         EditaridPallet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EditaridPalletActionPerformed(evt);
             }
         });
-        jPanel1.add(EditaridPallet, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, 100, 20));
+        jPanel1.add(EditaridPallet, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 490, 100, 20));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Agregar Producto");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, -1, -1));
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Eliminar producto (Con ID)");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 360, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 570, -1, -1));
 
         EditarNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EditarNombreActionPerformed(evt);
             }
         });
-        jPanel1.add(EditarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 300, 100, 20));
+        jPanel1.add(EditarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 520, 100, 20));
 
         EditarCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EditarCantidadActionPerformed(evt);
             }
         });
-        jPanel1.add(EditarCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 330, 100, 20));
+        jPanel1.add(EditarCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 550, 100, 20));
 
         EditarPrecio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EditarPrecioActionPerformed(evt);
             }
         });
-        jPanel1.add(EditarPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 360, 100, 20));
+        jPanel1.add(EditarPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 580, 100, 20));
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("idPallet:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, -1, -1));
 
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("nombre:");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("cantidad:");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Estado:");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 280, -1, -1));
 
         Eliminar.setText("Eliminar");
         Eliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -316,59 +316,57 @@ public class Productos extends javax.swing.JFrame {
                 EliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 440, 90, 30));
+        jPanel1.add(Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 650, 90, 30));
 
         EliminarP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EliminarPActionPerformed(evt);
             }
         });
-        jPanel1.add(EliminarP, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 400, 140, 30));
+        jPanel1.add(EliminarP, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 610, 140, 30));
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Editar Producto");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 400, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("precio:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, -1, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 580, -1, -1));
 
         EditarEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EditarEstadoActionPerformed(evt);
             }
         });
-        jPanel1.add(EditarEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 390, 100, 20));
+        jPanel1.add(EditarEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 610, 100, 20));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("precio:");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, -1, -1));
 
         Estado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EstadoActionPerformed(evt);
             }
         });
-        jPanel1.add(Estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 100, -1));
+        jPanel1.add(Estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 100, -1));
 
-        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Fondo.jpg"))); // NOI18N
-        jPanel1.add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 480));
+        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pxfuel.jpg"))); // NOI18N
+        jPanel1.add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1330, 830));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE)
         );
 
         pack();
