@@ -23,10 +23,8 @@
                     <td th:text="${cliente.clienteId}">ID</td>
                     <td th:text="${cliente.nombre}">Nombre</td>
                     <td th:text="${cliente.correo}">Correo</td>
-                    <td>
-                        <!-- Enlace para eliminar -->
+                    <td>     
                         <a th:href="@{/clientes/eliminar/{id}(id=${cliente.clienteId})}">Eliminar</a>
-                        <!-- Enlace para modificar -->
                         <a th:href="@{/clientes/modificar/{id}(id=${cliente.clienteId})}">Modificar</a>
                     </td>
                 </tr>

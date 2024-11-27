@@ -1,0 +1,88 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 27 nov 2024, 13:05:58
+    Author     : EsteP
+*/
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background: linear-gradient(to right, #4b79a1, #283e51);
+    color: white;
+    padding: 15px 0;
+}
+
+.navbar .nav-link.text-custom {
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+.navbar .nav-link.text-custom:hover {
+    color: #ffc107;
+}
+
+.titulo h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+    color: #ffc107;
+}
+
+.footerAbsoluto {
+    background: #283e51;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    position: relative;
+    width: 100%;
+}
+
+.footerAbsoluto span {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+button, .btn {
+    background-color: #4b79a1;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+button:hover, .btn:hover {
+    background-color: #283e51;
+}
+
+.dropdown-menu {
+    background-color: #4b79a1;
+    border: none;
+}
+
+.dropdown-item {
+    color: white;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.dropdown-item:hover {
+    background-color: #283e51;
+}
+
+.text-custom {
+    color: #ffc107;
+}
+
+.titulo {
+    padding: 20px;
+}
+
