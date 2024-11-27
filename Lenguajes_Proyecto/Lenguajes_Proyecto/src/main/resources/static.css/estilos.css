@@ -1,0 +1,100 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+
+.titulo {
+
+    background-color: #27502c;
+    color: #ffcb6f;
+}
+
+nav a:hover {
+    background-color: #27282a;
+    color: #ffcb6f !important;
+    transition-delay: 0.1s;
+    transition: 1s;
+    border-radius: 30%;
+}
+
+.footer-container {
+    text-align: center; 
+}
+
+.footerAbsoluto {
+    position: fixed; 
+    bottom: 0px; 
+    width: 100%;
+    padding: 20px;
+    background-color: #27502c; 
+    border-top: 1px solid #ccc;
+    z-index: 1000;
+    left: 50%; 
+    transform: translateX(-50%); 
+    text-align: center;
+    color: #ffcb6f;
+}
+
+
+.p-footer{
+    padding: 0.5rem !important;
+}
+
+.tablaCarrito {
+    position: relative;
+    left: 68% !important;
+    width: 30%;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.gradient-custom {
+    background: #ffffff;
+    background: -webkit-linear-gradient(to right, #ffffff, #ffffff);
+    background: linear-gradient(to right, #ffffff, #ffffff)
+}
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+    padding: 10px;
+}
+
+.card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: white;
+    margin-bottom: 20px;
+}
+.imagen-categoria {
+    width: 200px;
+    height: 175px; 
+    margin-bottom: 20px;
+}
+
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 50%;
+    padding: 20px;
+    background-color: #27502c;
+    color: #ffcb6f;
+    text-align: center;
+
+    transform: translateX(-50%);
+    
+    .table th, .table td {
+        white-space: nowrap;
+    }
+    
+    .table td {
+        text-overflow: ellipsis; 
+        overflow: hidden;
+    }
+
+}
