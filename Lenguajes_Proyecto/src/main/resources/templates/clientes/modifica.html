@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}">
+    <title>Modificar Cliente</title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}"/>
+
+<section>
+    <form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post">
+        <!-- Campo oculto para clienteId -->
+        <input type="hidden" th:field="*{clienteId}" />
+
+        <label for="nombre">Nombre:</label>
+        <input type="text" th:field="*{nombre}" placeholder="Nombre" required />
+
+        <label for="correo">Correo:</label>
+        <input type="email" th:field="*{correo}" placeholder="Correo" required />
+
+        <label for="telefono">Teléfono:</label>
+        <input type="text" th:field="*{telefono}" placeholder="Teléfono" required />
+
+        <label for="direccion">Dirección:</label>
+        <input type="text" th:field="*{direccion}" placeholder="Dirección" required />
+
+        <button type="submit">Guardar</button>
+    </form>
+</section>
+
+<footer th:replace="~{layout/plantilla :: footer}"/>
+</body>
+</html>
