@@ -9,7 +9,6 @@
 
 <section>
     <form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post">
-        <!-- Campo oculto para clienteId -->
         <input type="hidden" th:field="*{clienteId}" />
 
         <label for="nombre">Nombre:</label>

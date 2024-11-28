@@ -34,20 +34,7 @@ public class ClientesController {
 
     @PostMapping("/guardar")
     public String clientesGuardar(@ModelAttribute Clientes cliente) {
-       
-        if (cliente.getClienteId() != null && !cliente.getClienteId().isEmpty()) {
-            Clientes clienteExistente = clientesService.getClientes(cliente);
-            if (clienteExistente != null) {
-                clienteExistente.setNombre(cliente.getNombre());
-                clienteExistente.setCorreo(cliente.getCorreo());
-                clienteExistente.setTelefono(cliente.getTelefono());
-                clienteExistente.setDireccion(cliente.getDireccion());
-                clientesService.save(clienteExistente);
-            }
-        } else {
-           
-            clientesService.save(cliente);
-        }
+        clientesService.save(cliente);
         return "redirect:/clientes/listado";
     }
 

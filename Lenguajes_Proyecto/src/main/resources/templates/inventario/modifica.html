@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}">
+    <title>Modificar Producto</title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}"/>
+
+<section>
+    <form th:action="@{/inventario/guardar}" th:object="${inventario}" method="post">
+        <input type="hidden" th:field="*{idInventario}" />
+
+        <label for="nombre">Nombre:</label>
+        <input type="text" th:field="*{nombre}" placeholder="Nombre" required />
+
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" th:field="*{cantidad}" placeholder="Cantidad" required />
+
+        <label for="precio">Precio:</label>
+        <input type="number" step="0.01" th:field="*{precio}" placeholder="Precio" required />
+
+        <label for="idPallet">ID Pallet:</label>
+        <input type="text" th:field="*{idPallet}" placeholder="ID Pallet" required />
+
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a th:href="@{/inventario/listado}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</section>
+
+<footer th:replace="~{layout/plantilla :: footer}"/>
+</body>
+</html>

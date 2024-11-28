@@ -86,7 +86,6 @@ button:hover, .btn:hover {
     padding: 20px;
 }
 
-/* Estilos de la tabla y los botones */
 table {
     width: 100%;
     margin-top: 20px;
@@ -128,13 +127,13 @@ th, td {
 }
 
 .contenedor-principal {
-    display: flex; /* Habilitar Flexbox */
-    flex-direction: column; /* Organizar elementos en columna */
-    justify-content: center; /* Centrar verticalmente */
-    align-items: center; /* Centrar horizontalmente */
-    min-height: 100vh; /* Altura mínima igual a la ventana del navegador */
-    padding: 20px; /* Espaciado interno */
-    background-color: #f8f9fa; /* Fondo claro */
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 100vh; 
+    padding: 20px; 
+    background-color: #f8f9fa; 
 }
 
 .quienes-somos {
