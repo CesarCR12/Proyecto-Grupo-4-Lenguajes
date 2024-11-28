@@ -6,6 +6,7 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.Clientes;
 import com.example.demo.service.ClientesService;
+import com.example.demo.service.PaisService; // Import del servicio de Países
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,9 @@ public class ClientesController {
     @Autowired
     private ClientesService clientesService;
 
+    @Autowired
+    private PaisService paisService; // Inyección del servicio de Países
+
     @GetMapping("/listado")
     public String inicio(Model model) {
         List<Clientes> clientes = clientesService.getClientes(false);
@@ -29,6 +33,7 @@ public class ClientesController {
     @GetMapping("/nuevo")
     public String clientesNuevo(Model model) {
         model.addAttribute("cliente", new Clientes());
+        model.addAttribute("paises", paisService.getAllPaises()); // Añadir la lista de países al modelo
         return "clientes/modifica"; 
     }
 
@@ -43,6 +48,7 @@ public class ClientesController {
         Clientes cliente = clientesService.getClientes(new Clientes(id));
         if (cliente != null) {
             model.addAttribute("cliente", cliente);
+            model.addAttribute("paises", paisService.getAllPaises()); // Añadir la lista de países al modelo también aquí
             return "clientes/modifica"; 
         }
         return "redirect:/clientes/listado"; 
@@ -56,3 +62,4 @@ public class ClientesController {
         return "redirect:/clientes/listado";
     }
 }
+

@@ -15,8 +15,10 @@ public class Clientes implements Serializable {
     @Column(name = "FIDE_CLIENTES_TB_ID_CLIENTE_PK")
     private String clienteId;
 
-    @Column(name = "ID_PAIS")
-    private String paisId;
+    // Relación con la tabla FIDE_PAIS_TB (Muchos a uno)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_PAIS", referencedColumnName = "FIDE_PAIS_TB_ID_PAIS_PK")
+    private Pais pais;  // Objeto de tipo Pais
 
     @Column(name = "ID_PROVINCIA")
     private String provinciaId;
@@ -42,13 +44,16 @@ public class Clientes implements Serializable {
     @Column(name = "TELEFONO")
     private String telefono;
 
+    // Constructor vacío
     public Clientes() {
     }
 
+    // Constructor con ID del cliente
     public Clientes(String clienteId) {
         this.clienteId = clienteId;
     }
 
+    // Getters y Setters
     public String getClienteId() {
         return clienteId;
     }
@@ -57,14 +62,16 @@ public class Clientes implements Serializable {
         this.clienteId = clienteId;
     }
 
-    public String getPaisId() {
-        return paisId;
+    // Getter y Setter para la relación con Pais
+    public Pais getPais() {
+        return pais;
     }
 
-    public void setPaisId(String paisId) {
-        this.paisId = paisId;
+    public void setPais(Pais pais) {
+        this.pais = pais;
     }
 
+    // Otros Getters y Setters
     public String getProvinciaId() {
         return provinciaId;
     }

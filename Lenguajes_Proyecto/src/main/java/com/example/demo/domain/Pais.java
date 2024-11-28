@@ -6,23 +6,32 @@ package com.example.demo.domain;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
-import lombok.Data;
 
-@Data
 @Entity
 @Table(name = "FIDE_PAIS_TB")
 public class Pais implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     @Id
-    @Column(name = "FIDE_PAIS_TB_ID_PAIS_PK", nullable = false, length = 200)
-    private String idPais;
+    @Column(name = "FIDE_PAIS_TB_ID_PAIS_PK")
+    private String paisId;
 
-    @Column(name = "NOMBRE", nullable = false, length = 255)
+    @Column(name = "NOMBRE")
     private String nombre;
 
-    @ManyToOne
-    @JoinColumn(name = "ID_ESTADOS", referencedColumnName = "FIDE_ESTADOS_TB_ID_ESTADOS_PK")
-    private Estado estado;
+    public String getPaisId() {
+        return paisId;
+    }
+
+    public void setPaisId(String paisId) {
+        this.paisId = paisId;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 }
+

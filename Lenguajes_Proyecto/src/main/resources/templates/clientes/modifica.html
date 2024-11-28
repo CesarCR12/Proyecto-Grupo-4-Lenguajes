@@ -1,32 +1,53 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{layout/plantilla :: head}">
-    <title>Modificar Cliente</title>
-</head>
-<body>
-<header th:replace="~{layout/plantilla :: header}"/>
+    <head th:replace="~{layout/plantilla :: head}">
+        <title>Modificar Cliente</title>
+    </head>
+    <body>
+        <header th:replace="~{layout/plantilla :: header}" class="header"/>
 
-<section>
-    <form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post">
-        <input type="hidden" th:field="*{clienteId}" />
+        <section class="modificar-cliente">
+            <form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post" class="formulario">
+                <input type="hidden" th:field="*{clienteId}" />
 
-        <label for="nombre">Nombre:</label>
-        <input type="text" th:field="*{nombre}" placeholder="Nombre" required />
+                <div class="campo">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" th:field="*{nombre}" placeholder="Nombre" required />
+                </div>
 
-        <label for="correo">Correo:</label>
-        <input type="email" th:field="*{correo}" placeholder="Correo" required />
+                <div class="campo">
+                    <label for="correo">Correo:</label>
+                    <input type="email" th:field="*{correo}" placeholder="Correo" required />
+                </div>
 
-        <label for="telefono">Teléfono:</label>
-        <input type="text" th:field="*{telefono}" placeholder="Teléfono" required />
+                <div class="campo">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" th:field="*{telefono}" placeholder="Teléfono" required />
+                </div>
 
-        <label for="direccion">Dirección:</label>
-        <input type="text" th:field="*{direccion}" placeholder="Dirección" required />
+                <div class="campo">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" th:field="*{direccion}" placeholder="Dirección" required />
+                </div>
 
-        <button type="submit">Guardar</button>
-    </form>
-</section>
+                <div class="campo">
+                    <label for="pais">País:</label>
+                    <select th:field="*{pais}">
+                        <option value="">--Seleccione--</option>
+                        <option th:each="pais : ${paises}" 
+                                th:value="${pais.paisId}" 
+                                th:text="${pais.nombre}"></option>
+                    </select>
+                </div>
 
-<footer th:replace="~{layout/plantilla :: footer}"/>
-</body>
+                <button type="submit" class="btn">Guardar</button>
+            </form>
+        </section>
+
+        <footer th:replace="~{layout/plantilla :: footer}" class="footerAbsoluto"/>
+    </body>
 </html>
+
+
+
