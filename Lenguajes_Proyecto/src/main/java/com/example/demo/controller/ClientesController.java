@@ -7,6 +7,9 @@ package com.example.demo.controller;
 import com.example.demo.domain.Clientes;
 import com.example.demo.service.ClientesService;
 import com.example.demo.service.PaisService; // Import del servicio de Países
+import com.example.demo.service.ProvinciaService;
+import com.example.demo.service.CantonService;
+import com.example.demo.service.DistritoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +26,15 @@ public class ClientesController {
     @Autowired
     private PaisService paisService; // Inyección del servicio de Países
 
+    @Autowired
+    private ProvinciaService provinciaService; // Inyección del servicio de Países
+
+    @Autowired
+    private CantonService cantonService;
+
+    @Autowired
+    private DistritoService distritoService; // Inyección del servicio de Países
+
     @GetMapping("/listado")
     public String inicio(Model model) {
         List<Clientes> clientes = clientesService.getClientes(false);
@@ -34,7 +46,10 @@ public class ClientesController {
     public String clientesNuevo(Model model) {
         model.addAttribute("cliente", new Clientes());
         model.addAttribute("paises", paisService.getAllPaises()); // Añadir la lista de países al modelo
-        return "clientes/modifica"; 
+        model.addAttribute("provincias", provinciaService.getAllProvincias()); // Añadir la lista de países al modelo
+        model.addAttribute("cantones", cantonService.getAllCantones()); // Añadir la lista de países al modelo
+        model.addAttribute("distritos", distritoService.getAllDistritos()); // Añadir la lista de países al modelo
+        return "clientes/modifica";
     }
 
     @PostMapping("/guardar")
@@ -49,9 +64,12 @@ public class ClientesController {
         if (cliente != null) {
             model.addAttribute("cliente", cliente);
             model.addAttribute("paises", paisService.getAllPaises()); // Añadir la lista de países al modelo también aquí
-            return "clientes/modifica"; 
+            model.addAttribute("provincias", provinciaService.getAllProvincias()); // Añadir la lista de países al modelo
+            model.addAttribute("cantones", cantonService.getAllCantones()); // Añadir la lista de países al modelo
+            model.addAttribute("distritos", distritoService.getAllDistritos()); // Añadir la lista de países al modelo también aquí
+            return "clientes/modifica";
         }
-        return "redirect:/clientes/listado"; 
+        return "redirect:/clientes/listado";
     }
 
     @GetMapping("/eliminar/{id}")
@@ -62,4 +80,3 @@ public class ClientesController {
         return "redirect:/clientes/listado";
     }
 }
-

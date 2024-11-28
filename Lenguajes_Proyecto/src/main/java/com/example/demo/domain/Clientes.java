@@ -15,19 +15,21 @@ public class Clientes implements Serializable {
     @Column(name = "FIDE_CLIENTES_TB_ID_CLIENTE_PK")
     private String clienteId;
 
-    // Relación con la tabla FIDE_PAIS_TB (Muchos a uno)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PAIS", referencedColumnName = "FIDE_PAIS_TB_ID_PAIS_PK")
-    private Pais pais;  // Objeto de tipo Pais
+    private Pais pais; 
 
-    @Column(name = "ID_PROVINCIA")
-    private String provinciaId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_PROVINCIA", referencedColumnName = "FIDE_PROVINCIA_TB_ID_PROVINCIA_PK")
+    private Provincia provincia;  
 
-    @Column(name = "ID_CANTON")
-    private String cantonId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_CANTON", referencedColumnName = "FIDE_CANTON_TB_ID_CANTON_PK")
+    private Canton canton;  
 
-    @Column(name = "ID_DISTRITO")
-    private String distritoId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_DISTRITO", referencedColumnName = "FIDE_DISTRITO_TB_ID_DISTRITO_PK")
+    private Distrito distrito;  
 
     @Column(name = "ID_ESTADOS")
     private String estadoId;
@@ -71,29 +73,30 @@ public class Clientes implements Serializable {
         this.pais = pais;
     }
 
-    // Otros Getters y Setters
-    public String getProvinciaId() {
-        return provinciaId;
+    // Getter y Setter para la relación con Pais
+    public Provincia getProvincia() {
+        return provincia;
     }
 
-    public void setProvinciaId(String provinciaId) {
-        this.provinciaId = provinciaId;
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia;
     }
 
-    public String getCantonId() {
-        return cantonId;
+    // Getter y Setter para la relación con Pais
+    public Canton getCanton() {
+        return canton;
     }
 
-    public void setCantonId(String cantonId) {
-        this.cantonId = cantonId;
+    public void setCanton(Canton canton) {
+        this.canton = canton;
     }
 
-    public String getDistritoId() {
-        return distritoId;
+    public Distrito getDistrito() {
+        return distrito;
     }
 
-    public void setDistritoId(String distritoId) {
-        this.distritoId = distritoId;
+    public void setDistrito(Distrito distrito) {
+        this.distrito = distrito;
     }
 
     public String getEstadoId() {
