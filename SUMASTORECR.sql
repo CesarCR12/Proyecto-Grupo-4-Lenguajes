@@ -1205,8 +1205,6 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE('Se cancelo la modificacion');
 END FIDE_CLIENTES_TB_ACTUALIZAR_SP;
 
-DROP PROCEDURE FIDE_CLIENTES_TB_ACTUALIZAR_SP;
-
 ----------------------- Eliminar Cliente------------------------------------
 
 CREATE OR REPLACE PROCEDURE FIDE_CLIENTES_TB_ELIMINAR_SP (
@@ -1308,6 +1306,8 @@ EXCEPTION
         ROLLBACK;
         DBMS_OUTPUT.PUT_LINE('Se cancelo la agregacion del producto');
 END FIDE_INVENTARIO_TB_REGISTRAR_SP;
+
+DROP PROCEDURE FIDE_INVENTARIO_TB_REGISTRAR_SP;
 
 -----------------------Actualizar Producto------------------------------------
 

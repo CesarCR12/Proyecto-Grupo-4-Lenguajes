@@ -46,16 +46,13 @@ public class Clientes implements Serializable {
     @Column(name = "TELEFONO")
     private String telefono;
 
-    // Constructor vacío
     public Clientes() {
     }
 
-    // Constructor con ID del cliente
     public Clientes(String clienteId) {
         this.clienteId = clienteId;
     }
 
-    // Getters y Setters
     public String getClienteId() {
         return clienteId;
     }
@@ -64,7 +61,6 @@ public class Clientes implements Serializable {
         this.clienteId = clienteId;
     }
 
-    // Getter y Setter para la relación con Pais
     public Pais getPais() {
         return pais;
     }
@@ -73,7 +69,6 @@ public class Clientes implements Serializable {
         this.pais = pais;
     }
 
-    // Getter y Setter para la relación con Pais
     public Provincia getProvincia() {
         return provincia;
     }
@@ -82,7 +77,6 @@ public class Clientes implements Serializable {
         this.provincia = provincia;
     }
 
-    // Getter y Setter para la relación con Pais
     public Canton getCanton() {
         return canton;
     }

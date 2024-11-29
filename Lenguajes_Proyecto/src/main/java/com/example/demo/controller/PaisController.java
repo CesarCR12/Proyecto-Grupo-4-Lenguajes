@@ -20,9 +20,9 @@ public class PaisController {
 
     @GetMapping("/paises")
     public String getAllPaises(Model model) {
-        List<Pais> paises = paisService.getAllPaises();  // Llamamos al servicio
-        model.addAttribute("paises", paises);  // Pasamos los países al modelo
-        return "paises";  // La vista "paises.html" se renderiza
+        List<Pais> paises = paisService.getAllPaises();  
+        model.addAttribute("paises", paises);  
+        return "paises";  
     }
 }
 

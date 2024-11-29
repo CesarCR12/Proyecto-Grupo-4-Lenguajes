@@ -16,22 +16,19 @@ import java.util.List;
 public class PaisServiceImpl implements PaisService {
 
     @PersistenceContext
-    private EntityManager entityManager;  // Inyectamos el EntityManager
+    private EntityManager entityManager;  
 
     @Override
     public List<Pais> getAllPaises() {
-        // Usamos el EntityManager para hacer una consulta directa a la base de datos
-        String jpql = "SELECT p FROM Pais p";  // Consulta JPQL para obtener todos los países
-        return entityManager.createQuery(jpql, Pais.class).getResultList();  // Ejecutamos la consulta
+        String jpql = "SELECT p FROM Pais p";  
+        return entityManager.createQuery(jpql, Pais.class).getResultList();  
     }
 
-    // Método adicional para obtener un país específico por su ID
     public Pais getPaisById(String paisId) {
-        // Usamos el EntityManager para hacer la consulta de un país específico
         String jpql = "SELECT p FROM Pais p WHERE p.paisId = :paisId";
         return entityManager.createQuery(jpql, Pais.class)
-                            .setParameter("paisId", paisId)  // Establecemos el valor del parámetro paisId
-                            .getSingleResult();  // Debería devolver un solo resultado
+                            .setParameter("paisId", paisId)  
+                            .getSingleResult();  
     }
 }
 

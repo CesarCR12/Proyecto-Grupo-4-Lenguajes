@@ -16,16 +16,13 @@ public class CantonController {
 
     @GetMapping("/cantones")
     public String getAllCantones(Model model) {
-        // Obtener la lista de cantones desde el servicio
+
         List<Canton> cantones = cantonService.getAllCantones();
         
-        // Verificar que los cantones fueron obtenidos correctamente
-        System.out.println("Cantones: " + cantones.size());  // Para verificar que hay datos
+        System.out.println("Cantones: " + cantones.size());  
         
-        // Agregar la lista de cantones al modelo
         model.addAttribute("cantones", cantones);
         
-        // Retornar el nombre de la vista "Cantones"
         return "Cantones"; 
     }
 }

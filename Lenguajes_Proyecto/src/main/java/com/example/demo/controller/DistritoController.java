@@ -20,8 +20,8 @@ public class DistritoController {
 
     @GetMapping("/distritos")
     public String getAllDistritos(Model model) {
-        List<Distrito> distritos = distritoService.getAllDistritos();  // Llamamos al servicio
-        model.addAttribute("distritos", distritos);  // Pasamos los países al modelo
-        return "distritos";  // La vista "paises.html" se renderiza
+        List<Distrito> distritos = distritoService.getAllDistritos();  
+        model.addAttribute("distritos", distritos);  
+        return "distritos"; 
     }
 }

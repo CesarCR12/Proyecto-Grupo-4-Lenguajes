@@ -4,38 +4,32 @@
         <title>Modificar Cliente</title>
     </head>
     <body>
-        <!-- Cabecera -->
         <header th:replace="~{layout/plantilla :: header}" class="header"/>
 
         <section class="modificar-cliente">
             <form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post" class="formulario">
                 <input type="hidden" th:field="*{clienteId}" />
 
-                <!-- Campo: Nombre -->
                 <div class="campo">
                     <label for="nombre">Nombre:</label>
                     <input type="text" th:field="*{nombre}" placeholder="Nombre" required />
                 </div>
 
-                <!-- Campo: Correo -->
                 <div class="campo">
                     <label for="correo">Correo:</label>
                     <input type="email" th:field="*{correo}" placeholder="Correo" required />
                 </div>
 
-                <!-- Campo: Teléfono -->
                 <div class="campo">
                     <label for="telefono">Teléfono:</label>
                     <input type="text" th:field="*{telefono}" placeholder="Teléfono" required />
                 </div>
 
-                <!-- Campo: Dirección -->
                 <div class="campo">
                     <label for="direccion">Dirección:</label>
                     <input type="text" th:field="*{direccion}" placeholder="Dirección" required />
                 </div>
 
-                <!-- Campo: País -->
                 <div class="campo">
                     <label for="pais">País:</label>
                     <select th:field="*{pais}">
@@ -46,7 +40,6 @@
                     </select>
                 </div>
 
-                <!-- Campo: Provincia -->
                 <div class="campo">
                     <label for="provincia">Provincia:</label>
                     <select th:field="*{provincia}">
@@ -57,7 +50,6 @@
                     </select>
                 </div>
 
-                <!-- Campo: Cantón -->
                 <div class="campo">
                     <label for="canton">Cantón:</label>
                     <select th:field="*{canton}">
@@ -68,7 +60,6 @@
                     </select>
                 </div>
 
-                <!-- Campo: Distrito -->
                 <div class="campo">
                     <label for="distrito">Distrito:</label>
                     <select th:field="*{distrito}">
@@ -79,12 +70,10 @@
                     </select>
                 </div>
 
-                <!-- Botón de enviar -->
                 <button type="submit" class="btn">Guardar</button>
             </form>
         </section>
 
-        <!-- Pie de página -->
         <footer th:replace="~{layout/plantilla :: footer}" class="footerAbsoluto"/>
     </body>
 </html>

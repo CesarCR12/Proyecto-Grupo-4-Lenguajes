@@ -166,16 +166,16 @@ button[type="submit"]:hover {
 .quienes-somos {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centra el contenido horizontalmente */
-    justify-content: center; /* Centra el contenido verticalmente */
+    align-items: center; 
+    justify-content: center; 
     padding: 20px;
     background-color: #ffffff; 
     text-align: center; 
-    margin: 20px auto; /* Centra la sección en el medio de la página */
+    margin: 20px auto;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: 800px;
-    width: 90%;  /* Ajuste para mantenerla dentro de un margen adecuado */
+    width: 90%;  
 }
 
 .quienes-somos h2 {

@@ -16,21 +16,19 @@ import java.util.List;
 public class DistritoServiceImpl implements DistritoService {
 
     @PersistenceContext
-    private EntityManager entityManager;  // Inyectamos el EntityManager
+    private EntityManager entityManager;  
 
     @Override
     public List<Distrito> getAllDistritos() {
-        // Usamos el EntityManager para hacer una consulta directa a la base de datos
-        String jpql = "SELECT p FROM Distrito p";  // Consulta JPQL para obtener todos los países
-        return entityManager.createQuery(jpql, Distrito.class).getResultList();  // Ejecutamos la consulta
+
+        String jpql = "SELECT p FROM Distrito p";  
+        return entityManager.createQuery(jpql, Distrito.class).getResultList();  
     }
 
-    // Método adicional para obtener un país específico por su ID
     public Distrito getDistritoById(String distritoId) {
-        // Usamos el EntityManager para hacer la consulta de un país específico
         String jpql = "SELECT p FROM Distrito p WHERE p.distritoId = :distritoId";
         return entityManager.createQuery(jpql, Distrito.class)
-                            .setParameter("distritoId", distritoId)  // Establecemos el valor del parámetro paisId
-                            .getSingleResult();  // Debería devolver un solo resultado
+                            .setParameter("distritoId", distritoId)  
+                            .getSingleResult(); 
     }
 }

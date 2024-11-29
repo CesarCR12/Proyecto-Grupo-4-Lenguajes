@@ -6,7 +6,7 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.Clientes;
 import com.example.demo.service.ClientesService;
-import com.example.demo.service.PaisService; // Import del servicio de Países
+import com.example.demo.service.PaisService; 
 import com.example.demo.service.ProvinciaService;
 import com.example.demo.service.CantonService;
 import com.example.demo.service.DistritoService;
@@ -24,16 +24,16 @@ public class ClientesController {
     private ClientesService clientesService;
 
     @Autowired
-    private PaisService paisService; // Inyección del servicio de Países
+    private PaisService paisService; 
 
     @Autowired
-    private ProvinciaService provinciaService; // Inyección del servicio de Países
+    private ProvinciaService provinciaService; 
 
     @Autowired
     private CantonService cantonService;
 
     @Autowired
-    private DistritoService distritoService; // Inyección del servicio de Países
+    private DistritoService distritoService; 
 
     @GetMapping("/listado")
     public String inicio(Model model) {
@@ -45,10 +45,10 @@ public class ClientesController {
     @GetMapping("/nuevo")
     public String clientesNuevo(Model model) {
         model.addAttribute("cliente", new Clientes());
-        model.addAttribute("paises", paisService.getAllPaises()); // Añadir la lista de países al modelo
-        model.addAttribute("provincias", provinciaService.getAllProvincias()); // Añadir la lista de países al modelo
-        model.addAttribute("cantones", cantonService.getAllCantones()); // Añadir la lista de países al modelo
-        model.addAttribute("distritos", distritoService.getAllDistritos()); // Añadir la lista de países al modelo
+        model.addAttribute("paises", paisService.getAllPaises()); 
+        model.addAttribute("provincias", provinciaService.getAllProvincias()); 
+        model.addAttribute("cantones", cantonService.getAllCantones()); 
+        model.addAttribute("distritos", distritoService.getAllDistritos()); 
         return "clientes/modifica";
     }
 
@@ -63,10 +63,10 @@ public class ClientesController {
         Clientes cliente = clientesService.getClientes(new Clientes(id));
         if (cliente != null) {
             model.addAttribute("cliente", cliente);
-            model.addAttribute("paises", paisService.getAllPaises()); // Añadir la lista de países al modelo también aquí
-            model.addAttribute("provincias", provinciaService.getAllProvincias()); // Añadir la lista de países al modelo
-            model.addAttribute("cantones", cantonService.getAllCantones()); // Añadir la lista de países al modelo
-            model.addAttribute("distritos", distritoService.getAllDistritos()); // Añadir la lista de países al modelo también aquí
+            model.addAttribute("paises", paisService.getAllPaises()); 
+            model.addAttribute("provincias", provinciaService.getAllProvincias()); 
+            model.addAttribute("cantones", cantonService.getAllCantones()); 
+            model.addAttribute("distritos", distritoService.getAllDistritos()); 
             return "clientes/modifica";
         }
         return "redirect:/clientes/listado";
