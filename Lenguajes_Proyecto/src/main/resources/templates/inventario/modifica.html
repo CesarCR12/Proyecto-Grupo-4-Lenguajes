@@ -7,27 +7,38 @@
 <body>
 <header th:replace="~{layout/plantilla :: header}"/>
 
-<section>
-    <form th:action="@{/inventario/guardar}" th:object="${inventario}" method="post">
+<section class="modificar-cliente">
+    <form th:action="@{/inventario/guardar}" th:object="${inventario}" method="post" class="formulario">
         <input type="hidden" th:field="*{idInventario}" />
 
-        <label for="nombre">Nombre:</label>
-        <input type="text" th:field="*{nombre}" placeholder="Nombre" required />
+        <div class="campo">
+            <label for="nombre" class="text-custom">Nombre:</label>
+            <input type="text" th:field="*{nombre}" placeholder="Nombre del producto" required />
+        </div>
 
-        <label for="cantidad">Cantidad:</label>
-        <input type="number" th:field="*{cantidad}" placeholder="Cantidad" required />
+        <div class="campo">
+            <label for="cantidad" class="text-custom">Cantidad:</label>
+            <input type="number" th:field="*{cantidad}" placeholder="Cantidad disponible" required />
+        </div>
 
-        <label for="precio">Precio:</label>
-        <input type="number" step="0.01" th:field="*{precio}" placeholder="Precio" required />
+        <div class="campo">
+            <label for="precio" class="text-custom">Precio:</label>
+            <input type="number" step="0.01" th:field="*{precio}" placeholder="Precio por unidad" required />
+        </div>
 
-        <label for="idPallet">ID Pallet:</label>
-        <input type="text" th:field="*{idPallet}" placeholder="ID Pallet" required />
+        <div class="campo">
+            <label for="idPallet" class="text-custom">ID Pallet:</label>
+            <input type="text" th:field="*{idPallet}" placeholder="Identificador del pallet" required />
+        </div>
 
-        <button type="submit" class="btn btn-success">Guardar</button>
-        <a th:href="@{/inventario/listado}" class="btn btn-secondary">Cancelar</a>
+        <div class="campo">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a th:href="@{/inventario/listado}" class="btn btn-secondary">Cancelar</a>
+        </div>
     </form>
 </section>
 
 <footer th:replace="~{layout/plantilla :: footer}"/>
 </body>
 </html>
+

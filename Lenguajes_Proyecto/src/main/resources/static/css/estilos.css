@@ -140,7 +140,7 @@ th, td {
 }
 
 input[type="text"],
-input[type="email"],
+input[type="number"],
 select {
     padding: 10px;
     border: 1px solid #ccc;
@@ -163,7 +163,6 @@ button[type="submit"]:hover {
     background-color: #283e51;
 }
 
-/* Estilos para la sección Quienes Somos */
 .quienes-somos {
     display: flex;
     flex-direction: column;
