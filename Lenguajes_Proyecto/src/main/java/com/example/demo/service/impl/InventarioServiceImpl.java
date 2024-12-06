@@ -37,33 +37,33 @@ public class InventarioServiceImpl implements InventarioService {
     public void save(Inventario inventario) {
         if (inventario.getIdInventario() == null || inventario.getIdInventario().isEmpty()) {
             StoredProcedureQuery query = entityManager.createStoredProcedureQuery("FIDE_INVENTARIO_TB_REGISTRAR_SP");
-            query.registerStoredProcedureParameter("V_ID_INVENTARIO", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("V_ID_PALLET", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("V_NOMBRE", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("V_CANTIDAD", Integer.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("V_PRECIO", Double.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("P_ID_INVENTARIO", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("P_ID_PALLET", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("P_NOMBRE", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("P_CANTIDAD", Integer.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("P_PRECIO", Double.class, ParameterMode.IN);
 
-            query.setParameter("V_ID_INVENTARIO", inventario.getIdInventario());
-            query.setParameter("V_ID_PALLET", inventario.getIdPallet());
-            query.setParameter("V_NOMBRE", inventario.getNombre());
-            query.setParameter("V_CANTIDAD", inventario.getCantidad());
-            query.setParameter("V_PRECIO", inventario.getPrecio());
+            query.setParameter("P_ID_INVENTARIO", inventario.getIdInventario());
+            query.setParameter("P_ID_PALLET", inventario.getIdPallet());
+            query.setParameter("P_NOMBRE", inventario.getNombre());
+            query.setParameter("P_CANTIDAD", inventario.getCantidad());
+            query.setParameter("P_PRECIO", inventario.getPrecio());
 
             query.execute();
         } else {
             StoredProcedureQuery query = entityManager.createStoredProcedureQuery("FIDE_INVENTARIO_TB_ACTUALIZAR_SP");
-            query.registerStoredProcedureParameter("V_ID_INVENTARIO", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("V_ID_PALLET", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("V_NOMBRE", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("V_CANTIDAD", Integer.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("V_PRECIO", Double.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("V_ID_ESTADOS", String.class, ParameterMode.IN);
-            query.setParameter("V_ID_INVENTARIO", inventario.getIdInventario());
-            query.setParameter("V_ID_PALLET", inventario.getIdPallet());
-            query.setParameter("V_NOMBRE", inventario.getNombre());
-            query.setParameter("V_CANTIDAD", inventario.getCantidad());
-            query.setParameter("V_PRECIO", inventario.getPrecio());
-            query.setParameter("V_ID_ESTADOS", inventario.getIdEstados());
+            query.registerStoredProcedureParameter("P_ID_INVENTARIO", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("P_ID_PALLET", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("P_NOMBRE", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("P_CANTIDAD", Integer.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("P_PRECIO", Double.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("P_ID_ESTADOS", String.class, ParameterMode.IN);
+            query.setParameter("P_ID_INVENTARIO", inventario.getIdInventario());
+            query.setParameter("P_ID_PALLET", inventario.getIdPallet());
+            query.setParameter("P_NOMBRE", inventario.getNombre());
+            query.setParameter("P_CANTIDAD", inventario.getCantidad());
+            query.setParameter("P_PRECIO", inventario.getPrecio());
+            query.setParameter("P_ID_ESTADOS", inventario.getIdEstados());
 
             query.execute();
         }
@@ -73,8 +73,8 @@ public class InventarioServiceImpl implements InventarioService {
     @Transactional
     public void delete(Inventario inventario) {
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("FIDE_INVENTARIO_TB_ELIMINAR_SP");
-        query.registerStoredProcedureParameter("V_ID_INVENTARIO", String.class, ParameterMode.IN);
-        query.setParameter("V_ID_INVENTARIO", inventario.getIdInventario());
+        query.registerStoredProcedureParameter("P_ID_INVENTARIO", String.class, ParameterMode.IN);
+        query.setParameter("P_ID_INVENTARIO", inventario.getIdInventario());
         query.execute();
     }
 
@@ -82,8 +82,8 @@ public class InventarioServiceImpl implements InventarioService {
     @Transactional
     public void deleteById(String idInventario) {
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("FIDE_INVENTARIO_TB_ELIMINAR_SP");
-        query.registerStoredProcedureParameter("V_ID_INVENTARIO", String.class, ParameterMode.IN);
-        query.setParameter("V_ID_INVENTARIO", idInventario);
+        query.registerStoredProcedureParameter("P_ID_INVENTARIO", String.class, ParameterMode.IN);
+        query.setParameter("P_ID_INVENTARIO", idInventario);
         query.execute();
     }
 }
