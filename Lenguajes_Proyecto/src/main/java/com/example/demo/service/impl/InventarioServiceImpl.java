@@ -35,55 +35,74 @@ public class InventarioServiceImpl implements InventarioService {
     @Override
     @Transactional
     public void save(Inventario inventario) {
-        if (inventario.getIdInventario() == null || inventario.getIdInventario().isEmpty()) {
-            StoredProcedureQuery query = entityManager.createStoredProcedureQuery("FIDE_INVENTARIO_TB_REGISTRAR_SP");
-            query.registerStoredProcedureParameter("P_ID_INVENTARIO", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("P_ID_PALLET", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("P_NOMBRE", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("P_CANTIDAD", Integer.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("P_PRECIO", Double.class, ParameterMode.IN);
+        try {
+            if (inventario.getIdInventario() == null || inventario.getIdInventario().isEmpty()) {
+                System.out.println("Guardando nuevo producto");
+                StoredProcedureQuery query = entityManager.createStoredProcedureQuery("FIDE_INVENTARIO_TB_REGISTRAR_SP");
+                query.registerStoredProcedureParameter("P_ID_INVENTARIO", String.class, ParameterMode.IN);
+                query.registerStoredProcedureParameter("P_ID_PALLET", String.class, ParameterMode.IN);
+                query.registerStoredProcedureParameter("P_NOMBRE", String.class, ParameterMode.IN);
+                query.registerStoredProcedureParameter("P_CANTIDAD", Integer.class, ParameterMode.IN);
+                query.registerStoredProcedureParameter("P_PRECIO", Double.class, ParameterMode.IN);
+                query.setParameter("P_ID_INVENTARIO", inventario.getIdInventario());
+                query.setParameter("P_ID_PALLET", inventario.getIdPallet());
+                query.setParameter("P_NOMBRE", inventario.getNombre());
+                query.setParameter("P_CANTIDAD", inventario.getCantidad());
+                query.setParameter("P_PRECIO", inventario.getPrecio());
+                query.execute();
+                System.out.println("Producto guardado exitosamente");
+            } else {
+                System.out.println("Actualizando producto existente");
+                StoredProcedureQuery query = entityManager.createStoredProcedureQuery("FIDE_INVENTARIO_TB_ACTUALIZAR_SP");
+                query.registerStoredProcedureParameter("P_ID_INVENTARIO", String.class, ParameterMode.IN);
+                query.registerStoredProcedureParameter("P_ID_PALLET", String.class, ParameterMode.IN);
+                query.registerStoredProcedureParameter("P_NOMBRE", String.class, ParameterMode.IN);
+                query.registerStoredProcedureParameter("P_CANTIDAD", Integer.class, ParameterMode.IN);
+                query.registerStoredProcedureParameter("P_PRECIO", Double.class, ParameterMode.IN);
+                query.registerStoredProcedureParameter("P_ID_ESTADOS", String.class, ParameterMode.IN);
+                query.setParameter("P_ID_INVENTARIO", inventario.getIdInventario());
+                query.setParameter("P_ID_PALLET", inventario.getIdPallet());
+                query.setParameter("P_NOMBRE", inventario.getNombre());
+                query.setParameter("P_CANTIDAD", inventario.getCantidad());
+                query.setParameter("P_PRECIO", inventario.getPrecio());
+                query.setParameter("P_ID_ESTADOS", inventario.getIdEstados());
 
-            query.setParameter("P_ID_INVENTARIO", inventario.getIdInventario());
-            query.setParameter("P_ID_PALLET", inventario.getIdPallet());
-            query.setParameter("P_NOMBRE", inventario.getNombre());
-            query.setParameter("P_CANTIDAD", inventario.getCantidad());
-            query.setParameter("P_PRECIO", inventario.getPrecio());
-
-            query.execute();
-        } else {
-            StoredProcedureQuery query = entityManager.createStoredProcedureQuery("FIDE_INVENTARIO_TB_ACTUALIZAR_SP");
-            query.registerStoredProcedureParameter("P_ID_INVENTARIO", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("P_ID_PALLET", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("P_NOMBRE", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("P_CANTIDAD", Integer.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("P_PRECIO", Double.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("P_ID_ESTADOS", String.class, ParameterMode.IN);
-            query.setParameter("P_ID_INVENTARIO", inventario.getIdInventario());
-            query.setParameter("P_ID_PALLET", inventario.getIdPallet());
-            query.setParameter("P_NOMBRE", inventario.getNombre());
-            query.setParameter("P_CANTIDAD", inventario.getCantidad());
-            query.setParameter("P_PRECIO", inventario.getPrecio());
-            query.setParameter("P_ID_ESTADOS", inventario.getIdEstados());
-
-            query.execute();
+                query.execute();
+                System.out.println("Producto actualizado exitosamente");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al guardar producto: " + e.getMessage());
+            throw e;
         }
     }
 
     @Override
     @Transactional
     public void delete(Inventario inventario) {
-        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("FIDE_INVENTARIO_TB_ELIMINAR_SP");
-        query.registerStoredProcedureParameter("P_ID_INVENTARIO", String.class, ParameterMode.IN);
-        query.setParameter("P_ID_INVENTARIO", inventario.getIdInventario());
-        query.execute();
+        try {
+            StoredProcedureQuery query = entityManager.createStoredProcedureQuery("FIDE_INVENTARIO_TB_ELIMINAR_SP");
+            query.registerStoredProcedureParameter("P_ID_INVENTARIO", String.class, ParameterMode.IN);
+            query.setParameter("P_ID_INVENTARIO", inventario.getIdInventario());
+            query.execute();
+            System.out.println("Producto eliminado exitosamente");
+        } catch (Exception e) {
+            System.err.println("Error al eliminar producto: " + e.getMessage());
+            throw e;
+        }
     }
 
     @Override
     @Transactional
     public void deleteById(String idInventario) {
-        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("FIDE_INVENTARIO_TB_ELIMINAR_SP");
-        query.registerStoredProcedureParameter("P_ID_INVENTARIO", String.class, ParameterMode.IN);
-        query.setParameter("P_ID_INVENTARIO", idInventario);
-        query.execute();
+        try {
+            StoredProcedureQuery query = entityManager.createStoredProcedureQuery("FIDE_INVENTARIO_TB_ELIMINAR_SP");
+            query.registerStoredProcedureParameter("P_ID_INVENTARIO", String.class, ParameterMode.IN);
+            query.setParameter("P_ID_INVENTARIO", idInventario);
+            query.execute();
+            System.out.println("Producto eliminado exitosamente por ID");
+        } catch (Exception e) {
+            System.err.println("Error al eliminar producto por ID: " + e.getMessage());
+            throw e;
+        }
     }
 }

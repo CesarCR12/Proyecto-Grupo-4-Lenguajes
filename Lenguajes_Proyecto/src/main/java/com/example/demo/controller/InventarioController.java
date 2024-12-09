@@ -21,7 +21,7 @@ public class InventarioController {
 
     @GetMapping("/listado")
     public String listarInventario(Model model) {
-
+        System.out.println("Listando inventarios...");
         List<Inventario> inventarios = inventarioService.getInventarios(true);
         model.addAttribute("inventarios", inventarios);
         return "inventario/listado";
@@ -29,28 +29,38 @@ public class InventarioController {
 
     @GetMapping("/nuevo")
     public String nuevoInventario(Model model) {
+        System.out.println("Creando un nuevo producto...");
         model.addAttribute("inventario", new Inventario());
         return "inventario/modifica";
     }
 
     @PostMapping("/guardar")
     public String guardarInventario(@ModelAttribute Inventario inventario) {
+        System.out.println("Guardando producto...");
+        System.out.println("Nombre: " + inventario.getNombre());
+        System.out.println("Cantidad: " + inventario.getCantidad());
+        System.out.println("Precio: " + inventario.getPrecio());
+        System.out.println("ID Pallet: " + inventario.getIdPallet());
+        
         inventarioService.save(inventario);
         return "redirect:/inventario/listado";
     }
 
     @GetMapping("/modificar/{id}")
     public String modificarInventario(@PathVariable("id") String id, Model model) {
+        System.out.println("Modificando producto con ID: " + id);
         Inventario inventario = inventarioService.getInventario(new Inventario(id));
         if (inventario != null) {
             model.addAttribute("inventario", inventario);
             return "inventario/modifica";
         }
-        return "redirect:/inventario/listado"; 
+        System.out.println("Producto no encontrado, redirigiendo...");
+        return "redirect:/inventario/listado";
     }
 
     @GetMapping("/eliminar/{id}")
     public String eliminarInventario(@PathVariable("id") String id) {
+        System.out.println("Eliminando producto con ID: " + id);
         Inventario inventario = new Inventario();
         inventario.setIdInventario(id);
         inventarioService.delete(inventario);

@@ -13,7 +13,6 @@
     <script th:src="@{/js/rutinas.js}"></script>
 </head>
 <body>
-    <!-- Header -->
     <header th:fragment="header" class="header text-light">
         <nav class="navbar navbar-expand-sm p-0 titulo">
             <div class="container">
@@ -29,7 +28,8 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
                                 <li><a class="dropdown-item" th:href="@{/clientes/listado}">Clientes</a></li>
-                                <li><a class="dropdown-item" th:href="@{/inventario/listado}">Inventario</a></li> 
+                                <li><a class="dropdown-item" th:href="@{/inventario/listado}">Inventario</a></li>
+                                <li><a class="dropdown-item" th:href="@{/proveedores/listado}">Proveedores</a></li> <!-- Nuevo enlace -->
                             </ul>
                         </li>
                     </ul>

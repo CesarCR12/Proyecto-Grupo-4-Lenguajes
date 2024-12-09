@@ -8,30 +8,30 @@
 
 <section>
     <h1 th:text="${proveedor != null ? 'Modificar Proveedor' : 'Agregar Proveedor'}"></h1>
-    <form th:action="@{/proveedores/guardar}" th:object="${proveedor}" method="post">
+    <form th:action="@{/proveedores/guardar}" th:object="${proveedor}" method="post" class="formulario">
         <input type="hidden" th:field="*{proveedorId}" />
 
-        <div>
-            <label for="nombre">Nombre:</label>
+        <div class="campo">
+            <label for="nombreProveedor">Nombre:</label>
             <input type="text" th:field="*{nombreProveedor}" placeholder="Nombre del Proveedor" required />
         </div>
 
-        <div>
-            <label for="correo">Correo:</label>
-            <input type="email" th:field="*{correo}" placeholder="Correo del Proveedor" required />
-        </div>
-
-        <div>
+        <div class="campo">
             <label for="telefono">Teléfono:</label>
             <input type="text" th:field="*{telefono}" placeholder="Teléfono" required />
         </div>
 
-        <div>
+        <div class="campo">
+            <label for="correo">Correo:</label>
+            <input type="email" th:field="*{correo}" placeholder="Correo" required />
+        </div>
+
+        <div class="campo">
             <label for="direccion">Dirección:</label>
             <input type="text" th:field="*{direccion}" placeholder="Dirección" required />
         </div>
 
-        <div>
+        <div class="campo">
             <label for="pais">País:</label>
             <select th:field="*{pais}">
                 <option value="">--Seleccione--</option>
@@ -41,7 +41,7 @@
             </select>
         </div>
 
-        <div>
+        <div class="campo">
             <label for="provincia">Provincia:</label>
             <select th:field="*{provincia}">
                 <option value="">--Seleccione--</option>
@@ -51,7 +51,7 @@
             </select>
         </div>
 
-        <div>
+        <div class="campo">
             <label for="canton">Cantón:</label>
             <select th:field="*{canton}">
                 <option value="">--Seleccione--</option>
@@ -61,7 +61,7 @@
             </select>
         </div>
 
-        <div>
+        <div class="campo">
             <label for="distrito">Distrito:</label>
             <select th:field="*{distrito}">
                 <option value="">--Seleccione--</option>
@@ -71,7 +71,7 @@
             </select>
         </div>
 
-        <button type="submit">Guardar</button>
+        <button type="submit" class="btn btn-success">Guardar</button>
     </form>
 </section>
 

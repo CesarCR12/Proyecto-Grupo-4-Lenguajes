@@ -4,11 +4,12 @@
  */
 package com.example.demo.service;
 
-import com.example.demo.domain.Pais;
+import com.example.demo.domain.Proveedor;
 import java.util.List;
 
-public interface PaisService {
-    List<Pais> getAllPaises();
+public interface ProveedorService {
+    List<Proveedor> getProveedores(); 
+    Proveedor getProveedorById(String id); 
+    void save(Proveedor proveedor); 
+    void deleteProveedorById(String id); 
 }
-
-
