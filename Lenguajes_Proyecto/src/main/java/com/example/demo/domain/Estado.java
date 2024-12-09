@@ -4,21 +4,35 @@
  */
 package com.example.demo.domain;
 
-import jakarta.persistence.*;
-import java.io.Serializable;
-import lombok.Data;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 
-@Data
 @Entity
 @Table(name = "FIDE_ESTADOS_TB")
-public class Estado implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Estado {
 
     @Id
-    @Column(name = "FIDE_ESTADOS_TB_ID_ESTADOS_PK", nullable = false, length = 200)
-    private String idEstado;
+    @Column(name = "FIDE_ESTADOS_TB_ID_ESTADOS_PK")
+    private String id;
 
-    @Column(name = "DESCRIPCION", nullable = false, length = 255)
+    @Column(name = "DESCRIPCION")
     private String descripcion;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 }

@@ -29,7 +29,8 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
                                 <li><a class="dropdown-item" th:href="@{/clientes/listado}">Clientes</a></li>
                                 <li><a class="dropdown-item" th:href="@{/inventario/listado}">Inventario</a></li>
-                                <li><a class="dropdown-item" th:href="@{/proveedores/listado}">Proveedores</a></li> <!-- Nuevo enlace -->
+                                <li><a class="dropdown-item" th:href="@{/proveedores/listado}">Proveedores</a></li>
+                                <li><a class="dropdown-item" th:href="@{/promociones/listado}">Promociones</a></li> 
                             </ul>
                         </li>
                     </ul>
@@ -47,7 +48,6 @@
         </section>
     </header>  
 
-    <!-- Footer -->
     <footer th:fragment="footer" class="footerAbsoluto">
         <section class="d-flex justify-content-center justify-content-lg-between border-bottom">
             <div class="me-5 d-none d-lg-block">

@@ -473,6 +473,21 @@ FOR EACH ROW
 BEGIN
     :NEW.FIDE_PROVEEDORES_TB_ID_PROVEEDORES_PK := ID_PROVEEDORES_SEQ.NEXTVAL;
 END;
+
+
+
+-------------------------------AUMENTAR ID Promociones------------------------------------------------ 
+CREATE SEQUENCE FIDE_PROMOCIONES_SEQ
+START WITH 4
+INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER FIDE_PROMOCIONES_TB_SEQ_ID_TRG
+BEFORE INSERT ON FIDE_PROMOCIONES_TB
+FOR EACH ROW
+BEGIN
+    :NEW.FIDE_PROMOCIONES_TB_ID_PROMOCION_PK := FIDE_PROMOCIONES_SEQ.NEXTVAL;
+END;
+
 --------------------------------FECHA DE CREACION Y FECHA DE MODIFICACION PARA TODAS LAS TABLAS--------------------------------
 ---------TRIGGER PARA LA TABLA ESTADOS---------
 CREATE OR REPLACE TRIGGER FIDE_FIDE_ESTADOS_TB_SEQ_CREACION_FECHA_MODIFICACION_TRG
@@ -1219,7 +1234,7 @@ SELECT * FROM FIDE_INVENTARIO_PRECIO_V;
 
 --------------------------------------------[PROCEDIMIENTOS ALMACENADOS]--------------------------------------------
 
--------------------------------Agregar Clientes------------------------------------------------ 
+-------------------------------Agregar Clientes------------------------------------------------
 
 CREATE OR REPLACE PROCEDURE FIDE_CLIENTES_TB_INSERTAR_CLIENTE_SP (
     P_NOMBRE IN VARCHAR2,
