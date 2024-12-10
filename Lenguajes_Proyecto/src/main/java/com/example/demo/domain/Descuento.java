@@ -19,12 +19,11 @@ public class Descuento implements Serializable {
     private String idEstados;
 
     @Column(name = "ID_TIPO_DESCUENTO", nullable = false)
-    private String idTipoDescuento = "1"; // Valor predeterminado
+    private String idTipoDescuento = "1"; 
 
     @Column(name = "VALOR")
     private Double valor;
 
-    // Getters y Setters
     public String getId() {
         return id;
     }

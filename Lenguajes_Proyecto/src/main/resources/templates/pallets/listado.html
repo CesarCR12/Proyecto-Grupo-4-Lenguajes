@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}">
+    <title>Listado de Pallets</title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}"/>
+
+<section>
+    <h1>Listado de Pallets</h1>
+    <div th:replace="pallets/fragmentos :: botonesAgregar"></div>
+    <div th:replace="pallets/fragmentos :: listadoPallets"></div>
+</section>
+
+<footer th:replace="~{layout/plantilla :: footer}"/>
+</body>
+</html>

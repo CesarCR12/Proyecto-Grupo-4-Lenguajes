@@ -24,7 +24,6 @@ public class TipoDescuento implements Serializable {
     @Column(name = "DESCRIPCION")
     private String descripcion;
 
-    // Getters y Setters
     public String getId() {
         return id;
     }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}">
+    <title th:text="*{idPallet != null} ? 'Modificar Pallet' : 'Agregar Pallet'"></title>
+</head>
+<body>
+    <header th:replace="~{layout/plantilla :: header}" class="header"/>
+
+    <section class="modificar-pallet">
+        <form th:action="@{/pallets/guardar}" th:object="${pallet}" method="post">
+            <input type="hidden" th:if="*{idPallet != null}" th:field="*{idPallet}" />
+
+            <div>
+                <label for="idProveedores">Proveedor:</label>
+                <input type="text" id="idProveedores" name="idProveedores" th:field="*{idProveedores}" required>
+            </div>
+
+            <div th:if="*{idPallet != null}">
+                <label for="idEstados">Estado:</label>
+                <input type="text" id="idEstados" name="idEstados" th:field="*{idEstados}">
+            </div>
+
+            <div>
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" th:field="*{descripcion}" required></textarea>
+            </div>
+            <button type="submit" th:text="*{idPallet != null} ? 'Modificar' : 'Agregar'">Guardar</button>
+        </form>
+    </section>
+
+    <footer th:replace="~{layout/plantilla :: footer}" class="footerAbsoluto"/>
+</body>
+</html>
