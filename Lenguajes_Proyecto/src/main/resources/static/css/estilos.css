@@ -108,11 +108,11 @@ th, td {
 }
 
 .mi-clase-de-estilo {
-    display: block; 
-    margin: 40px auto; 
-    max-width: 100%; 
-    height: auto; 
-    border: 2px solid #4b79a1; 
+    display: block;
+    margin: 40px auto;
+    max-width: 100%;
+    height: auto;
+    border: 2px solid #4b79a1;
     border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -166,16 +166,16 @@ button[type="submit"]:hover {
 .quienes-somos {
     display: flex;
     flex-direction: column;
-    align-items: center; 
-    justify-content: center; 
+    align-items: center;
+    justify-content: center;
     padding: 20px;
-    background-color: #ffffff; 
-    text-align: center; 
+    background-color: #ffffff;
+    text-align: center;
     margin: 20px auto;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: 800px;
-    width: 90%;  
+    width: 90%;
 }
 
 .quienes-somos h2 {
@@ -186,9 +186,347 @@ button[type="submit"]:hover {
 
 .quienes-somos p {
     font-size: 1rem;
-    color: #333; 
+    color: #333;
     line-height: 1.6;
     margin: 10px 0;
+}
+
+.modificar-promocion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 90%;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.etiqueta {
+    font-size: 1rem;
+    color: #4b79a1;
+    font-weight: bold;
+}
+
+.input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #4b79a1;
+    box-shadow: 0 0 5px rgba(75, 121, 161, 0.5);
+}
+
+.boton {
+    align-self: flex-end;
+    padding: 10px 20px;
+    background-color: #4b79a1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.boton:hover {
+    background-color: #283e51;
+}
+
+.formulario-proveedor {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 30px auto;
+}
+
+.formulario-proveedor .campo {
+    margin-bottom: 20px;
+}
+
+.formulario-proveedor .campo label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.formulario-proveedor input[type="text"],
+.formulario-proveedor input[type="email"],
+.formulario-proveedor select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.formulario-proveedor input[type="text"]:focus,
+.formulario-proveedor input[type="email"]:focus,
+.formulario-proveedor select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    outline: none;
+}
+
+.formulario-proveedor button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.formulario-proveedor button[type="submit"]:hover {
+    background-color: #217dbb;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #4b79a1;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.modificar-descuento form {
+    background: linear-gradient(to right, #4b79a1, #283e51); /* Fondo degradado */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    margin: 30px auto;
+    color: white;
+}
+
+.modificar-descuento form div {
+    margin-bottom: 20px;
+}
+
+.modificar-descuento form label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffc107;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.modificar-descuento form input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    box-sizing: border-box;
+}
+
+.modificar-descuento form input[type="number"]:focus {
+    border-color: #ffc107;
+    box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+    outline: none;
+}
+
+.modificar-descuento form button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    background-color: #ffc107;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modificar-descuento form button:hover {
+    background-color: #283e51;
+    color: white;
+}
+
+.modificar-pallet form {
+    background-color: #f1f1f1; /* Fondo claro */
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    max-width: 650px;
+    margin: 50px auto;
+    color: #333;
+    font-family: 'Roboto', sans-serif;
+    border: 1px solid #ddd;
+}
+
+.modificar-pallet form div {
+    margin-bottom: 25px;
+}
+
+.modificar-pallet form label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.modificar-pallet form input[type="text"],
+.modificar-pallet form textarea {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #2c3e50;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modificar-pallet form input[type="text"]:focus,
+.modificar-pallet form textarea:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+    outline: none;
+}
+
+.modificar-pallet form button {
+    width: 100%;
+    padding: 14px;
+    font-size: 1.1rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.modificar-pallet form button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+.modificar-pallet form button:active {
+    background-color: #1d4e79;
+    transform: scale(1);
+}
+
+.formulario-cliente {
+    background-color: #ffffff;
+    padding: 20px;
+    margin-top: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 30px auto;
+    border: 1px solid #ccc;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select {
+    padding: 12px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    outline: none;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #4b79a1;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+button[type="submit"]:hover {
+    background-color: #283e51;
+}
+
+.select-container {
+    display: flex;
+    gap: 20px;
+}
+
+.select-container select {
+    width: 100%;
+}
+
+.select-container .campo {
+    flex: 1;
+}
+
+.select-container label {
+    font-weight: bold;
+    color: #4b79a1;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select {
+    background-color: #f9f9f9;
+    border: 2px solid #ddd;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }
 
 

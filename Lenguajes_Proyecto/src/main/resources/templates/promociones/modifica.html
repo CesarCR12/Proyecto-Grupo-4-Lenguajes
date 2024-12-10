@@ -1,41 +1,38 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{layout/plantilla :: head}">
-    <title th:text="*{promocionId != null} ? 'Modificar Promoción' : 'Agregar Promoción'"></title>
-</head>
-<body>
-    <header th:replace="~{layout/plantilla :: header}" class="header"/>
+    <head th:replace="~{layout/plantilla :: head}">
+        <title th:text="*{promocionId != null} ? 'Modificar Promoción' : 'Agregar Promoción'"></title>
+    </head>
+    <body>
+        <header th:replace="~{layout/plantilla :: header}" class="header"/>
 
-    <section class="modificar-promocion">
-        <form th:action="@{/promociones/guardar}" th:object="${promocion}" method="post">
-            <input type="hidden" th:if="*{promocionId != null}" th:field="*{promocionId}" />
+        <section class="modificar-promocion">
+            <form th:action="@{/promociones/guardar}" th:object="${promocion}" method="post" class="formulario">
+                <input type="hidden" th:if="*{promocionId != null}" th:field="*{promocionId}" />
 
-            <div>
-                <label for="nombrePromocion">Nombre:</label>
-                <input type="text" id="nombrePromocion" name="nombrePromocion" th:field="*{nombrePromocion}" required>
-            </div>
-            <div>
-                <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" th:field="*{descripcion}" required></textarea>
-            </div>
-            <div>
-                <label for="fechaInicio">Fecha Inicio:</label>
-                <input type="date" id="fechaInicio" name="fechaInicio" th:field="*{fechaInicio}" required>
-            </div>
-            <div>
-                <label for="fechaFin">Fecha Fin:</label>
-                <input type="date" id="fechaFin" name="fechaFin" th:field="*{fechaFin}" required>
-            </div>
-            <div>
-                <label for="estadoId">Estado:</label>
-                <select id="estadoId" name="estadoId" class="form-control" required>
-                    <option th:each="estado : ${estados}" th:value="${estado.id}" th:text="${estado.descripcion}"></option>
-                </select>
-            </div>
-            <button type="submit" th:text="*{promocionId != null} ? 'Modificar' : 'Agregar'">Guardar</button>
-        </form>
-    </section>
+                <div class="campo">
+                    <label for="nombrePromocion" class="etiqueta">Nombre:</label>
+                    <input type="text" id="nombrePromocion" name="nombrePromocion" th:field="*{nombrePromocion}" required class="input">
+                </div>
+                <div class="campo">
+                    <label for="descripcion" class="etiqueta">Descripción:</label>
+                    <textarea id="descripcion" name="descripcion" th:field="*{descripcion}" required class="input"></textarea>
+                </div>
+                <div class="campo">
+                    <label for="fechaInicio" class="etiqueta">Fecha Inicio:</label>
+                    <input type="date" id="fechaInicio" name="fechaInicio" th:field="*{fechaInicio}" required class="input">
+                </div>
+                <div class="campo">
+                    <label for="fechaFin" class="etiqueta">Fecha Fin:</label>
+                    <input type="date" id="fechaFin" name="fechaFin" th:field="*{fechaFin}" required class="input">
+                </div>
+                <div class="campo">
+                    <label for="estadoId" class="etiqueta">Estado:</label>
+                    <select id="estadoId" name="estadoId" class="input" required>
+                        <option th:each="estado : ${estados}" th:value="${estado.id}" th:text="${estado.descripcion}"></option>
+                    </select>
+                </div>
+                <button type="submit" class="boton" th:text="*{promocionId != null} ? 'Modificar' : 'Agregar'">Guardar</button>
+            </form>
+        </section>
 
-    <footer th:replace="~{layout/plantilla :: footer}" class="footerAbsoluto"/>
-</body>
-</html>

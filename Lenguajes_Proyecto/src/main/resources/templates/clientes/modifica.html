@@ -1,43 +1,41 @@
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{layout/plantilla :: head}">
-        <title>Modificar Cliente</title>
-    </head>
-    <body>
-        <header th:replace="~{layout/plantilla :: header}" class="header"/>
+<head th:replace="~{layout/plantilla :: head}">
+    <title>Modificar Cliente</title>
+</head>
+<body>
+    <header th:replace="~{layout/plantilla :: header}" class="header"></header>
 
-        <section class="modificar-cliente">
-            <form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post" class="formulario">
-                <input type="hidden" th:field="*{clienteId}" />
+    <section class="formulario-cliente">
+        <form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post" class="formulario">
+            <input type="hidden" th:field="*{clienteId}" />
 
-                <div class="campo">
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" th:field="*{nombre}" placeholder="Nombre" required />
-                </div>
+            <div class="campo">
+                <label for="nombre">Nombre:</label>
+                <input type="text" th:field="*{nombre}" placeholder="Nombre" required />
+            </div>
 
-                <div class="campo">
-                    <label for="correo">Correo:</label>
-                    <input type="email" th:field="*{correo}" placeholder="Correo" required />
-                </div>
+            <div class="campo">
+                <label for="correo">Correo:</label>
+                <input type="email" th:field="*{correo}" placeholder="Correo" required />
+            </div>
 
-                <div class="campo">
-                    <label for="telefono">Teléfono:</label>
-                    <input type="text" th:field="*{telefono}" placeholder="Teléfono" required />
-                </div>
+            <div class="campo">
+                <label for="telefono">Teléfono:</label>
+                <input type="text" th:field="*{telefono}" placeholder="Teléfono" required />
+            </div>
 
-                <div class="campo">
-                    <label for="direccion">Dirección:</label>
-                    <input type="text" th:field="*{direccion}" placeholder="Dirección" required />
-                </div>
+            <div class="campo">
+                <label for="direccion">Dirección:</label>
+                <input type="text" th:field="*{direccion}" placeholder="Dirección" required />
+            </div>
 
+            <div class="select-container">
                 <div class="campo">
                     <label for="pais">País:</label>
                     <select th:field="*{pais}">
                         <option value="">--Seleccione--</option>
-                        <option th:each="pais : ${paises}" 
-                                th:value="${pais.paisId}" 
-                                th:text="${pais.nombre}"></option>
+                        <option th:each="pais : ${paises}" th:value="${pais.paisId}" th:text="${pais.nombre}"></option>
                     </select>
                 </div>
 
@@ -45,19 +43,17 @@
                     <label for="provincia">Provincia:</label>
                     <select th:field="*{provincia}">
                         <option value="">--Seleccione--</option>
-                        <option th:each="provincia : ${provincias}" 
-                                th:value="${provincia.provinciaId}" 
-                                th:text="${provincia.nombre}"></option>
+                        <option th:each="provincia : ${provincias}" th:value="${provincia.provinciaId}" th:text="${provincia.nombre}"></option>
                     </select>
                 </div>
+            </div>
 
+            <div class="select-container">
                 <div class="campo">
                     <label for="canton">Cantón:</label>
                     <select th:field="*{canton}">
                         <option value="">--Seleccione--</option>
-                        <option th:each="canton : ${cantones}" 
-                                th:value="${canton.cantonId}" 
-                                th:text="${canton.nombre}"></option>
+                        <option th:each="canton : ${cantones}" th:value="${canton.cantonId}" th:text="${canton.nombre}"></option>
                     </select>
                 </div>
 
@@ -65,18 +61,15 @@
                     <label for="distrito">Distrito:</label>
                     <select th:field="*{distrito}">
                         <option value="">--Seleccione--</option>
-                        <option th:each="distrito : ${distritos}" 
-                                th:value="${distrito.distritoId}" 
-                                th:text="${distrito.nombre}"></option>
+                        <option th:each="distrito : ${distritos}" th:value="${distrito.distritoId}" th:text="${distrito.nombre}"></option>
                     </select>
                 </div>
+            </div>
 
-                <button type="submit" class="btn">Guardar</button>
-            </form>
-        </section>
-
-        <footer th:replace="~{layout/plantilla :: footer}" class="footerAbsoluto"/>
-    </body>
+            <button type="submit">Guardar Cliente</button>
+        </form>
+    </section>
+</body>
 </html>
 
 

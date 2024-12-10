@@ -8,7 +8,7 @@
 
 <section>
     <h1 th:text="${proveedor != null ? 'Modificar Proveedor' : 'Agregar Proveedor'}"></h1>
-    <form th:action="@{/proveedores/guardar}" th:object="${proveedor}" method="post" class="formulario">
+    <form th:action="@{/proveedores/guardar}" th:object="${proveedor}" method="post" class="formulario-proveedor">
         <input type="hidden" th:field="*{proveedorId}" />
 
         <div class="campo">
