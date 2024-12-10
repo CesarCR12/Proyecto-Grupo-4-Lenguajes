@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}">
+    <title th:text="*{id != null} ? 'Modificar Descuento' : 'Agregar Descuento'"></title>
+</head>
+<body>
+    <header th:replace="~{layout/plantilla :: header}" class="header"/>
+
+    <section class="modificar-descuento">
+        <form th:action="@{/descuentos/guardar}" th:object="${descuento}" method="post">
+            <input type="hidden" th:if="*{id != null}" th:field="*{id}" />
+            <div>
+                <label for="valor">Valor:</label>
+                <input type="number" id="valor" name="valor" th:field="*{valor}" step="0.01" min="0" required>
+            </div>
+            <button type="submit" th:text="*{id != null} ? 'Modificar' : 'Agregar'">Guardar</button>
+        </form>
+    </section>
+
+    <footer th:replace="~{layout/plantilla :: footer}" class="footerAbsoluto"/>
+</body>
+</html>

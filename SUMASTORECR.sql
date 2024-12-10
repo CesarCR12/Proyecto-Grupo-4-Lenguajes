@@ -460,6 +460,17 @@ FOR EACH ROW
 BEGIN
 :NEW.FIDE_INVENTARIO_TB_ID_INVENTARIO_PK := ID_INVENTARIO_SEQ.NEXTVAL;
 END;
+-------------------------------AUMENTAR ID decuentos------------------------------------------------ 
+CREATE SEQUENCE FIDE_DESCUENTO_SEQ
+START WITH 4
+INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER FIDE_DESCUENTO_TB_SEQ_ID_TRG
+BEFORE INSERT ON FIDE_DESCUENTO_TB
+FOR EACH ROW
+BEGIN
+    :NEW.FIDE_DESCUENTO_TB_ID_DESCUENTO_PK := FIDE_DESCUENTO_SEQ.NEXTVAL;
+END;
 
 -------------------------------AUMENTAR ID PROVEEDORES------------------------------------------------ 
 CREATE SEQUENCE ID_PROVEEDORES_SEQ
@@ -1497,23 +1508,14 @@ BEGIN
     );
 
     COMMIT;
-
     DBMS_OUTPUT.PUT_LINE('Se agrego el producto con el id: ' || P_ID_INVENTARIO);
-
+    
 EXCEPTION
     WHEN OTHERS THEN
         DBMS_OUTPUT.PUT_LINE('Error');
         ROLLBACK;
 END FIDE_INVENTARIO_TB_REGISTRAR_SP;
-BEGIN
-    FIDE_INVENTARIO_TB_REGISTRAR_SP(
-        P_ID_INVENTARIO => 'PROD001',
-        P_ID_PALLET => '2',
-        P_NOMBRE => 'Producto Test',
-        P_CANTIDAD => 10,
-        P_PRECIO => 150.00
-    );
-END;
+    
 -----------------------Actualizar Producto------------------------------------
 
 CREATE OR REPLACE PROCEDURE FIDE_INVENTARIO_TB_ACTUALIZAR_SP (

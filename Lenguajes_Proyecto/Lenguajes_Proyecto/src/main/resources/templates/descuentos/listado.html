@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}">
+    <title>Listado de Descuentos</title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}"/>
+
+<section>
+    <h1>Listado de Descuentos</h1>
+    <div th:replace="descuentos/fragmentos :: botonesAgregar"></div>
+    <div th:replace="descuentos/fragmentos :: listadoDescuentos"></div>
+</section>
+
+<footer th:replace="~{layout/plantilla :: footer}"/>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+    <title>Fragmentos Descuentos</title>
+</head>
+<body>
+    <div th:fragment="botonesAgregar">
+        <a th:href="@{/descuentos/nuevo}" class="btn btn-primary">Agregar Descuento</a>
+    </div>
+
+    <div th:fragment="listadoDescuentos">
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Tipo de Descuento</th>
+                    <th>Valor</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="descuento : ${descuentos}">
+                    <td th:text="${descuento.id}"></td>
+                    <td th:text="${descuento.idTipoDescuento}"></td>
+                    <td th:text="${descuento.valor}"></td>
+                    <td>
+                        <a th:href="@{/descuentos/modificar/{id}(id=${descuento.id})}" class="btn btn-warning">Modificar</a>
+                        <a th:href="@{/descuentos/eliminar/{id}(id=${descuento.id})}" 
+                           onclick="return confirm('¿Está seguro de eliminar este descuento?')" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
