@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}">
+    <title>Listado de Facturas</title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}" class="header"></header>
+
+<section>
+    <h1>Listado de Facturas</h1>
+    <a th:href="@{/facturas/nuevo}" class="btn btn-primary">Agregar Factura</a>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Fecha Venta</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="factura : ${facturas}">
+                <td th:text="${factura.idFactura}">ID</td>
+                <td th:text="${factura.idCliente}">Cliente</td>
+                <td th:text="${factura.fechaVenta}">Fecha</td>
+                <td th:text="${factura.totalVenta}">Total</td>
+                <td>
+                    <a th:href="@{/facturas/modificar/{id}(id=${factura.idFactura})}" class="btn btn-warning">Modificar</a>
+                    <a th:href="@{/facturas/eliminar/{id}(id=${factura.idFactura})}" class="btn btn-danger" 
+                       onclick="return confirm('¿Estás seguro de eliminar esta factura?')">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<footer th:replace="~{layout/plantilla :: footer}" class="footerAbsoluto"></footer>
+</body>
+</html>

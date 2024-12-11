@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}">
+    <title th:text="*{idFactura != null} ? 'Modificar Factura' : 'Agregar Factura'"></title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}" class="header"></header>
+
+<section class="formulario-factura">
+    <form th:action="@{/facturas/guardar}" th:object="${factura}" method="post" class="formulario">
+        <input type="hidden" th:field="*{idFactura}" />
+
+        <div class="campo">
+            <label for="idCliente">Cliente:</label>
+            <select th:field="*{idCliente}" required>
+                <option value="">--Seleccione--</option>
+                <option th:each="cliente : ${clientes}" th:value="${cliente.clienteId}" th:text="${cliente.nombre}"></option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="idPromocion">Promoción:</label>
+            <select th:field="*{idPromocion}">
+                <option value="">--Seleccione--</option>
+                <option th:each="promocion : ${promociones}" th:value="${promocion.promocionId}" th:text="${promocion.nombrePromocion}"></option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="fechaVenta">Fecha de Venta:</label>
+            <input type="date" th:field="*{fechaVenta}" required />
+        </div>
+
+        <div class="campo">
+            <label for="idsInventario">Productos:</label>
+            <textarea th:field="*{idsInventario}" placeholder="IDs de productos separados por comas"
+                      oninput="this.value = this.value.replace(/\s/g, '')"></textarea>
+        </div>
+
+        <div class="campo">
+            <label for="cantidades">Cantidades:</label>
+            <textarea th:field="*{cantidades}" placeholder="Cantidades correspondientes separadas por comas"
+                      oninput="this.value = this.value.replace(/\s/g, '')"></textarea>
+        </div>
+
+        <div class="error" th:if="${param.error}" style="color: red;">
+            <p th:text="${param.error == 'invalidData' ? 'Los datos de productos y cantidades no son válidos.' : 'Ocurrió un error al guardar la factura.'}"></p>
+        </div>
+
+        <button type="submit" th:text="*{idFactura != null} ? 'Modificar' : 'Agregar'">Guardar</button>
+    </form>
+</section>
+
+<footer th:replace="~{layout/plantilla :: footer}" class="footerAbsoluto"></footer>
+</body>
+</html>
