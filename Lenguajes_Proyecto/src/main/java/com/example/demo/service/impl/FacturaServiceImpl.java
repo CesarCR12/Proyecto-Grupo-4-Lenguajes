@@ -50,7 +50,6 @@ public class FacturaServiceImpl implements FacturaService {
         query.setParameter("P_FECHA_VENTA", new java.sql.Date(factura.getFechaVenta().getTime()));
         query.setParameter("P_IMPUESTOS", factura.getImpuestos());
 
-        // Asegurar formato correcto para múltiples IDs y cantidades
         query.setParameter("P_IDS_INVENTARIO", factura.getIdsInventario().trim());
         query.setParameter("P_CANTIDADES", factura.getCantidades().trim());
 
@@ -79,7 +78,6 @@ public class FacturaServiceImpl implements FacturaService {
         query.setParameter("P_FECHA_VENTA", new java.sql.Date(factura.getFechaVenta().getTime()));
         query.setParameter("P_IMPUESTOS", factura.getImpuestos());
 
-        // Asegurar formato correcto para múltiples IDs y cantidades
         query.setParameter("P_IDS_INVENTARIO", factura.getIdsInventario().trim());
         query.setParameter("P_CANTIDADES", factura.getCantidades().trim());
 

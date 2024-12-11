@@ -56,7 +56,6 @@ public class FacturaController {
     public String guardarFactura(@ModelAttribute Factura factura) {
         try {
             if (factura.getIdFactura() == null || factura.getIdFactura().isEmpty()) {
-                // Procesar y validar múltiples IDs y cantidades
                 factura.setIdsInventario(factura.getIdsInventario().replace(" ", ""));
                 factura.setCantidades(factura.getCantidades().replace(" ", ""));
 
