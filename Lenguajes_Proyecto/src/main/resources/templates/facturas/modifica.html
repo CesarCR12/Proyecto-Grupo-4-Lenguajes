@@ -2,11 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout/plantilla :: head}">
     <title th:text="*{idFactura != null} ? 'Modificar Factura' : 'Agregar Factura'"></title>
+    <link rel="stylesheet" href="/resources/estilos.css">
 </head>
 <body>
 <header th:replace="~{layout/plantilla :: header}" class="header"></header>
 
-<section class="formulario-factura">
+<section class="formulario-contenedor">
+    <h1 th:text="*{idFactura != null} ? 'Modificar Factura' : 'Agregar Factura'"></h1>
     <form th:action="@{/facturas/guardar}" th:object="${factura}" method="post" class="formulario">
         <input type="hidden" th:field="*{idFactura}" />
 
@@ -33,14 +35,12 @@
 
         <div class="campo">
             <label for="idsInventario">Productos:</label>
-            <textarea th:field="*{idsInventario}" placeholder="IDs de productos separados por comas"
-                      oninput="this.value = this.value.replace(/\s/g, '')"></textarea>
+            <textarea th:field="*{idsInventario}" placeholder="IDs de productos separados por comas"></textarea>
         </div>
 
         <div class="campo">
             <label for="cantidades">Cantidades:</label>
-            <textarea th:field="*{cantidades}" placeholder="Cantidades correspondientes separadas por comas"
-                      oninput="this.value = this.value.replace(/\s/g, '')"></textarea>
+            <textarea th:field="*{cantidades}" placeholder="Cantidades correspondientes separadas por comas"></textarea>
         </div>
 
         <div class="campo">
@@ -53,7 +53,29 @@
             </select>
         </div>
 
-        <div class="error" th:if="${param.error}" style="color: red;">
+        <div class="campo">
+            <label for="inventario">Inventario:</label>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="inventario : ${inventarios}">
+                        <td th:text="${inventario.idInventario}"></td>
+                        <td th:text="${inventario.nombre}"></td>
+                        <td th:text="${inventario.cantidad}"></td>
+                        <td th:text="${inventario.precio}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="error" th:if="${param.error}" style="color: red; text-align: center;">
             <p th:text="${param.error == 'invalidData' ? 'Los datos de productos y cantidades no son válidos.' : 'Ocurrió un error al guardar la factura.'}"></p>
         </div>
 

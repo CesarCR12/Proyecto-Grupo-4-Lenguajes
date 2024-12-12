@@ -9,6 +9,7 @@ import com.example.demo.service.ClientesService;
 import com.example.demo.service.FacturaService;
 import com.example.demo.service.PromocionService;
 import com.example.demo.service.DescuentoService;
+import com.example.demo.service.InventarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,9 @@ public class FacturaController {
     @Autowired
     private DescuentoService descuentoService;
 
+    @Autowired
+    private InventarioService inventarioService;
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -53,7 +57,8 @@ public class FacturaController {
         model.addAttribute("factura", new Factura());
         model.addAttribute("clientes", clientesService.getClientes(true));
         model.addAttribute("promociones", promocionService.getAllPromociones());
-        model.addAttribute("descuentos", descuentoService.getAllDescuentos()); // Línea agregada
+        model.addAttribute("descuentos", descuentoService.getAllDescuentos());
+        model.addAttribute("inventarios", inventarioService.getInventarios(true)); 
         return "facturas/modifica";
     }
 
@@ -86,7 +91,8 @@ public class FacturaController {
             model.addAttribute("factura", factura);
             model.addAttribute("clientes", clientesService.getClientes(true));
             model.addAttribute("promociones", promocionService.getAllPromociones());
-            model.addAttribute("descuentos", descuentoService.getAllDescuentos()); 
+            model.addAttribute("descuentos", descuentoService.getAllDescuentos());
+            model.addAttribute("inventarios", inventarioService.getInventarios(true)); 
             return "facturas/modifica";
         }
         return "redirect:/facturas/listado";
