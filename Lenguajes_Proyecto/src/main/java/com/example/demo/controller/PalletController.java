@@ -4,7 +4,9 @@
  */
 package com.example.demo.controller;
 
+import com.example.demo.domain.Estado;
 import com.example.demo.domain.Pallet;
+import com.example.demo.service.EstadoService;
 import com.example.demo.service.PalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,9 @@ public class PalletController {
     @Autowired
     private PalletService palletService;
 
+    @Autowired
+    private EstadoService estadoService;
+
     @GetMapping("/listado")
     public String listarPallets(Model model) {
         List<Pallet> pallets = palletService.obtenerTodosLosPallets();
@@ -30,19 +35,37 @@ public class PalletController {
     @GetMapping("/nuevo")
     public String nuevoPallet(Model model) {
         Pallet nuevoPallet = new Pallet();
-        nuevoPallet.setEstado("ACTIVO"); 
         model.addAttribute("pallet", nuevoPallet);
+        model.addAttribute("estados", estadoService.getAllEstados());
         return "pallets/modifica";
     }
 
     @PostMapping("/guardar")
-    public String guardarPallet(@ModelAttribute Pallet pallet) {
-        if (pallet.getIdPallet() == null) { 
-            palletService.guardarPallet(pallet);
-        } else { 
-            palletService.actualizarPallet(pallet);
+    public String guardarPallet(@ModelAttribute Pallet pallet, @RequestParam("estadoId") String estadoId, Model model) {
+        try {
+            Estado estado = estadoService.getEstadoById(estadoId);
+            if (estado != null) {
+                pallet.setIdEstados(estado.getId());
+                pallet.setEstado(estado.getDescripcion());
+            } else {
+                model.addAttribute("error", "El estado seleccionado no es válido.");
+                model.addAttribute("pallet", pallet);
+                model.addAttribute("estados", estadoService.getAllEstados());
+                return "pallets/modifica";
+            }
+
+            if (pallet.getIdPallet() == null) {
+                palletService.guardarPallet(pallet);
+            } else {
+                palletService.actualizarPallet(pallet);
+            }
+            return "redirect:/pallets/listado";
+        } catch (Exception e) {
+            model.addAttribute("error", "Ocurrió un error al guardar el pallet: " + e.getMessage());
+            model.addAttribute("pallet", pallet);
+            model.addAttribute("estados", estadoService.getAllEstados());
+            return "pallets/modifica";
         }
-        return "redirect:/pallets/listado";
     }
 
     @GetMapping("/modificar/{id}")
@@ -50,6 +73,7 @@ public class PalletController {
         Pallet pallet = palletService.obtenerPalletPorId(id);
         if (pallet != null) {
             model.addAttribute("pallet", pallet);
+            model.addAttribute("estados", estadoService.getAllEstados());
             return "pallets/modifica";
         }
         return "redirect:/pallets/listado";

@@ -34,16 +34,22 @@ public class PalletServiceImpl implements PalletService {
     @Transactional
     public void guardarPallet(Pallet pallet) {
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("FIDE_PALLETS_TB_INSERTAR_SP");
+
         query.registerStoredProcedureParameter("P_ID_PROVEEDORES", String.class, jakarta.persistence.ParameterMode.IN);
         query.registerStoredProcedureParameter("P_ID_ESTADOS", String.class, jakarta.persistence.ParameterMode.IN);
         query.registerStoredProcedureParameter("P_DESCRIPCION", String.class, jakarta.persistence.ParameterMode.IN);
 
+    if (pallet.getIdProveedores() == null || pallet.getIdProveedores().isEmpty()) {
+        throw new IllegalArgumentException("El campo 'ID_PROVEEDORES' no puede estar vacío.");
+    }
+
         query.setParameter("P_ID_PROVEEDORES", pallet.getIdProveedores());
-        query.setParameter("P_ID_ESTADOS", pallet.getIdEstados()); 
+        query.setParameter("P_ID_ESTADOS", pallet.getIdEstados());
         query.setParameter("P_DESCRIPCION", pallet.getDescripcion());
 
         query.execute();
-    }
+}
+
 
     @Override
     @Transactional
