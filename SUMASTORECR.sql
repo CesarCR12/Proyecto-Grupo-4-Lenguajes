@@ -1969,6 +1969,107 @@ EXCEPTION
         ROLLBACK;
 END;
 
+-----------------------agregar detalle factura------------------------------------
+CREATE OR REPLACE PROCEDURE FIDE_DETALLES_FACTURAS_AGREGAR_SP (
+    P_ID_DETALLE IN VARCHAR2,
+    P_ID_FACTURAS IN VARCHAR2,
+    P_ID_ESTADOS IN VARCHAR2,
+    P_ID_INVENTARIO IN VARCHAR2,
+    P_CANTIDAD_VENDIDA IN INT,
+    P_PRECIO_UNITARIO IN DECIMAL,
+    P_PRECIO_TOTAL_UNITARIO IN DECIMAL
+)
+AS
+BEGIN
+    INSERT INTO FIDE_DETALLES_FACTURAS_TB (
+        FIDE_DETALLES_FACTURAS_TB_ID_DETALLE_PK,
+        ID_FACTURAS,
+        ID_ESTADOS,
+        ID_INVENTARIO,
+        CANTIDAD_VENDIDA,
+        PRECIO_UNITARIO,
+        PRECIO_TOTAL_UNITARIO
+    ) VALUES (
+        P_ID_DETALLE,
+        P_ID_FACTURAS,
+        P_ID_ESTADOS,
+        P_ID_INVENTARIO,
+        P_CANTIDAD_VENDIDA,
+        P_PRECIO_UNITARIO,
+        P_PRECIO_TOTAL_UNITARIO
+    );
+    COMMIT;
+
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('Error en la ejecución del procedimiento.');
+        RAISE;
+END FIDE_DETALLES_FACTURAS_AGREGAR_SP;
+
+-----------------------eliminar detalle factura------------------------------------
+CREATE OR REPLACE PROCEDURE FIDE_DETALLES_FACTURAS_ELIMINAR_SP (
+    P_ID_DETALLE IN VARCHAR2
+)
+AS
+BEGIN
+    DELETE FROM FIDE_DETALLES_FACTURAS_TB
+    WHERE FIDE_DETALLES_FACTURAS_TB_ID_DETALLE_PK = P_ID_DETALLE;
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('Error en la ejecución del procedimiento.');
+        RAISE;
+END FIDE_DETALLES_FACTURAS_ELIMINAR_SP;
+
+-----------------------modificar detalle factura------------------------------------
+CREATE OR REPLACE PROCEDURE FIDE_DETALLES_FACTURAS_MODIFICAR_SP (
+    P_ID_DETALLE IN VARCHAR2,
+    P_ID_FACTURAS IN VARCHAR2,
+    P_ID_ESTADOS IN VARCHAR2,
+    P_ID_INVENTARIO IN VARCHAR2,
+    P_CANTIDAD_VENDIDA IN INT,
+    P_PRECIO_UNITARIO IN DECIMAL,
+    P_PRECIO_TOTAL_UNITARIO IN DECIMAL
+)
+AS
+BEGIN
+    UPDATE FIDE_DETALLES_FACTURAS_TB
+    SET 
+        ID_FACTURAS = P_ID_FACTURAS,
+        ID_ESTADOS = P_ID_ESTADOS,
+        ID_INVENTARIO = P_ID_INVENTARIO,
+        CANTIDAD_VENDIDA = P_CANTIDAD_VENDIDA,
+        PRECIO_UNITARIO = P_PRECIO_UNITARIO,
+        PRECIO_TOTAL_UNITARIO = P_PRECIO_TOTAL_UNITARIO
+    WHERE FIDE_DETALLES_FACTURAS_TB_ID_DETALLE_PK = P_ID_DETALLE;
+    COMMIT;
+
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('Error en la ejecución del procedimiento.');
+        RAISE;
+END FIDE_DETALLES_FACTURAS_MODIFICAR_SP;
+
+-----------------------eliminar tipo descuento------------------------------------
+CREATE OR REPLACE PROCEDURE FIDE_TIPO_DESCUENTO_ELIMINAR_SP (
+    P_ID_TIPO_DESCUENTO IN VARCHAR2
+)
+AS
+BEGIN
+    DELETE FROM FIDE_TIPO_DESCUENTO_TB
+    WHERE FIDE_TIPO_DESCUENTO_TB_ID_TIPO_DESCUENTO_PK = P_ID_TIPO_DESCUENTO;
+    COMMIT;
+
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('Error en la ejecución del procedimiento.');
+        RAISE;
+END FIDE_TIPO_DESCUENTO_ELIMINAR_SP;
+
 --------------------------------------------FUNCIONES------------------------------------------------------------------------------
 
 ---------------------------Funcion 1 que hace filtrar los datos de un cliente conforme al nombre----------------------
