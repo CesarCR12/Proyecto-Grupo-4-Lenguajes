@@ -2322,7 +2322,7 @@ EXCEPTION
         RETURN NULL;
 END FIDE_INVENTARIO_OBTENER_POR_PROVEEDOR_FN;
 
------------------------Funcion/cursor 11 Devuelve las promociones que se han aplicado a un cliente específico------------------------------------------------------
+-----------------------Funcion/cursor 11 Devuelve las promociones que se han aplicado a un cliente especï¿½fico------------------------------------------------------
 CREATE OR REPLACE FUNCTION FIDE_PROMOCIONES_OBTENER_POR_CLIENTE_FN(
     P_ID_CLIENTE IN VARCHAR2
 ) RETURN SYS_REFCURSOR IS
@@ -2365,7 +2365,7 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE('Error');
         RETURN NULL;
 END FIDE_DESCUENTOS_LISTAR_EN_FACTURAS_FN;
------------------------Funcion/cursor 13 Devuelve las facturas generadas en un rango de fechas específico------------------------------------------------------
+-----------------------Funcion/cursor 13 Devuelve las facturas generadas en un rango de fechas especï¿½fico------------------------------------------------------
 CREATE OR REPLACE FUNCTION FIDE_FACTURAS_LISTAR_POR_FECHAS_FN(
     P_FECHA_INICIO IN DATE,
     P_FECHA_FIN IN DATE
@@ -2387,7 +2387,7 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE('Error');
         RETURN NULL;
 END FIDE_FACTURAS_LISTAR_POR_FECHAS_FN;
------------------------Funcion/cursor 14 Devuelve los productos del inventario con precio dentro de un rango específico------------------------------------------------------
+-----------------------Funcion/cursor 14 Devuelve los productos del inventario con precio dentro de un rango especï¿½fico------------------------------------------------------
 CREATE OR REPLACE FUNCTION FIDE_INVENTARIO_LISTAR_POR_PRECIO_FN(
     P_PRECIO_MIN IN DECIMAL,
     P_PRECIO_MAX IN DECIMAL
@@ -2431,7 +2431,7 @@ EXCEPTION
 END FIDE_INVENTARIO_DETALLES_PROVEEDORES_FN;
 -------------------------------------------Cursores echos 8 hacer 7------------------------------------------------------------------------------
 
------------------------procedimiento/cursor 1 listar clientes que tienen un estado específico---------------------------------
+-----------------------procedimiento/cursor 1 listar clientes que tienen un estado especï¿½fico---------------------------------
 CREATE OR REPLACE PROCEDURE FIDE_CLIENTES_LISTAR_POR_ESTADO_SP(
     P_ESTADO IN VARCHAR2
 ) IS
@@ -2452,7 +2452,7 @@ BEGIN
         FETCH C_CLIENTES INTO V_CLIENTE_ID, V_NOMBRE, V_CORREO, V_TELEFONO;
         EXIT WHEN C_CLIENTES%NOTFOUND;
 
-        DBMS_OUTPUT.PUT_LINE('ID : ' || V_CLIENTE_ID ||', Nombre: ' || V_NOMBRE || ', Correo: ' || V_CORREO || ', Teléfono: ' || V_TELEFONO);
+        DBMS_OUTPUT.PUT_LINE('ID : ' || V_CLIENTE_ID ||', Nombre: ' || V_NOMBRE || ', Correo: ' || V_CORREO || ', Telï¿½fono: ' || V_TELEFONO);
     END LOOP;
     CLOSE C_CLIENTES;
 END FIDE_CLIENTES_LISTAR_POR_ESTADO_SP;
@@ -2504,7 +2504,7 @@ BEGIN
         FETCH C_PROMOCIONES INTO V_ID_PROMOCION, V_NOMBRE_PROMOCION, V_FECHA_INICIO, V_FECHA_FIN;
         EXIT WHEN C_PROMOCIONES%NOTFOUND;
 
-        DBMS_OUTPUT.PUT_LINE('Promoción ID: ' || V_ID_PROMOCION || ', Nombre: ' || V_NOMBRE_PROMOCION || ', Inicio: ' || V_FECHA_INICIO || ', Fin: ' || V_FECHA_FIN);
+        DBMS_OUTPUT.PUT_LINE('Promociï¿½n ID: ' || V_ID_PROMOCION || ', Nombre: ' || V_NOMBRE_PROMOCION || ', Inicio: ' || V_FECHA_INICIO || ', Fin: ' || V_FECHA_FIN);
     END LOOP;
     CLOSE C_PROMOCIONES;
 END FIDE_PROMOCIONES_LISTAR_ACTIVAS_SP;
@@ -2555,7 +2555,7 @@ BEGIN
     CLOSE C_CLIENTES_FACTURAS;
 END FIDE_CLIENTES_FACTURAS_MAYOR_MONTO_SP;
 
------------------------cursor 6  Lista todas las promociones que están activas---------------------------------
+-----------------------cursor 6  Lista todas las promociones que estï¿½n activas---------------------------------
 DECLARE
     CURSOR C_PROMOCIONES IS
         SELECT FIDE_PROMOCIONES_TB_ID_PROMOCION_PK AS ID_PROMOCION,
@@ -2574,7 +2574,7 @@ BEGIN
         FETCH C_PROMOCIONES INTO V_ID_PROMOCION, V_NOMBRE_PROMOCION, V_FECHA_INICIO, V_FECHA_FIN;
         EXIT WHEN C_PROMOCIONES%NOTFOUND;
 
-        DBMS_OUTPUT.PUT_LINE('Promoción ID: ' || V_ID_PROMOCION || ', Nombre: ' || V_NOMBRE_PROMOCION || ', Inicio: ' || V_FECHA_INICIO || ', Fin: ' || V_FECHA_FIN);
+        DBMS_OUTPUT.PUT_LINE('Promociï¿½n ID: ' || V_ID_PROMOCION || ', Nombre: ' || V_NOMBRE_PROMOCION || ', Inicio: ' || V_FECHA_INICIO || ', Fin: ' || V_FECHA_FIN);
     END LOOP;
     CLOSE C_PROMOCIONES;
 END;
@@ -2669,4 +2669,5 @@ END FIDE_CLIENTES_TB_FILTRAR_CLIENTES_FN;
 END FIDE_SUMASTORECR_FUNCIONES_PKG;
 
 SELECT * FROM FIDE_INVENTARIO_TB;
+
 
