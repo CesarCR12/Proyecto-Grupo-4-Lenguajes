@@ -34,13 +34,17 @@ public class Factura implements Serializable {
     private Double subtotal;
 
     @Column(name = "IMPUESTOS")
-    private Double impuestos = 12.0; 
+    private Double impuestos = 12.0;
+
+    @ManyToOne
+    @JoinColumn(name = "ID_DESCUENTO", referencedColumnName = "FIDE_DESCUENTO_TB_ID_DESCUENTO_PK")
+    private Descuento descuento;
 
     @Transient
-    private String idsInventario; 
+    private String idsInventario;
 
     @Transient
-    private String cantidades; 
+    private String cantidades;
 
     public String getIdFactura() {
         return idFactura;
@@ -96,6 +100,14 @@ public class Factura implements Serializable {
 
     public void setImpuestos(Double impuestos) {
         this.impuestos = impuestos;
+    }
+
+    public Descuento getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(Descuento descuento) {
+        this.descuento = descuento;
     }
 
     public String getIdsInventario() {

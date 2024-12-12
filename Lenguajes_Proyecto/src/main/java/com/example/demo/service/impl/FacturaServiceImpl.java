@@ -4,6 +4,7 @@
  */
 package com.example.demo.service.impl;
 
+import com.example.demo.domain.Descuento;
 import com.example.demo.domain.Factura;
 import com.example.demo.service.FacturaService;
 import jakarta.persistence.EntityManager;
@@ -42,6 +43,7 @@ public class FacturaServiceImpl implements FacturaService {
         query.registerStoredProcedureParameter("P_IMPUESTOS", Double.class, jakarta.persistence.ParameterMode.IN);
         query.registerStoredProcedureParameter("P_IDS_INVENTARIO", String.class, jakarta.persistence.ParameterMode.IN);
         query.registerStoredProcedureParameter("P_CANTIDADES", String.class, jakarta.persistence.ParameterMode.IN);
+        query.registerStoredProcedureParameter("P_ID_DESCUENTO", String.class, jakarta.persistence.ParameterMode.IN);
         query.registerStoredProcedureParameter("P_TOTAL_VENTA", Double.class, jakarta.persistence.ParameterMode.OUT);
 
         query.setParameter("P_ID_FACTURA", factura.getIdFactura());
@@ -49,9 +51,10 @@ public class FacturaServiceImpl implements FacturaService {
         query.setParameter("P_ID_PROMOCION", factura.getIdPromocion());
         query.setParameter("P_FECHA_VENTA", new java.sql.Date(factura.getFechaVenta().getTime()));
         query.setParameter("P_IMPUESTOS", factura.getImpuestos());
-
         query.setParameter("P_IDS_INVENTARIO", factura.getIdsInventario().trim());
         query.setParameter("P_CANTIDADES", factura.getCantidades().trim());
+
+        query.setParameter("P_ID_DESCUENTO", (factura.getDescuento() != null) ? factura.getDescuento().getId() : null);
 
         query.execute();
 
@@ -70,6 +73,7 @@ public class FacturaServiceImpl implements FacturaService {
         query.registerStoredProcedureParameter("P_IMPUESTOS", Double.class, jakarta.persistence.ParameterMode.IN);
         query.registerStoredProcedureParameter("P_IDS_INVENTARIO", String.class, jakarta.persistence.ParameterMode.IN);
         query.registerStoredProcedureParameter("P_CANTIDADES", String.class, jakarta.persistence.ParameterMode.IN);
+        query.registerStoredProcedureParameter("P_ID_DESCUENTO", String.class, jakarta.persistence.ParameterMode.IN);
         query.registerStoredProcedureParameter("P_TOTAL_VENTA", Double.class, jakarta.persistence.ParameterMode.OUT);
 
         query.setParameter("P_ID_FACTURA", factura.getIdFactura());
@@ -77,9 +81,9 @@ public class FacturaServiceImpl implements FacturaService {
         query.setParameter("P_ID_PROMOCION", factura.getIdPromocion());
         query.setParameter("P_FECHA_VENTA", new java.sql.Date(factura.getFechaVenta().getTime()));
         query.setParameter("P_IMPUESTOS", factura.getImpuestos());
-
         query.setParameter("P_IDS_INVENTARIO", factura.getIdsInventario().trim());
         query.setParameter("P_CANTIDADES", factura.getCantidades().trim());
+        query.setParameter("P_ID_DESCUENTO", (factura.getDescuento() != null) ? factura.getDescuento().getId() : null);
 
         query.execute();
 
@@ -102,6 +106,20 @@ public class FacturaServiceImpl implements FacturaService {
             query.setParameter("P_CANTIDADES", factura.getCantidades().trim());
 
             query.execute();
+        }
+    }
+
+    @Override
+    @Transactional
+    public void agregarDescuentoAFactura(String idFactura, String idDescuento) {
+        Factura factura = obtenerFacturaPorId(idFactura);
+        Descuento descuento = entityManager.find(Descuento.class, idDescuento);
+
+        if (factura != null && descuento != null) {
+            factura.setDescuento(descuento);
+            entityManager.merge(factura);
+        } else {
+            throw new IllegalArgumentException("Factura o Descuento no encontrados.");
         }
     }
 }

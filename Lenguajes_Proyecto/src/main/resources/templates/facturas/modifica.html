@@ -43,6 +43,16 @@
                       oninput="this.value = this.value.replace(/\s/g, '')"></textarea>
         </div>
 
+        <div class="campo">
+            <label for="descuento">Descuento:</label>
+            <select th:field="*{descuento.id}">
+                <option value="">--Seleccione--</option>
+                <option th:each="descuento : ${descuentos}" 
+                        th:value="${descuento.id}" 
+                        th:text="'Descuento: ' + ${descuento.valor} + ''"></option>
+            </select>
+        </div>
+
         <div class="error" th:if="${param.error}" style="color: red;">
             <p th:text="${param.error == 'invalidData' ? 'Los datos de productos y cantidades no son válidos.' : 'Ocurrió un error al guardar la factura.'}"></p>
         </div>

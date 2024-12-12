@@ -8,6 +8,7 @@ import com.example.demo.domain.Factura;
 import com.example.demo.service.ClientesService;
 import com.example.demo.service.FacturaService;
 import com.example.demo.service.PromocionService;
+import com.example.demo.service.DescuentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,9 @@ public class FacturaController {
     @Autowired
     private PromocionService promocionService;
 
+    @Autowired
+    private DescuentoService descuentoService;
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -49,6 +53,7 @@ public class FacturaController {
         model.addAttribute("factura", new Factura());
         model.addAttribute("clientes", clientesService.getClientes(true));
         model.addAttribute("promociones", promocionService.getAllPromociones());
+        model.addAttribute("descuentos", descuentoService.getAllDescuentos()); // Línea agregada
         return "facturas/modifica";
     }
 
@@ -81,6 +86,7 @@ public class FacturaController {
             model.addAttribute("factura", factura);
             model.addAttribute("clientes", clientesService.getClientes(true));
             model.addAttribute("promociones", promocionService.getAllPromociones());
+            model.addAttribute("descuentos", descuentoService.getAllDescuentos()); 
             return "facturas/modifica";
         }
         return "redirect:/facturas/listado";
@@ -94,6 +100,19 @@ public class FacturaController {
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/facturas/listado?error=true";
+        }
+    }
+
+    @PutMapping("/{idFactura}/descuento/{idDescuento}")
+    public String asignarDescuentoAFactura(
+            @PathVariable String idFactura,
+            @PathVariable String idDescuento) {
+        try {
+            facturaService.agregarDescuentoAFactura(idFactura, idDescuento);
+            return "redirect:/facturas/listado?descuentoAsignado=true";
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return "redirect:/facturas/listado?error=" + e.getMessage();
         }
     }
 
