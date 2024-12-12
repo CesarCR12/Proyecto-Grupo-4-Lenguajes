@@ -2252,6 +2252,357 @@ END FIDE_DISTRITO_TB_NOMBRE_POR_ID_FN;
 SELECT FIDE_DISTRITO_TB_NOMBRE_POR_ID_FN('ME') FROM dual;
 /
 
+-----------------------Funcion/cursor 8 Lista los productos disponibles con mayor cantidad de precio------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION FIDE_INVENTARIO_PRODUCTOS_DISPONIBLES_FN(
+    P_CANTIDAD_MINIMA IN INT
+) RETURN SYS_REFCURSOR IS
+    V_CURSOR SYS_REFCURSOR;
+BEGIN
+    OPEN V_CURSOR FOR
+        SELECT FIDE_INVENTARIO_TB_ID_INVENTARIO_PK AS ID_PRODUCTO, 
+               NOMBRE AS NOMBRE_PRODUCTO, 
+               CANTIDAD, 
+               PRECIO
+        FROM FIDE_INVENTARIO_TB
+        WHERE CANTIDAD > P_CANTIDAD_MINIMA
+        AND ESTADO = 'ACTIVO';
+
+    RETURN V_CURSOR;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error');
+        RETURN NULL;
+END FIDE_INVENTARIO_PRODUCTOS_DISPONIBLES_FN;
+-----------------------Funcion/cursor 9 Detallar todas las facturas de un cliente------------------------------------------------------
+CREATE OR REPLACE FUNCTION FIDE_FACTURAS_DETALLE_POR_CLIENTE_FN(
+    P_ID_CLIENTE IN VARCHAR2
+) RETURN SYS_REFCURSOR IS
+    V_CURSOR SYS_REFCURSOR;
+BEGIN
+    OPEN V_CURSOR FOR
+        SELECT FIDE_FACTURAS_TB_ID_FACTURAS_PK AS ID_FACTURA,
+               FECHA_VENTA, 
+               TOTAL_VENTA, 
+               SUBTOTAL, 
+               IMPUESTOS
+        FROM FIDE_FACTURAS_TB
+        WHERE ID_CLIENTE = P_ID_CLIENTE;
+
+    RETURN V_CURSOR;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error');
+        RETURN NULL;
+END FIDE_FACTURAS_DETALLE_POR_CLIENTE_FN;
+
+-----------------------Funcion/cursor 10 Devuelve los productos de inventario relacionados con un proveedor------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION FIDE_INVENTARIO_OBTENER_POR_PROVEEDOR_FN(
+    P_ID_PROVEEDOR IN VARCHAR2
+) RETURN SYS_REFCURSOR IS
+    V_CURSOR SYS_REFCURSOR;
+BEGIN
+    OPEN V_CURSOR FOR
+        SELECT FIDE_INVENTARIO_TB_ID_INVENTARIO_PK AS ID_PRODUCTO,
+               NOMBRE AS NOMBRE_PRODUCTO, 
+               CANTIDAD, 
+               PRECIO
+        FROM FIDE_INVENTARIO_TB
+        WHERE ID_PALLET IN (
+            SELECT FIDE_PALLETS_TB_ID_PALLET_PK
+            FROM FIDE_PALLETS_TB
+            WHERE ID_PROVEEDORES = P_ID_PROVEEDOR
+        );
+
+    RETURN V_CURSOR;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error');
+        RETURN NULL;
+END FIDE_INVENTARIO_OBTENER_POR_PROVEEDOR_FN;
+
+-----------------------Funcion/cursor 11 Devuelve las promociones que se han aplicado a un cliente específico------------------------------------------------------
+CREATE OR REPLACE FUNCTION FIDE_PROMOCIONES_OBTENER_POR_CLIENTE_FN(
+    P_ID_CLIENTE IN VARCHAR2
+) RETURN SYS_REFCURSOR IS
+    V_CURSOR SYS_REFCURSOR;
+BEGIN
+    OPEN V_CURSOR FOR
+        SELECT FIDE_PROMOCIONES_TB_ID_PROMOCION_PK AS ID_PROMOCION, 
+               NOMBRE_PROMOCION, 
+               FECHA_INICIO, 
+               FECHA_FIN
+        FROM FIDE_PROMOCIONES_TB
+        WHERE ID_FACTURAS IN (
+            SELECT FIDE_FACTURAS_TB_ID_FACTURAS_PK 
+            FROM FIDE_FACTURAS_TB 
+            WHERE ID_CLIENTE = P_ID_CLIENTE
+        );
+
+    RETURN V_CURSOR;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error');
+        RETURN NULL;
+END FIDE_PROMOCIONES_OBTENER_POR_CLIENTE_FN;
+-----------------------Funcion/cursor 12 Devuelve los descuentos que se han aplicado en facturas------------------------------------------------------
+CREATE OR REPLACE FUNCTION FIDE_DESCUENTOS_LISTAR_EN_FACTURAS_FN
+RETURN SYS_REFCURSOR IS
+    V_CURSOR SYS_REFCURSOR;
+BEGIN
+    OPEN V_CURSOR FOR
+        SELECT DISTINCT D.FIDE_DESCUENTO_TB_ID_DESCUENTO_PK AS ID_DESCUENTO, 
+                        D.VALOR AS VALOR_DESCUENTO, 
+                        F.FIDE_FACTURAS_TB_ID_FACTURAS_PK AS ID_FACTURA
+        FROM FIDE_DESCUENTO_TB D
+        JOIN FIDE_FACTURAS_TB F ON D.FIDE_DESCUENTO_TB_ID_DESCUENTO_PK = F.ID_DESCUENTO
+        WHERE D.ESTADO = 'ACTIVO';
+
+    RETURN V_CURSOR;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error');
+        RETURN NULL;
+END FIDE_DESCUENTOS_LISTAR_EN_FACTURAS_FN;
+-----------------------Funcion/cursor 13 Devuelve las facturas generadas en un rango de fechas específico------------------------------------------------------
+CREATE OR REPLACE FUNCTION FIDE_FACTURAS_LISTAR_POR_FECHAS_FN(
+    P_FECHA_INICIO IN DATE,
+    P_FECHA_FIN IN DATE
+) RETURN SYS_REFCURSOR IS
+    V_CURSOR SYS_REFCURSOR;
+BEGIN
+    OPEN V_CURSOR FOR
+        SELECT FIDE_FACTURAS_TB_ID_FACTURAS_PK AS ID_FACTURA,
+               FECHA_VENTA, 
+               TOTAL_VENTA, 
+               SUBTOTAL, 
+               IMPUESTOS
+        FROM FIDE_FACTURAS_TB
+        WHERE FECHA_VENTA BETWEEN P_FECHA_INICIO AND P_FECHA_FIN;
+
+    RETURN V_CURSOR;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error');
+        RETURN NULL;
+END FIDE_FACTURAS_LISTAR_POR_FECHAS_FN;
+-----------------------Funcion/cursor 14 Devuelve los productos del inventario con precio dentro de un rango específico------------------------------------------------------
+CREATE OR REPLACE FUNCTION FIDE_INVENTARIO_LISTAR_POR_PRECIO_FN(
+    P_PRECIO_MIN IN DECIMAL,
+    P_PRECIO_MAX IN DECIMAL
+) RETURN SYS_REFCURSOR IS
+    V_CURSOR SYS_REFCURSOR;
+BEGIN
+    OPEN V_CURSOR FOR
+        SELECT FIDE_INVENTARIO_TB_ID_INVENTARIO_PK AS ID_INVENTARIO,
+               NOMBRE AS NOMBRE_PRODUCTO,
+               PRECIO
+        FROM FIDE_INVENTARIO_TB
+        WHERE PRECIO BETWEEN P_PRECIO_MIN AND P_PRECIO_MAX;
+
+    RETURN V_CURSOR;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error');
+        RETURN NULL;
+END FIDE_INVENTARIO_LISTAR_POR_PRECIO_FN;
+
+-----------------------Funcion/cursor 15 Devuelve los detalles de los productos en inventario junto con los nombres de los proveedores------------------------------------------------
+CREATE OR REPLACE FUNCTION FIDE_INVENTARIO_DETALLES_PROVEEDORES_FN
+RETURN SYS_REFCURSOR IS
+    V_CURSOR SYS_REFCURSOR;
+BEGIN
+    OPEN V_CURSOR FOR
+        SELECT I.FIDE_INVENTARIO_TB_ID_INVENTARIO_PK AS ID_INVENTARIO,
+               I.NOMBRE AS NOMBRE_PRODUCTO,
+               I.CANTIDAD,
+               I.PRECIO,
+               P.NOMBRE_PROVEEDOR
+        FROM FIDE_INVENTARIO_TB I
+        JOIN FIDE_PALLETS_TB PA ON I.ID_PALLET = PA.FIDE_PALLETS_TB_ID_PALLET_PK
+        JOIN FIDE_PROVEEDORES_TB P ON PA.ID_PROVEEDORES = P.FIDE_PROVEEDORES_TB_ID_PROVEEDORES_PK;
+
+    RETURN V_CURSOR;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error');
+        RETURN NULL;
+END FIDE_INVENTARIO_DETALLES_PROVEEDORES_FN;
+-------------------------------------------Cursores echos 8 hacer 7------------------------------------------------------------------------------
+
+-----------------------procedimiento/cursor 1 listar clientes que tienen un estado específico---------------------------------
+CREATE OR REPLACE PROCEDURE FIDE_CLIENTES_LISTAR_POR_ESTADO_SP(
+    P_ESTADO IN VARCHAR2
+) IS
+    CURSOR C_CLIENTES IS
+        SELECT FIDE_CLIENTES_TB_ID_CLIENTE_PK AS ID_CLIENTE,
+               NOMBRE, 
+               CORREO, 
+               TELEFONO
+        FROM FIDE_CLIENTES_TB
+        WHERE ESTADO = P_ESTADO;
+    V_CLIENTE_ID VARCHAR2(200);
+    V_NOMBRE VARCHAR2(255);
+    V_CORREO VARCHAR2(255);
+    V_TELEFONO VARCHAR2(20);
+BEGIN
+    OPEN C_CLIENTES;
+    LOOP
+        FETCH C_CLIENTES INTO V_CLIENTE_ID, V_NOMBRE, V_CORREO, V_TELEFONO;
+        EXIT WHEN C_CLIENTES%NOTFOUND;
+
+        DBMS_OUTPUT.PUT_LINE('ID : ' || V_CLIENTE_ID ||', Nombre: ' || V_NOMBRE || ', Correo: ' || V_CORREO || ', Teléfono: ' || V_TELEFONO);
+    END LOOP;
+    CLOSE C_CLIENTES;
+END FIDE_CLIENTES_LISTAR_POR_ESTADO_SP;
+
+-----------------------procedimiento/cursor 2 lista las facturas generadas en un rango de fechas---------------------------------
+CREATE OR REPLACE PROCEDURE FIDE_FACTURAS_LISTAR_POR_FECHA_SP(
+    P_FECHA_INICIO IN DATE,
+    P_FECHA_FIN IN DATE
+) IS
+    CURSOR C_FACTURAS IS
+        SELECT FIDE_FACTURAS_TB_ID_FACTURAS_PK AS ID_FACTURA,
+               FECHA_VENTA,
+               TOTAL_VENTA,
+               SUBTOTAL,
+               IMPUESTOS
+        FROM FIDE_FACTURAS_TB
+        WHERE FECHA_VENTA BETWEEN P_FECHA_INICIO AND P_FECHA_FIN;
+    V_ID_FACTURA VARCHAR2(200);
+    V_FECHA_VENTA DATE;
+    V_TOTAL_VENTA DECIMAL(10, 2);
+    V_SUBTOTAL DECIMAL(10, 2);
+    V_IMPUESTOS DECIMAL(10, 2);
+BEGIN
+    OPEN C_FACTURAS;
+    LOOP
+        FETCH C_FACTURAS INTO V_ID_FACTURA, V_FECHA_VENTA, V_TOTAL_VENTA, V_SUBTOTAL, V_IMPUESTOS;
+        EXIT WHEN C_FACTURAS%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('Factura ID: ' || V_ID_FACTURA || ', Fecha: ' || V_FECHA_VENTA || ', Total: ' || V_TOTAL_VENTA ||  ', Subtotal: ' || V_SUBTOTAL || ', Impuestos: ' || V_IMPUESTOS);
+    END LOOP;
+    CLOSE C_FACTURAS;
+END FIDE_FACTURAS_LISTAR_POR_FECHA_SP;
+
+-----------------------procedimiento/cursor 3 lista las promociones activas y su rango de fechas---------------------------------
+CREATE OR REPLACE PROCEDURE FIDE_PROMOCIONES_LISTAR_ACTIVAS_SP IS
+    CURSOR C_PROMOCIONES IS
+        SELECT FIDE_PROMOCIONES_TB_ID_PROMOCION_PK AS ID_PROMOCION,
+               NOMBRE_PROMOCION,
+               FECHA_INICIO,
+               FECHA_FIN
+        FROM FIDE_PROMOCIONES_TB
+        WHERE ESTADO = 'ACTIVO';
+    V_ID_PROMOCION VARCHAR2(200);
+    V_NOMBRE_PROMOCION VARCHAR2(255);
+    V_FECHA_INICIO DATE;
+    V_FECHA_FIN DATE;
+BEGIN
+    OPEN C_PROMOCIONES;
+    LOOP
+        FETCH C_PROMOCIONES INTO V_ID_PROMOCION, V_NOMBRE_PROMOCION, V_FECHA_INICIO, V_FECHA_FIN;
+        EXIT WHEN C_PROMOCIONES%NOTFOUND;
+
+        DBMS_OUTPUT.PUT_LINE('Promoción ID: ' || V_ID_PROMOCION || ', Nombre: ' || V_NOMBRE_PROMOCION || ', Inicio: ' || V_FECHA_INICIO || ', Fin: ' || V_FECHA_FIN);
+    END LOOP;
+    CLOSE C_PROMOCIONES;
+END FIDE_PROMOCIONES_LISTAR_ACTIVAS_SP;
+-----------------------cursor 4 productos con precio mayor a un valor---------------------------------
+DECLARE
+    CURSOR C_PRODUCTOS_ESPECIALES IS
+        SELECT FIDE_INVENTARIO_TB_ID_INVENTARIO_PK AS ID_PRODUCTO,
+               NOMBRE,
+               PRECIO
+        FROM FIDE_INVENTARIO_TB
+        WHERE PRECIO > 100;
+    V_ID_PRODUCTO VARCHAR2(200);
+    V_NOMBRE VARCHAR2(255);
+    V_PRECIO DECIMAL(10, 2);
+BEGIN
+    OPEN C_PRODUCTOS_ESPECIALES;
+    LOOP
+        FETCH C_PRODUCTOS_ESPECIALES INTO V_ID_PRODUCTO, V_NOMBRE, V_PRECIO;
+        EXIT WHEN C_PRODUCTOS_ESPECIALES%NOTFOUND;
+
+        DBMS_OUTPUT.PUT_LINE('Producto ID: ' || V_ID_PRODUCTO || ', Nombre: ' || V_NOMBRE || ', Precio: ' || V_PRECIO);
+    END LOOP;
+    CLOSE C_PRODUCTOS_ESPECIALES;
+END;
+
+-----------------------procedimiento/cursor 5  lista los clientes que tienen facturas con un total mayor a un monto---------------------------------
+CREATE OR REPLACE PROCEDURE FIDE_CLIENTES_FACTURAS_MAYOR_MONTO_SP(
+    P_MONTO_MINIMO IN DECIMAL
+) IS
+    CURSOR C_CLIENTES_FACTURAS IS
+        SELECT DISTINCT C.FIDE_CLIENTES_TB_ID_CLIENTE_PK AS ID_CLIENTE,
+                        C.NOMBRE AS NOMBRE_CLIENTE,
+                        F.TOTAL_VENTA
+        FROM FIDE_CLIENTES_TB C
+        JOIN FIDE_FACTURAS_TB F ON C.FIDE_CLIENTES_TB_ID_CLIENTE_PK = F.ID_CLIENTE
+        WHERE F.TOTAL_VENTA > P_MONTO_MINIMO;
+    V_ID_CLIENTE VARCHAR2(200);
+    V_NOMBRE_CLIENTE VARCHAR2(255);
+    V_TOTAL_VENTA DECIMAL(10, 2);
+BEGIN
+    OPEN C_CLIENTES_FACTURAS;
+    LOOP
+        FETCH C_CLIENTES_FACTURAS INTO V_ID_CLIENTE, V_NOMBRE_CLIENTE, V_TOTAL_VENTA;
+        EXIT WHEN C_CLIENTES_FACTURAS%NOTFOUND;
+
+        DBMS_OUTPUT.PUT_LINE('Cliente ID: ' || V_ID_CLIENTE || ', Nombre: ' || V_NOMBRE_CLIENTE || ', Total Venta: ' || V_TOTAL_VENTA);
+    END LOOP;
+    CLOSE C_CLIENTES_FACTURAS;
+END FIDE_CLIENTES_FACTURAS_MAYOR_MONTO_SP;
+
+-----------------------cursor 6  Lista todas las promociones que están activas---------------------------------
+DECLARE
+    CURSOR C_PROMOCIONES IS
+        SELECT FIDE_PROMOCIONES_TB_ID_PROMOCION_PK AS ID_PROMOCION,
+               NOMBRE_PROMOCION,
+               FECHA_INICIO,
+               FECHA_FIN
+        FROM FIDE_PROMOCIONES_TB
+        WHERE ESTADO = 'ACTIVO';
+    V_ID_PROMOCION VARCHAR2(200);
+    V_NOMBRE_PROMOCION VARCHAR2(255);
+    V_FECHA_INICIO DATE;
+    V_FECHA_FIN DATE;
+BEGIN
+    OPEN C_PROMOCIONES;
+    LOOP
+        FETCH C_PROMOCIONES INTO V_ID_PROMOCION, V_NOMBRE_PROMOCION, V_FECHA_INICIO, V_FECHA_FIN;
+        EXIT WHEN C_PROMOCIONES%NOTFOUND;
+
+        DBMS_OUTPUT.PUT_LINE('Promoción ID: ' || V_ID_PROMOCION || ', Nombre: ' || V_NOMBRE_PROMOCION || ', Inicio: ' || V_FECHA_INICIO || ', Fin: ' || V_FECHA_FIN);
+    END LOOP;
+    CLOSE C_PROMOCIONES;
+END;
+
+-----------------------cursor 7  Lista todos los clientes que no tienen ninguna factura asociada---------------------------------
+DECLARE
+    CURSOR C_CLIENTES_SIN_FACTURAS IS
+        SELECT FIDE_CLIENTES_TB_ID_CLIENTE_PK AS ID_CLIENTE,
+               NOMBRE AS NOMBRE_CLIENTE,
+               CORREO
+        FROM FIDE_CLIENTES_TB
+        WHERE FIDE_CLIENTES_TB_ID_CLIENTE_PK NOT IN (
+            SELECT ID_CLIENTE 
+            FROM FIDE_FACTURAS_TB
+        );
+    V_ID_CLIENTE VARCHAR2(200);
+    V_NOMBRE_CLIENTE VARCHAR2(255);
+    V_CORREO VARCHAR2(255);
+BEGIN
+    OPEN C_CLIENTES_SIN_FACTURAS;
+    LOOP
+        FETCH C_CLIENTES_SIN_FACTURAS INTO V_ID_CLIENTE, V_NOMBRE_CLIENTE, V_CORREO;
+        EXIT WHEN C_CLIENTES_SIN_FACTURAS%NOTFOUND;
+
+        DBMS_OUTPUT.PUT_LINE('Cliente ID: ' || V_ID_CLIENTE || ', Nombre: ' || V_NOMBRE_CLIENTE || ', Correo: ' || V_CORREO);
+    END LOOP;
+    CLOSE C_CLIENTES_SIN_FACTURAS;
+END;
 --------------------------------------------PAQUETES--------------------------------------------
 
 ---------------------------------PAQUETES PROCEDIMIENTO---------------------------------
