@@ -1371,6 +1371,24 @@ SELECT
     ESTADO
 FROM
     FIDE_PALLETS_TB;
+---------Muestra las promociones que estan entre fechas---------
+CREATE OR REPLACE VIEW VISTA_FIDE_PROMOCIONES AS
+SELECT
+    FIDE_PROMOCIONES_TB_ID_PROMOCION_PK AS ID_PROMOCION,
+    ID_FACTURAS,
+    ID_ESTADOS,
+    NOMBRE_PROMOCION,
+    FECHA_INICIO,
+    FECHA_FIN,
+    DESCRIPCION,
+    ESTADO
+FROM
+    FIDE_PROMOCIONES_TB
+WHERE
+    FECHA_INICIO <= SYSDATE
+    AND (FECHA_FIN >= SYSDATE OR FECHA_FIN IS NULL);
+
+
 
 --------------------------------------------[PROCEDIMIENTOS ALMACENADOS]--------------------------------------------
 
