@@ -1360,6 +1360,18 @@ JOIN
     FIDE_INVENTARIO_TB I ON DF.ID_INVENTARIO = I.FIDE_INVENTARIO_TB_ID_INVENTARIO_PK;
 
 SELECT * FROM FIDE_DETALLES_FACTURAS_V;
+
+---------Muestra los pallets que estan activos---------
+CREATE OR REPLACE VIEW VISTA_FIDE_PALLETS AS
+SELECT
+    FIDE_PALLETS_TB_ID_PALLET_PK AS ID_PALLET,
+    ID_PROVEEDORES,
+    ID_ESTADOS,
+    DESCRIPCION,
+    ESTADO
+FROM
+    FIDE_PALLETS_TB;
+
 --------------------------------------------[PROCEDIMIENTOS ALMACENADOS]--------------------------------------------
 
 -------------------------------Agregar Clientes------------------------------------------------
