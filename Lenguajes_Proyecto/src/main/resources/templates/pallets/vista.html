@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}">
+    <title>Pallets</title>
+</head>
+<body>
+    <header th:replace="~{layout/plantilla :: header}" class="header"></header>
+    <section class="container py-5">
+        <h1 class="mb-4">Listado de Pallets</h1>
+        <form method="get" th:action="@{/pallets/vista}">
+            <label for="idEstados">Filtrar por Estado:</label>
+            <select name="idEstados" id="idEstados" onchange="this.form.submit()">
+                <option value="1" th:selected="${idEstados == '1'}">Activos</option>
+                <option value="2" th:selected="${idEstados == '2'}">Inactivos</option>
+            </select>
+        </form>
+        <table class="table table-striped table-bordered mt-4">
+            <thead class="table-primary">
+                <tr>
+                    <th>ID Pallet</th>
+                    <th>Proveedor</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pallet : ${pallets}">
+                    <td th:text="${pallet.idPallet}"></td>
+                    <td th:text="${pallet.idProveedores}"></td>
+                    <td th:text="${pallet.descripcion}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <footer th:replace="~{layout/plantilla :: footer}" class="footer"></footer>
+</body>
+</html>

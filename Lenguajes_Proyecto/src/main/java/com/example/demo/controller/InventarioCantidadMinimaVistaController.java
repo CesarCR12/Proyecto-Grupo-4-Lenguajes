@@ -23,7 +23,7 @@ public class InventarioCantidadMinimaVistaController {
     public String mostrarInventarioCantidadMinima(Model model) {
         List<InventarioCantidadMinimaVista> inventarios = inventarioCantidadMinimaVistaService.obtenerInventarioCantidadMinimaVista();
         model.addAttribute("inventarios", inventarios);
-        return "inventario/vista"; // Cambiar el retorno si el archivo tiene otro nombre.
+        return "inventario/vista";
     }
 
 }
