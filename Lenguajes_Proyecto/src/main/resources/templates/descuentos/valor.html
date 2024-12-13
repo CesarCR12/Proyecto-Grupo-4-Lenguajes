@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}">
+    <title>Consultar Valor del Descuento</title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}"></header>
+<section class="container py-5">
+    <h1 class="mb-4">Consultar Valor del Descuento</h1>
+    <form th:action="@{/descuentos/valor}" method="get">
+        <div class="mb-3">
+            <label for="idDescuento" class="form-label">ID del Descuento</label>
+            <input type="text" id="idDescuento" name="idDescuento" class="form-control" placeholder="Ingrese el ID del Descuento" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+
+    <div th:if="${error}">
+        <div class="alert alert-danger mt-4" th:text="${error}"></div>
+    </div>
+
+    <div th:if="${valorDescuento != null and valorDescuento >= 0}">
+        <h2 class="mt-4">Resultado:</h2>
+        <p>El descuento con ID <b th:text="${idDescuento}"></b> tiene un valor de <b th:text="${valorDescuento}"></b>.</p>
+    </div>
+</section>
+<footer th:replace="~{layout/plantilla :: footer}"></footer>
+</body>
+</html>

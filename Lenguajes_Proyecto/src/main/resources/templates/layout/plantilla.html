@@ -63,8 +63,7 @@
                             <ul class="dropdown-menu" aria-labelledby="proveedoresDropdown">
                                 <li><a class="dropdown-item" th:href="@{/proveedores/listado}">Gestionar Proveedores</a></li>
                                 <li><a class="dropdown-item" th:href="@{/proveedores/contactos}">Proveedores Vista Contactos</a></li>
-
-
+                                <li><a class="dropdown-item" th:href="@{/proveedores/nombre}">Buscar Proveedor por ID</a></li>
                             </ul>
                         </li>
 
@@ -75,6 +74,7 @@
                             <ul class="dropdown-menu" aria-labelledby="promocionesDropdown">
                                 <li><a class="dropdown-item" th:href="@{/promociones/listado}">Gestionar Promociones</a></li>
                                 <li><a class="dropdown-item" th:href="@{/promociones/vista}">Promociones Activas Vista</a></li>
+                                <li><a class="dropdown-item" th:href="@{/promociones/nombre}">Buscar Promoción por ID</a></li>
                             </ul>
                         </li>
                         
@@ -85,6 +85,7 @@
                             <ul class="dropdown-menu" aria-labelledby="descuentosDropdown">
                                 <li><a class="dropdown-item" th:href="@{/descuentos/listado}">Gestionar Descuentos</a></li>
                                 <li><a class="dropdown-item" th:href="@{/descuentos/detalle}">Detalle de Descuentos Vista</a></li>
+                                <li><a class="dropdown-item" th:href="@{/descuentos/valor}">Consultar Valor del Descuento</a></li>
                             </ul>
                         </li>
 
@@ -96,6 +97,8 @@
                                 <li><a class="dropdown-item" th:href="@{/facturas/listado}">Gestionar Facturas</a></li>
                                 <li><a class="dropdown-item" th:href="@{/facturas/clientes}">Facturas Vista Clientes</a></li>
                                 <li><a class="dropdown-item" th:href="@{/facturas/detalle}">Detalle Facturas por Cliente</a></li>
+                  
+
                             </ul>
                         </li>
                     </ul>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}">
+    <title>Consultar Nombre de la Promoción</title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}"></header>
+<section class="container py-5">
+    <h1 class="mb-4">Consultar Nombre de la Promoción</h1>
+    <form th:action="@{/promociones/nombre}" method="get">
+        <input type="text" name="idPromocion" class="form-control" placeholder="Ingrese el ID de la Promoción" required>
+        <button type="submit" class="btn btn-primary mt-2">Buscar</button>
+    </form>
+
+    <div th:if="${error}">
+        <div class="alert alert-danger mt-4" th:text="${error}"></div>
+    </div>
+
+    <div th:if="${nombrePromocion}">
+        <h2 class="mt-4">Resultado:</h2>
+        <p>La promoción con ID <b th:text="${idPromocion}"></b> se llama <b th:text="${nombrePromocion}"></b>.</p>
+    </div>
+</section>
+<footer th:replace="~{layout/plantilla :: footer}"></footer>
+</body>
+</html>

@@ -526,9 +526,10 @@ button:hover {
 }
 
 .table th {
-    background-color: #007bff;
+    background-color: #003366; 
     color: white;
 }
+
 
 h1 {
     text-align: center;
