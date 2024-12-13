@@ -535,6 +535,41 @@ h1 {
     color: #333;
 }
 
+.contenedor-principal {
+    padding: 20px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.manual-de-uso {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-top: 15px;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    max-width: 800px;
+    width: 100%; 
+    margin: 0 auto; 
+}
+
+.manual-de-uso:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.manual-de-uso h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.manual-de-uso p {
+    font-size: 16px;
+}
+
 
 
 
