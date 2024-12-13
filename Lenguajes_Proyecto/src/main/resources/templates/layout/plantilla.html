@@ -22,18 +22,55 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <ul class="navbar-nav align-items-center text-light" style="margin-top: 10px; margin-bottom: 10px;">
-                        <li class="nav-item px-2 dropdown">
-                            <a class="nav-link dropdown-toggle text-custom" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Opciones
+ 
+                        <li class="nav-item dropdown px-3">
+                            <a class="nav-link dropdown-toggle text-custom" href="#" id="clientesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Clientes
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                                <li><a class="dropdown-item" th:href="@{/clientes/listado}">Clientes</a></li>
-                                <li><a class="dropdown-item" th:href="@{/inventario/listado}">Inventario</a></li>
-                                <li><a class="dropdown-item" th:href="@{/proveedores/listado}">Proveedores</a></li>
-                                <li><a class="dropdown-item" th:href="@{/promociones/listado}">Promociones</a></li> 
-                                <li><a class="dropdown-item" th:href="@{/descuentos/listado}">Descuentos</a></li>
-                                <li><a class="dropdown-item" th:href="@{/pallets/listado}">Pallets</a></li>
-                                <li><a class="dropdown-item" th:href="@{/facturas/listado}">Facturas</a></li>
+                            <ul class="dropdown-menu" aria-labelledby="clientesDropdown">
+                                <li><a class="dropdown-item" th:href="@{/clientes/listado}">Clientes Listado</a></li>
+ 
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown px-3">
+                            <a class="nav-link dropdown-toggle text-custom" href="#" id="inventarioDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Inventario
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="inventarioDropdown">
+                                <li><a class="dropdown-item" th:href="@{/inventario/listado}">Inventario Listado</a></li>
+                                <li><a class="dropdown-item" th:href="@{/pallets/listado}">Pallets Listado</a></li>
+
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown px-3">
+                            <a class="nav-link dropdown-toggle text-custom" href="#" id="proveedoresDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Proveedores
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="proveedoresDropdown">
+                                <li><a class="dropdown-item" th:href="@{/proveedores/listado}">Proveedores Listado</a></li>
+
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown px-3">
+                            <a class="nav-link dropdown-toggle text-custom" href="#" id="promocionesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Promociones y Descuentos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="promocionesDropdown">
+                                <li><a class="dropdown-item" th:href="@{/promociones/listado}">Promociones Listado</a></li>
+                                <li><a class="dropdown-item" th:href="@{/descuentos/listado}">Descuentos Listado</a></li>
+
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown px-3">
+                            <a class="nav-link dropdown-toggle text-custom" href="#" id="facturasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Facturas
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="facturasDropdown">
+                                <li><a class="dropdown-item" th:href="@{/facturas/listado}">Facturas Listado</a></li>
 
                             </ul>
                         </li>

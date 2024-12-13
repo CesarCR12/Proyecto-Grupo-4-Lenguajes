@@ -8,7 +8,7 @@
 <header th:replace="~{layout/plantilla :: header}" class="header"></header>
 
 <section class="formulario-contenedor">
-    <h1 th:text="*{idFactura != null} ? 'Modificar Factura' : 'Agregar Factura'"></h1>
+    <h1 th:text="*{idFactura != null} ? 'Modificar Factura' : 'Factura'"></h1>
     <form th:action="@{/facturas/guardar}" th:object="${factura}" method="post" class="formulario">
         <input type="hidden" th:field="*{idFactura}" />
 
