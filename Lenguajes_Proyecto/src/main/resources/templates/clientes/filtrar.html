@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}">
+    <title>Filtrar Clientes</title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}" class="header"></header>
+<section class="container py-5">
+    <h1 class="mb-4">Filtrar Clientes</h1>
+
+    <form method="get" action="/clientes/filtrar" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="nombre" class="form-control" placeholder="Ingrese el nombre del cliente" th:value="${nombre}">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
+
+    <div th:if="${resultado}">
+        <h3>Resultado:</h3>
+        <pre th:text="${resultado}"></pre>
+    </div>
+</section>
+<footer th:replace="~{layout/plantilla :: footer}" class="footer"></footer>
+</body>
+</html>

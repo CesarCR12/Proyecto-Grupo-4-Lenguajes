@@ -28,10 +28,9 @@
                                 Clientes
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="clientesDropdown">
-                                <li><a class="dropdown-item" th:href="@{/clientes/listado}">Clientes Listado</a></li>
+                                <li><a class="dropdown-item" th:href="@{/clientes/listado}">Gestionar Clientes</a></li>
                                 <li><a class="dropdown-item" th:href="@{/clientes/vista}">Vista Cliente</a></li>
-
- 
+                                <li><a class="dropdown-item" th:href="@{/clientes/filtrar}">Filtrar Clientes</a></li>
                             </ul>
                         </li>
 
@@ -40,10 +39,19 @@
                                 Inventario
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="inventarioDropdown">
-                                <li><a class="dropdown-item" th:href="@{/inventario/listado}">Inventario Listado</a></li>
+                                <li><a class="dropdown-item" th:href="@{/inventario/listado}">Gestionar Inventario</a></li>
                                 <li><a class="dropdown-item" th:href="@{/inventario/cantidad-minima}">Vista Cantidad Mínima</a></li>
-                                <li><a class="dropdown-item" th:href="@{/pallets/listado}">Pallets Listado</a></li>
+                            </ul>
+                        </li>
+                        
+                         <li class="nav-item dropdown px-3">
+                            <a class="nav-link dropdown-toggle text-custom" href="#" id="palletsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Pallets
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="palletsDropdown">
+                                <li><a class="dropdown-item" th:href="@{/pallets/listado}">Gestionar Pallets</a></li>
                                 <li><a class="dropdown-item" th:href="@{/pallets/vista}">Vista Pallets</a></li>
+                                <li><a class="dropdown-item" th:href="@{/pallets/proveedor}">Buscar Proveedor por Pallet</a></li>
                             </ul>
                         </li>
 
@@ -52,7 +60,7 @@
                                 Proveedores
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="proveedoresDropdown">
-                                <li><a class="dropdown-item" th:href="@{/proveedores/listado}">Proveedores Listado</a></li>
+                                <li><a class="dropdown-item" th:href="@{/proveedores/listado}">Gestionar Proveedores</a></li>
                                 <li><a class="dropdown-item" th:href="@{/proveedores/contactos}">Proveedores Vista Contactos</a></li>
 
 
@@ -61,12 +69,20 @@
 
                         <li class="nav-item dropdown px-3">
                             <a class="nav-link dropdown-toggle text-custom" href="#" id="promocionesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Promociones y Descuentos
+                                Promociones
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="promocionesDropdown">
-                                <li><a class="dropdown-item" th:href="@{/promociones/listado}">Promociones Listado</a></li>
+                                <li><a class="dropdown-item" th:href="@{/promociones/listado}">Gestionar Promociones</a></li>
                                 <li><a class="dropdown-item" th:href="@{/promociones/vista}">Promociones Activas Vista</a></li>
-                                <li><a class="dropdown-item" th:href="@{/descuentos/listado}">Descuentos Listado</a></li>
+                            </ul>
+                        </li>
+                        
+                         <li class="nav-item dropdown px-3">
+                            <a class="nav-link dropdown-toggle text-custom" href="#" id="descuentosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Descuentos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="descuentosDropdown">
+                                <li><a class="dropdown-item" th:href="@{/descuentos/listado}">Gestionar Descuentos</a></li>
                                 <li><a class="dropdown-item" th:href="@{/descuentos/detalle}">Detalle de Descuentos Vista</a></li>
                             </ul>
                         </li>
@@ -76,7 +92,7 @@
                                 Facturas
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="facturasDropdown">
-                                <li><a class="dropdown-item" th:href="@{/facturas/listado}">Facturas Listado</a></li>
+                                <li><a class="dropdown-item" th:href="@{/facturas/listado}">Gestionar Facturas</a></li>
                                 <li><a class="dropdown-item" th:href="@{/facturas/clientes}">Facturas Vista Clientes</a></li>
 
                             </ul>
@@ -99,11 +115,11 @@
     <footer th:fragment="footer" class="footerAbsoluto">
         <section class="d-flex justify-content-center justify-content-lg-between border-bottom">
             <div class="me-5 d-none d-lg-block">
-                <span>¡Síguenos en redes sociales!</span>
+                <span>Sistema de Administracion SumaStore</span>
             </div>
         </section>
         <div class="p-footer">
-            &COPY; Todos los derechos reservados.
+
         </div>
     </footer>
 </body>
