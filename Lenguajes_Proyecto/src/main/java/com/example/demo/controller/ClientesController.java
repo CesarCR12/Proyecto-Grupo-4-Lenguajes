@@ -79,4 +79,6 @@ public class ClientesController {
         clientesService.delete(cliente);
         return "redirect:/clientes/listado";
     }
+    
+
 }
