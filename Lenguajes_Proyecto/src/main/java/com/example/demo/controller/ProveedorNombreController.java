@@ -19,9 +19,14 @@ public class ProveedorNombreController {
 
     @GetMapping("/proveedores/nombre")
     public String obtenerNombreProveedor(
-        @RequestParam String idProveedor,
+        @RequestParam(value = "idProveedor", required = false) String idProveedor, 
         Model model
     ) {
+        if (idProveedor == null || idProveedor.isEmpty()) {
+            model.addAttribute("error", "El parámetro 'idProveedor' es obligatorio.");
+            return "proveedores/nombre";
+        }
+        
         String nombreProveedor = proveedorNombreService.obtenerNombreProveedor(idProveedor);
         model.addAttribute("idProveedor", idProveedor);
         model.addAttribute("nombreProveedor", nombreProveedor);

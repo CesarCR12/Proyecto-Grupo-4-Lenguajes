@@ -21,7 +21,7 @@ public class ProveedorNombreServiceImpl implements ProveedorNombreService {
     public String obtenerNombreProveedor(String idProveedor) {
         try {
             return (String) entityManager
-                    .createNativeQuery("SELECT FIDE_GET_NOMBRE_PROVEEDOR(:idProveedor) FROM DUAL")
+                    .createNativeQuery("SELECT FIDE_OBTENER_NOMBRE_PROVEEDOR_FN(:idProveedor) FROM DUAL")
                     .setParameter("idProveedor", idProveedor)
                     .getSingleResult();
         } catch (Exception e) {

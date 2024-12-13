@@ -7,14 +7,21 @@
 <header th:replace="~{layout/plantilla :: header}"></header>
 <section class="container py-5">
     <h1 class="mb-4">Consultar Nombre del Proveedor</h1>
-    <form th:action="@{/proveedores/nombre}" method="get" class="d-flex gap-2">
-        <input type="text" name="idProveedor" class="form-control" placeholder="Ingrese el ID del Proveedor" required>
-        <button type="submit" class="btn btn-primary">Buscar</button>
+    <form th:action="@{/proveedores/nombre}" method="get">
+        <div class="form-group">
+            <label for="idProveedor">ID del Proveedor</label>
+            <input type="text" id="idProveedor" name="idProveedor" class="form-control" placeholder="Ingrese el ID del Proveedor" required>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Buscar</button>
     </form>
 
     <div th:if="${nombreProveedor}">
         <h2 class="mt-4">Resultado:</h2>
         <p>El proveedor con ID <b th:text="${idProveedor}"></b> se llama <b th:text="${nombreProveedor}"></b>.</p>
+    </div>
+    
+    <div th:if="${error}">
+        <p class="text-danger" th:text="${error}"></p>
     </div>
 </section>
 <footer th:replace="~{layout/plantilla :: footer}"></footer>
