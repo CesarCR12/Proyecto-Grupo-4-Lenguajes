@@ -8,21 +8,6 @@
 <section class="container py-5">
     <h1 class="mb-4">Facturas por Cliente</h1>
     <form method="get" action="/facturas/clientes" class="mb-3">
-        <div class="row g-2 align-items-center">
-            <div class="col-auto">
-                <input type="text" name="filtroCliente" class="form-control" placeholder="Buscar por ID Cliente" 
-                       th:value="${filtroCliente}">
-            </div>
-            <div class="col-auto">
-                <select name="sortOrder" class="form-select">
-                    <option value="asc" th:selected="${sortOrder == 'asc'}">Orden Ascendente</option>
-                    <option value="desc" th:selected="${sortOrder == 'desc'}">Orden Descendente</option>
-                </select>
-            </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-primary">Filtrar</button>
-            </div>
-        </div>
     </form>
 
     <table class="table table-striped table-bordered">

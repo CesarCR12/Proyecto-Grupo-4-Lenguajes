@@ -2171,7 +2171,7 @@ EXCEPTION
     WHEN OTHERS THEN
         RETURN 'Ocurrio un error: ' || SQLERRM;
 END FIDE_CLIENTES_TB_FILTRAR_CLIENTES_FN;
-/
+
 
 SELECT FIDE_CLIENTES_TB_FILTRAR_CLIENTES_FN('Esteban') FROM DUAL;
 /
@@ -2338,27 +2338,41 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE('Error');
         RETURN NULL;
 END FIDE_INVENTARIO_PRODUCTOS_DISPONIBLES_FN;
------------------------Funcion/cursor 9 Detallar todas las facturas de un cliente------------------------------------------------------
+-----------------------Funcion 9 Detallar todas las facturas de un cliente------------------------------------------------------
+CREATE OR REPLACE TYPE FIDE_FACTURAS_DETALLE_T AS OBJECT (
+    ID_FACTURA NUMBER,
+    FECHA_VENTA DATE,
+    TOTAL_VENTA NUMBER,
+    SUBTOTAL NUMBER,
+    IMPUESTOS NUMBER
+);
+
+CREATE OR REPLACE TYPE FIDE_FACTURAS_DETALLE_TB AS TABLE OF FIDE_FACTURAS_DETALLE_T;
+
 CREATE OR REPLACE FUNCTION FIDE_FACTURAS_DETALLE_POR_CLIENTE_FN(
     P_ID_CLIENTE IN VARCHAR2
-) RETURN SYS_REFCURSOR IS
-    V_CURSOR SYS_REFCURSOR;
+) RETURN FIDE_FACTURAS_DETALLE_TB PIPELINED IS
 BEGIN
-    OPEN V_CURSOR FOR
+    FOR R IN (
         SELECT FIDE_FACTURAS_TB_ID_FACTURAS_PK AS ID_FACTURA,
                FECHA_VENTA, 
                TOTAL_VENTA, 
                SUBTOTAL, 
                IMPUESTOS
         FROM FIDE_FACTURAS_TB
-        WHERE ID_CLIENTE = P_ID_CLIENTE;
-
-    RETURN V_CURSOR;
-EXCEPTION
-    WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Error');
-        RETURN NULL;
+        WHERE ID_CLIENTE = P_ID_CLIENTE
+    ) LOOP
+        PIPE ROW(FIDE_FACTURAS_DETALLE_T(
+            R.ID_FACTURA,
+            R.FECHA_VENTA,
+            R.TOTAL_VENTA,
+            R.SUBTOTAL,
+            R.IMPUESTOS
+        ));
+    END LOOP;
+    RETURN;
 END FIDE_FACTURAS_DETALLE_POR_CLIENTE_FN;
+
 
 -----------------------Funcion/cursor 10 Devuelve los productos de inventario relacionados con un proveedor------------------------------------------------------
 

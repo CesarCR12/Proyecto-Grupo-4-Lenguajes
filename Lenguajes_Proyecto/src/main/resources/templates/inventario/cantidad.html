@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}">
+    <title>Consultar Cantidad</title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}"></header>
+<section class="container py-5">
+    <h1 class="mb-4">Consultar Cantidad por Nombre</h1>
+    <form th:action="@{/inventario/cantidad-consultar}" method="get">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre del Producto:</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Consultar</button>
+    </form>
+
+    <div th:if="${cantidad != null}">
+        <h2 class="mt-4">Resultado:</h2>
+        <p>El producto <b th:text="${nombre}"></b> tiene una cantidad de <b th:text="${cantidad}"></b>.</p>
+    </div>
+</section>
+<footer th:replace="~{layout/plantilla :: footer}"></footer>
+</body>
+</html>
