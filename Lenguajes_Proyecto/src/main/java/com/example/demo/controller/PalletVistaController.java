@@ -22,9 +22,12 @@ public class PalletVistaController {
 
     @GetMapping("/pallets/vista")
     public String mostrarPallets(@RequestParam(defaultValue = "1") String idEstados, Model model) {
+ 
         List<PalletVista> pallets = palletVistaService.obtenerPalletsPorEstado(idEstados);
+        
         model.addAttribute("pallets", pallets);
         model.addAttribute("idEstados", idEstados);
+        
         return "pallets/vista";
     }
 }

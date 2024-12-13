@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout/plantilla :: head}">
-    <title>Promociones Activas</title>
+    <title>Promociones - Vista</title>
 </head>
 <body>
 <header th:replace="~{layout/plantilla :: header}" class="header"></header>
 <section class="container py-5">
     <h1 class="mb-4">Promociones Activas</h1>
+
     <table class="table table-striped table-bordered">
-        <thead class="table-success">
+        <thead class="table-dark">
             <tr>
-                <th>Nombre de la Promoción</th>
+                <th>Nombre Promoción</th>
+                <th>Descripción</th>
                 <th>Fecha Inicio</th>
                 <th>Fecha Fin</th>
-                <th>Descripción</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="promocion : ${promociones}">
                 <td th:text="${promocion.nombrePromocion}"></td>
-                <td th:text="${#dates.format(promocion.fechaInicio, 'dd/MM/yyyy')}"></td>
-                <td th:text="${promocion.fechaFin != null ? #dates.format(promocion.fechaFin, 'dd/MM/yyyy') : 'Sin fecha fin'}"></td>
                 <td th:text="${promocion.descripcion}"></td>
+                <td th:text="${#dates.format(promocion.fechaInicio, 'yyyy-MM-dd')}"></td>
+                <td th:text="${#dates.format(promocion.fechaFin, 'yyyy-MM-dd')}"></td>
             </tr>
         </tbody>
     </table>

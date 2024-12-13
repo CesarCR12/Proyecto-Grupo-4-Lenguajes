@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "VISTA_FIDE_PALLETS")
+@Table(name = "FIDE_PALLETS_V")
 public class PalletVista {
 
     @Id
@@ -21,7 +21,7 @@ public class PalletVista {
 
     private String descripcion;
 
-    private String estado;
+    public PalletVista() {}
 
     public String getIdPallet() {
         return idPallet;
@@ -53,13 +53,5 @@ public class PalletVista {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
     }
 }

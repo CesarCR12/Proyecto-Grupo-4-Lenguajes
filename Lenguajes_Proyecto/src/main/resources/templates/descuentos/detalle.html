@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}">
+    <title>Descuentos Detalle</title>
+</head>
+<body>
+<header th:replace="~{layout/plantilla :: header}" class="header"></header>
+<section class="container py-5">
+    <h1 class="mb-4">Descuentos Detalle</h1>
+
+    <div class="mb-3">
+        <a th:href="@{/descuentos/detalle(sortOrder='asc')}" class="btn btn-primary" th:classappend="${sortOrder == 'asc'} ? 'active' : ''">
+            Ordenar Ascendente
+        </a>
+        <a th:href="@{/descuentos/detalle(sortOrder='desc')}" class="btn btn-secondary" th:classappend="${sortOrder == 'desc'} ? 'active' : ''">
+            Ordenar Descendente
+        </a>
+    </div>
+
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Tipo Descuento</th>
+                <th>Valor Descuento</th>
+                <th>Fecha Creación</th>
+                <th>Fecha Modificación</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="descuento : ${descuentos}">
+                <td th:text="${descuento.tipoDescuento}"></td>
+                <td th:text="${descuento.valorDescuento}"></td>
+                <td th:text="${#dates.format(descuento.fechaDeCreacion, 'yyyy-MM-dd')}"></td>
+                <td th:text="${#dates.format(descuento.fechaDeModificacion, 'yyyy-MM-dd')}"></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+<footer th:replace="~{layout/plantilla :: footer}" class="footer"></footer>
+</body>
+</html>

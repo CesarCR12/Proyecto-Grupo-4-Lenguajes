@@ -4,9 +4,9 @@
  */
 package com.example.demo.service;
 
-import com.example.demo.domain.PromocionVista;
+import com.example.demo.domain.DescuentoDetalleVista;
 import java.util.List;
 
-public interface PromocionVistaService {
-    List<PromocionVista> obtenerPromociones();
+public interface DescuentoDetalleVistaService {
+    List<DescuentoDetalleVista> obtenerDescuentosOrdenados(String sortOrder);
 }

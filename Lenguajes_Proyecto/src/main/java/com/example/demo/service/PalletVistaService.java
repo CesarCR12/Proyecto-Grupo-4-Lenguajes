@@ -5,9 +5,8 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.PalletVista;
-
 import java.util.List;
 
 public interface PalletVistaService {
-    List<PalletVista> obtenerPalletsPorEstado(String idEstados);
+    List<PalletVista> obtenerPalletsPorEstado(String idEstados); 
 }

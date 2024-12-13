@@ -10,21 +10,45 @@ import jakarta.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "VISTA_FIDE_PROMOCIONES") 
+@Table(name = "FIDE_PROMOCIONES_POR_FECHA_V")
 public class PromocionVista {
 
     @Id
     private String idPromocion;
 
+    private String idFacturas;
+    private String idEstados;
     private String nombrePromocion;
-
     private Date fechaInicio;
-
     private Date fechaFin;
-
     private String descripcion;
 
     public PromocionVista() {}
+
+    // Getters and Setters
+    public String getIdPromocion() {
+        return idPromocion;
+    }
+
+    public void setIdPromocion(String idPromocion) {
+        this.idPromocion = idPromocion;
+    }
+
+    public String getIdFacturas() {
+        return idFacturas;
+    }
+
+    public void setIdFacturas(String idFacturas) {
+        this.idFacturas = idFacturas;
+    }
+
+    public String getIdEstados() {
+        return idEstados;
+    }
+
+    public void setIdEstados(String idEstados) {
+        this.idEstados = idEstados;
+    }
 
     public String getNombrePromocion() {
         return nombrePromocion;

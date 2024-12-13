@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller
-public class PromocionesVistaController {
+public class PromocionVistaController {
 
     @Autowired
     private PromocionVistaService promocionVistaService;
 
-    @GetMapping("/promociones/activas")
-    public String mostrarPromocionesActivas(Model model) {
-        List<PromocionVista> promociones = promocionVistaService.obtenerPromocionesActivas();
+    @GetMapping("/promociones/vista")
+    public String mostrarPromociones(Model model) {
+        List<PromocionVista> promociones = promocionVistaService.obtenerPromociones();
         model.addAttribute("promociones", promociones);
-        return "promociones/activas";
+        return "promociones/vista";
     }
 }
